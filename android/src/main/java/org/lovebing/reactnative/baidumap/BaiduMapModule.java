@@ -1,5 +1,7 @@
 package org.lovebing.reactnative.baidumap;
 
+import android.support.annotation.Nullable;
+
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -7,7 +9,6 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.Callback;
 
 import com.baidu.mapapi.map.MapView;
 import com.facebook.react.bridge.ReactMethod;
@@ -28,6 +29,7 @@ import com.baidu.mapapi.utils.CoordinateConverter;
 import com.baidu.mapapi.utils.CoordinateConverter.CoordType;
 
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 
 /**
@@ -38,11 +40,11 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
 
     private static GeoCoder geoCoder;
 
-    private static Callback onGetGeoCodeResult;
-    private static Callback onGetReverseGeoCodeResult;
+    private ReactApplicationContext context;
 
     public BaiduMapModule(ReactApplicationContext reactContext) {
         super(reactContext);
+        context = reactContext;
     }
 
     public String getName() {
@@ -74,21 +76,20 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
     public void setShowZoomControls(boolean show) {
         getMapView().showZoomControls(show);
     }
+
     @ReactMethod
     public void setMapType(int mapType) {
         getMap().setMapType(mapType);
     }
 
     @ReactMethod
-    public void geocode(String city, String addr, Callback callback) {
-        onGetGeoCodeResult = callback;
+    public void geocode(String city, String addr) {
         getGeoCoder().geocode(new GeoCodeOption()
                 .city(city).address(addr));
     }
 
     @ReactMethod
-    public void reverseGeoCode(double lat, double lng, Callback callback) {
-        onGetReverseGeoCodeResult = callback;
+    public void reverseGeoCode(double lat, double lng) {
         getGeoCoder().reverseGeoCode(new ReverseGeoCodeOption()
                 .location(getBaiduCoorFromGPSCoor(new LatLng(lat, lng))));
     }
@@ -105,9 +106,6 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
         geoCoder = GeoCoder.newInstance();
         geoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener(){
             public void onGetGeoCodeResult(GeoCodeResult result) {
-                if(onGetGeoCodeResult == null) {
-                    return;
-                }
                 WritableMap params = Arguments.createMap();
                 if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
                     params.putInt("errcode", -1);
@@ -116,14 +114,11 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
                     params.putDouble("latitude",  result.getLocation().latitude);
                     params.putDouble("longitude",  result.getLocation().longitude);
                 }
-                onGetGeoCodeResult.invoke(params);
+                sendEvent("onGetGeoCodeResult", params);
             }
 
             @Override
             public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
-                if(onGetReverseGeoCodeResult == null) {
-                    return;
-                }
                 WritableMap params = Arguments.createMap();
                 if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
                     params.putInt("errcode", -1);
@@ -131,7 +126,7 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
                 else {
                     params.putString("address",  result.getAddress());
                 }
-                onGetReverseGeoCodeResult.invoke(params);
+                sendEvent("onGetReverseGeoCodeResult", params);
             }
         });
         return geoCoder;
@@ -160,5 +155,16 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
         LatLng desLatLng = converter.convert();
         return desLatLng;
 
+    }
+
+    /**
+     *
+     * @param eventName
+     * @param params
+     */
+    protected void sendEvent(String eventName,@Nullable WritableMap params) {
+        context
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(eventName, params);
     }
 }
