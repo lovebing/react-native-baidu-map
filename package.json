@@ -1,0 +1,23 @@
+{
+  "name": "react-native-baidu-map",
+  "version": "0.0.0",
+  "description": "Baidu Map SDK For React Native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lovebing/react-native-baidu-map.git"
+  },
+  "keywords": [
+    "Baidu Map",
+    "React Native"
+  ],
+  "author": "lovebing",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lovebing/react-native-baidu-map/issues"
+  },
+  "homepage": "https://github.com/lovebing/react-native-baidu-map#readme"
+}
