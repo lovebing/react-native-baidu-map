@@ -47,16 +47,24 @@ export const BaiduMapModule = {
             }
             catch(e) {
                 reject(e);
+                return;
             }
-            DeviceEventEmitter.addListener('onGetReverseGeoCodeResult', resp => {
+            DeviceEventEmitter.once('onGetReverseGeoCodeResult', resp => {
+                console.warn('onGetReverseGeoCodeResult', 'onGetReverseGeoCodeResult')
                 resolve(resp);
             });
         });
     },
     geocode(city, addr) {
-        _BaiduMapModule.geocode(city, addr);
         return new Promise((resolve, reject) => {
-            DeviceEventEmitter.addListener('onGetGeoCodeResult', resp => {
+            try {
+               _BaiduMapModule.geocode(city, addr); 
+            }
+            catch(e) {
+                reject(e);
+                return;
+            }
+            DeviceEventEmitter.once('onGetGeoCodeResult', resp => {
                 resolve(resp);
             });
         });
