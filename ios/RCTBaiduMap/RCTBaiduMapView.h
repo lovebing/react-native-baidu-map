@@ -6,8 +6,21 @@
 //  Copyright © 2016 lovebing.org. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#ifndef RCTBaiduMapView_h
+#define RCTBaiduMapView_h
 
-@interface RCTBaiduMapView : NSObject
+
+#import "RCTViewManager.h"
+#import <BaiduMapAPI_Map/BMKMapView.h>
+#import <UIKit/UIKit.h>
+
+@interface RCTBaiduMapView : BMKMapView <BMKMapViewDelegate>
+
+@property (nonatomic, copy) RCTBubblingEventBlock onChange;
+
+-(void)setZoom:(float)zoom;
+-(void)setMapType:(int)mapType;
 
 @end
+
+#endif

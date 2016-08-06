@@ -1,8 +1,11 @@
 package org.lovebing.reactnative.baidumap;
 
+import android.app.Activity;
 import android.support.annotation.Nullable;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BaiduMapOptions;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
@@ -41,10 +44,12 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
     private static GeoCoder geoCoder;
 
     private ReactApplicationContext context;
+    private Activity activity;
 
-    public BaiduMapModule(ReactApplicationContext reactContext) {
+    public BaiduMapModule(ReactApplicationContext reactContext, Activity activity) {
         super(reactContext);
         context = reactContext;
+        this.activity = activity;
     }
 
     public String getName() {

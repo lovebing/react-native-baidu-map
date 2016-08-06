@@ -20,6 +20,7 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> {
         return REACT_CLASS;
     }
 
+
     public void initSDK(Context context) {
         SDKInitializer.initialize(context);
     }

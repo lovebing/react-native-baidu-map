@@ -18,17 +18,19 @@ import com.facebook.react.uimanager.ViewManager;
  * Created by lovebing on 4/17/16.
  */
 public class BaiduMapPackage implements ReactPackage {
+    private Activity activity;
     BaiduMapViewManager baiduMapViewManager;
 
     public BaiduMapPackage(Activity activity) {
-        this.baiduMapViewManager = new BaiduMapViewManager();
-        this.baiduMapViewManager.initSDK(activity.getApplicationContext());
+        this.activity = activity;
+        baiduMapViewManager = new BaiduMapViewManager();
+        baiduMapViewManager.initSDK(activity.getApplicationContext());
     }
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         return Arrays.<NativeModule>asList(
-                new BaiduMapModule(reactContext)
+                new BaiduMapModule(reactContext, activity)
         );
     }
 
@@ -36,7 +38,7 @@ public class BaiduMapPackage implements ReactPackage {
     public List<ViewManager> createViewManagers(
             ReactApplicationContext reactContext) {
         return Arrays.<ViewManager>asList(
-                new BaiduMapViewManager()
+                baiduMapViewManager
         );
     }
 

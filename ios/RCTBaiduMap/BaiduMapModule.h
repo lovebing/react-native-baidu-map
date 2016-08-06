@@ -18,7 +18,10 @@
 #import <BaiduMapAPI_Search/BMKSearchComponent.h>
 #import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 
-@interface BaiduMapModule : NSObject <RCTBridgeModule, BMKMapViewDelegate, BMKGeoCodeSearchDelegate>
+@interface BaiduMapModule : NSObject <RCTBridgeModule, BMKMapViewDelegate, BMKGeoCodeSearchDelegate> {
+    UINavigationController *navigationController;   
+    BMKMapManager* _mapManager; 
+}
 
 -(BMKGeoCodeSearch *)getGeocodesearch;
 

@@ -1,56 +1,103 @@
 import {
     requireNativeComponent,
-    PropTypes,
     View,
     NativeModules,
     DeviceEventEmitter
 } from 'react-native';
 
-const MapType = {
-    GENERAL: 1
+import React, {
+    Component,
+    PropTypes
+} from 'react';
+
+
+export const MapTypes = {
+    NORMAL: 1,
+    SATELLITE: 2
 };
 
-const _BaiduMapView = {
-    name: 'BaiduMapView',
-    propTypes: {
+export class MapView extends Component {
+    static propTypes = {
         ...View.propTypes,
-        showZoomControls: PropTypes.bool,
-        mapType: PropTypes.number
-    },
-    getDefaultProps () {
-        return {
-            showZoomControls: true,
-            mapType: MapType.GENERAL
+        zoomControlsVisible: PropTypes.bool,
+        mapType: PropTypes.number,
+        zoom: PropTypes.number,
+        onMapStatusChangeStart: PropTypes.func,
+        onMapStatusChange: PropTypes.func,
+        onMapStatusChangeFinish: PropTypes.func,
+        onMapLoaded: PropTypes.func,
+        onMapClick: PropTypes.func,
+        onMapDoubleClick: PropTypes.func,
+        onMarkerClick: PropTypes.func
+    };
+
+    static defaultProps = {
+        zoomControlsVisible: true,
+        mapType: MapTypes.NORMAL
+    };
+
+    constructor() {
+        super();
+    }
+
+    _onChange(event) {
+        if(typeof this.props[event.nativeEvent.type] === 'function') {
+            this.props[event.nativeEvent.type](event.nativeEvent.params);
         }
     }
-};
+
+    componentDidMount() {
+    }
+
+    componentWillUnmount() {
+    }
+
+    render() {
+        return <BaiduMapView {...this.props} onChange={this._onChange.bind(this)} />;
+    }
+}
+
+const BaiduMapView = requireNativeComponent('RCTBaiduMapView', MapView, {
+    nativeOnly: {onChange: true}
+});
+
+const _module = NativeModules.BaiduMapModule;
 
 
-const _BaiduMapModule = NativeModules.BaiduMapModule;
-
-export const BaiduMapView = requireNativeComponent('RCTBaiduMapView', _BaiduMapView);
-
-export const BaiduMapModule = {
+export const MapModule = {
     setMarker (lat, lng) {
-        _BaiduMapModule.setMarker(lat, lng);
+        _module.setMarker(lat, lng);
     },
     setMapType (type) {
-        _BaiduMapModule.setMapType(type);
+        _module.setMapType(type);
     },
     moveToCenter (lat, lng, zoom) {
-        _BaiduMapModule.moveToCenter(lat, lng, zoom);
+        _module.moveToCenter(lat, lng, zoom);
     },
     reverseGeoCode(lat, lng) {
         return new Promise((resolve, reject) => {
             try {
-                _BaiduMapModule.reverseGeoCode(lat, lng);
+                _module.reverseGeoCode(lat, lng);
             }
             catch(e) {
                 reject(e);
                 return;
             }
             DeviceEventEmitter.once('onGetReverseGeoCodeResult', resp => {
-                console.warn('onGetReverseGeoCodeResult', 'onGetReverseGeoCodeResult')
+                resolve(resp);
+            });
+        });
+    },
+    reverseGeoCodeGPS(lat, lng) {
+        return new Promise((resolve, reject) => {
+            try {
+                _module.reverseGeoCode(lat, lng);
+            }
+            catch(e) {
+                reject(e);
+                return;
+            }
+            DeviceEventEmitter.once('onGetReverseGeoCodeResult', resp => {
                 resolve(resp);
             });
         });
@@ -58,7 +105,7 @@ export const BaiduMapModule = {
     geocode(city, addr) {
         return new Promise((resolve, reject) => {
             try {
-               _BaiduMapModule.geocode(city, addr); 
+               _module.geocode(city, addr); 
             }
             catch(e) {
                 reject(e);

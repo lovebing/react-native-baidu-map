@@ -17,7 +17,36 @@ static BMKGeoCodeSearch *geoCodeSearch;
 
 RCT_EXPORT_MODULE();
 
+RCT_EXPORT_METHOD(initSDK:(NSString *)appKey) {
+    _mapManager = [[BMKMapManager alloc]init];
+    BOOL ret = [_mapManager start:appKey  generalDelegate:nil];
+    if (!ret) {
+        NSLog(@"manager start failed!");
+    }
+    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+    [window addSubview:navigationController.view];
+    [window makeKeyAndVisible];
+}
+
 RCT_EXPORT_METHOD(reverseGeoCode:(double)lat lng:(double)lng) {
+    
+    [self getGeocodesearch].delegate = self;
+    CLLocationCoordinate2D baiduCoor = CLLocationCoordinate2DMake(lat, lng);
+    
+    CLLocationCoordinate2D pt = (CLLocationCoordinate2D){baiduCoor.latitude, baiduCoor.longitude};
+    
+    BMKReverseGeoCodeOption *reverseGeoCodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
+    reverseGeoCodeSearchOption.reverseGeoPoint = pt;
+    
+    BOOL flag = [[self getGeocodesearch] reverseGeoCode:reverseGeoCodeSearchOption];
+    
+    if(flag) {
+        NSLog(@"逆向地理编码发送成功");
+    }
+    //[reverseGeoCodeSearchOption release];
+}
+
+RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     
     [self getGeocodesearch].delegate = self;
     CLLocationCoordinate2D baiduCoor = [self getBaiduCoor:lat lng:lng];
