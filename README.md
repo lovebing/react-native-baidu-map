@@ -1,7 +1,9 @@
-## react-native-baidu-map 百度地图 React Native 模块
+# [react-native-baidu-map] [![npm version](https://img.shields.io/npm/v/react-native-baidu-map.svg?style=flat)](https://www.npmjs.com/package/react-native-baidu-map)
 
-支持 React Native 0.30+
+百度地图 React Native 模块，支持 React Native 0.30+
 
+### 安装
+    npm install react-native-baidu-map
 ### 导入
 
 ####Android Studio
@@ -23,19 +25,21 @@
 - 其它一些注意事项可考虑百度百度LBS文档
 
 ##### AppDelegate.m 初始化
-  #import "RCTBaiduMapViewManager.h"
-  - (BOOL)application:(UIApplication *)application    didFinishLaunchingWithOptions:(NSDictionary     *)launchOptions
-  { 
-    [RCTBaiduMapViewManager initSDK:@"api key"];
-  }
+    #import "RCTBaiduMapViewManager.h"
+    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+    {
+        ...
+        [RCTBaiduMapViewManager initSDK:@"api key"];
+        ...
+    }
   
 ### 使用方法
 
-  import { MapView, MapTypes, MapModule } from 'react-native-baidu-map
+    import { MapView, MapTypes, MapModule } from 'react-native-baidu-map
 
 #### MapView 属性
-  {
-    zoomControlsVisible: PropTypes.bool (Android only),
+    {
+        zoomControlsVisible: PropTypes.bool (Android only),
         mapType: PropTypes.number,
         zoom: PropTypes.number,
         onMapStatusChangeStart: PropTypes.func (Android only),
@@ -47,10 +51,10 @@
         onMarkerClick: PropTypes.func
     }
 #### MapModule 方法
-  setMarker(double lat, double lng) (Android only)
-  setMapType(int mapType)  (Android only)
-  moveToCenter(double lat, double lng, float zoom)  (Android only)
-  Promise reverseGeoCode(double lat, double lng)
-  Promise reverseGeoCodeGPS(double lat, double lng)
-  Promise geocode(String city, String addr)
+    setMarker(double lat, double lng) (Android only)
+    setMapType(int mapType)  (Android only)
+    moveToCenter(double lat, double lng, float zoom)  (Android only)
+    Promise reverseGeoCode(double lat, double lng)
+    Promise reverseGeoCodeGPS(double lat, double lng)
+    Promise geocode(String city, String addr)
       
