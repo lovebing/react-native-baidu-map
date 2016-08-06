@@ -91,7 +91,7 @@ export const MapModule = {
     reverseGeoCodeGPS(lat, lng) {
         return new Promise((resolve, reject) => {
             try {
-                _module.reverseGeoCode(lat, lng);
+                _module.reverseGeoCodeGPS(lat, lng);
             }
             catch(e) {
                 reject(e);
