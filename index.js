@@ -71,6 +71,9 @@ export const MapModule = {
     setMapType (type) {
         _module.setMapType(type);
     },
+    setZoom (zoom) {
+        _module.setZoom(zoom);
+    },
     moveToCenter (lat, lng, zoom) {
         _module.moveToCenter(lat, lng, zoom);
     },
@@ -105,7 +108,7 @@ export const MapModule = {
     geocode(city, addr) {
         return new Promise((resolve, reject) => {
             try {
-               _module.geocode(city, addr); 
+               _module.geocode(city, addr);
             }
             catch(e) {
                 reject(e);
