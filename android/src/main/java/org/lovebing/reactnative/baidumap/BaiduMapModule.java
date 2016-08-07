@@ -63,6 +63,15 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void setZoom(int zoom) {
+        MapStatus mapStatus = new MapStatus.Builder()
+                .zoom(zoom)
+                .build();
+        MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
+        getMap().setMapStatus(mapStatusUpdate);
+    }
+    
+    @ReactMethod
     public void moveToCenter(double latitude, double longitude, int zoom) {
         LatLng point = new LatLng(latitude, longitude);
         MapStatus mapStatus = new MapStatus.Builder()
