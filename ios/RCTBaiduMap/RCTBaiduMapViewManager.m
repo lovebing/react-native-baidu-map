@@ -8,9 +8,9 @@
 
 #import "RCTBaiduMapViewManager.h"
 
-@implementation RCTBaiduMapViewManager {
-    RCTBaiduMapView* _mapView;
-}
+static RCTBaiduMapView* _mapView;
+
+@implementation RCTBaiduMapViewManager;
 
 RCT_EXPORT_MODULE(RCTBaiduMapView)
 RCT_EXPORT_VIEW_PROPERTY(mapType, int)
@@ -122,4 +122,9 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
     }
     _mapView.onChange(params);
 }
+
++(RCTBaiduMapView *) getBaiduMapView {
+    return _mapView;
+}
+
 @end

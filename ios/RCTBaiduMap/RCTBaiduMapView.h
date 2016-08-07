@@ -20,6 +20,7 @@
 
 -(void)setZoom:(float)zoom;
 -(void)setMapType:(int)mapType;
+-(void)setCenterLatLng:(NSDictionary *)LatLngObj;
 
 @end
 

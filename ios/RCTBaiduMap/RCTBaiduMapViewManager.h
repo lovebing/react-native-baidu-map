@@ -17,6 +17,8 @@
 
 -(void)sendEvent:(NSDictionary *) params;
 
++(RCTBaiduMapView *) getBaiduMapView;
+
 @end
 
 #endif /* RCTBaiduMapViewManager_h */

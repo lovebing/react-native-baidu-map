@@ -13,7 +13,7 @@
 }
 
 -(void)setZoom:(float)zoom {
-    [_mapView setZoomLevel:zoom];
+    _mapView.zoomLevel = zoom;
 }
 
 -(void)setMapType:(int)mapType {
@@ -30,14 +30,20 @@
             type = BMKMapTypeSatellite;
             break;
     }
-    [_mapView setMapType:type];
+    _mapView.mapType = type;
+}
+
+-(void)setCenterLatLng:(NSDictionary *)LatLngObj {
+    double lat = [RCTConvert double:LatLngObj[@"lat"]];
+    double lng = [RCTConvert double:LatLngObj[@"lng"]];
+    CLLocationCoordinate2D point = CLLocationCoordinate2DMake(lat, lng);
+    _mapView.centerCoordinate = point;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
         super.backgroundColor = [UIColor clearColor];
         _mapView = [[BMKMapView alloc] initWithFrame:self.bounds];
-        //_mapView.delegate = self;
         [self addSubview:_mapView];
     }
     return self;
@@ -48,7 +54,6 @@
     if ((self = [super init])) {
         super.backgroundColor = [UIColor clearColor];
         _mapView = [[BMKMapView alloc] init];
-        _mapView.delegate = self;
         [self addSubview:_mapView];
     }
     return self;

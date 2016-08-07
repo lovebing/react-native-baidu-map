@@ -17,15 +17,25 @@ static BMKGeoCodeSearch *geoCodeSearch;
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(initSDK:(NSString *)appKey) {
-    _mapManager = [[BMKMapManager alloc]init];
-    BOOL ret = [_mapManager start:appKey  generalDelegate:nil];
-    if (!ret) {
-        NSLog(@"manager start failed!");
-    }
-    UIWindow *window = [UIApplication sharedApplication].delegate.window;
-    [window addSubview:navigationController.view];
-    [window makeKeyAndVisible];
+RCT_EXPORT_METHOD(setMarker:(double)lat lng:(double)lng) {
+    
+}
+
+RCT_EXPORT_METHOD(setMapType:(int)type) {
+    [[self getBaiduMapView] setMapType:type];
+}
+
+RCT_EXPORT_METHOD(setZoom:(float)zoom) {
+    [[self getBaiduMapView] setZoom:zoom];
+}
+
+RCT_EXPORT_METHOD(moveToCenter:(double)lat lng:(double)lng zoom:(double)zoom) {
+    NSDictionary* center = @{
+                             @"lat": @(lat),
+                             @"lng": @(lng)
+                             };
+    [[self getBaiduMapView] setCenterLatLng:center];
+    [[self getBaiduMapView] setZoom:zoom];
 }
 
 RCT_EXPORT_METHOD(reverseGeoCode:(double)lat lng:(double)lng) {
@@ -122,4 +132,7 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     return baiduCoor;
 }
 
+-(RCTBaiduMapView *) getBaiduMapView {
+    return [RCTBaiduMapViewManager getBaiduMapView];
+}
 @end

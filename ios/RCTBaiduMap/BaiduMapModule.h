@@ -18,6 +18,8 @@
 #import <BaiduMapAPI_Search/BMKSearchComponent.h>
 #import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 
+#import "RCTBaiduMapViewManager.h"
+
 @interface BaiduMapModule : NSObject <RCTBridgeModule, BMKMapViewDelegate, BMKGeoCodeSearchDelegate> {
     UINavigationController *navigationController;   
     BMKMapManager* _mapManager; 
@@ -30,6 +32,8 @@
 -(NSMutableDictionary *)getEmptyBody;
 
 -(CLLocationCoordinate2D)getBaiduCoor:(double)lat lng:(double)lng;
+
+-(RCTBaiduMapView *) getBaiduMapView;
 
 @end
 
