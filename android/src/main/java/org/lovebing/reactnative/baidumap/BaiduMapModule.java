@@ -1,11 +1,8 @@
 package org.lovebing.reactnative.baidumap;
 
-import android.app.Activity;
 import android.support.annotation.Nullable;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BaiduMapOptions;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
@@ -39,17 +36,16 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
  * Created by lovebing on 1/30/2016.
  */
 public class BaiduMapModule extends ReactContextBaseJavaModule {
+
     private static final String REACT_CLASS = "BaiduMapModule";
 
     private static GeoCoder geoCoder;
 
     private ReactApplicationContext context;
-    private Activity activity;
 
-    public BaiduMapModule(ReactApplicationContext reactContext, Activity activity) {
+    public BaiduMapModule(ReactApplicationContext reactContext) {
         super(reactContext);
         context = reactContext;
-        this.activity = activity;
     }
 
     public String getName() {
@@ -96,7 +92,27 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void reverseGeoCode(double lat, double lng) {
         getGeoCoder().reverseGeoCode(new ReverseGeoCodeOption()
+                .location(new LatLng(lat, lng)));
+    }
+
+    @ReactMethod
+    public void reverseGeoCodeGPS(double lat, double lng) {
+        getGeoCoder().reverseGeoCode(new ReverseGeoCodeOption()
                 .location(getBaiduCoorFromGPSCoor(new LatLng(lat, lng))));
+    }
+
+    /**
+     *
+     * @param sourceLatLng
+     * @return
+     */
+    protected LatLng getBaiduCoorFromGPSCoor(LatLng sourceLatLng) {
+        CoordinateConverter converter = new CoordinateConverter();
+        converter.from(CoordType.GPS);
+        converter.coord(sourceLatLng);
+        LatLng desLatLng = converter.convert();
+        return desLatLng;
+
     }
 
 
@@ -144,22 +160,9 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
     protected MapView getMapView() {
         return BaiduMapViewManager.getMapView();
     }
+
     protected BaiduMap getMap() {
         return BaiduMapViewManager.getMapView().getMap();
-    }
-
-    /**
-     *
-     * @param sourceLatLng
-     * @return
-     */
-    protected LatLng getBaiduCoorFromGPSCoor(LatLng sourceLatLng) {
-        CoordinateConverter converter = new CoordinateConverter();
-        converter.from(CoordType.GPS);
-        converter.coord(sourceLatLng);
-        LatLng desLatLng = converter.convert();
-        return desLatLng;
-
     }
 
     /**

@@ -1,6 +1,7 @@
 package org.lovebing.reactnative.baidumap;
 
 import android.app.Activity;
+import android.content.Context;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,19 +19,21 @@ import com.facebook.react.uimanager.ViewManager;
  * Created by lovebing on 4/17/16.
  */
 public class BaiduMapPackage implements ReactPackage {
-    private Activity activity;
+
+    private Context mContext;
+
     BaiduMapViewManager baiduMapViewManager;
 
-    public BaiduMapPackage(Activity activity) {
-        this.activity = activity;
+    public BaiduMapPackage(Context context) {
+        this.mContext = context;
         baiduMapViewManager = new BaiduMapViewManager();
-        baiduMapViewManager.initSDK(activity.getApplicationContext());
+        baiduMapViewManager.initSDK(context);
     }
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         return Arrays.<NativeModule>asList(
-                new BaiduMapModule(reactContext, activity)
+                new BaiduMapModule(reactContext)
         );
     }
 
