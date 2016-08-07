@@ -1,8 +1,10 @@
-/node_modules/
-/android/.idea/
-/android/gradle/
-/android/gradlew
-/android/gradlew.bat
-/android/local.properties
+node_modules/
+android/build/
+android/.idea/
+android/gradle/
+android/gradlew
+android/gradlew.bat
+android/local.properties
 .DS_Store
+.idea
 npm-debug.log

@@ -12,7 +12,7 @@
 
 - MainApplication`new BaiduMapPackage(getApplicationContext())`
 - AndroidMainifest.xml `<meta-data
-            android:name="com.amap.api.v2.apikey" android:value="xx"/>`
+            android:name="com.baidu.lbsapi.API_KEY" android:value="xx"/>`
 
 #### Xcode
 - Project navigator->Libraries->Add Files to 选择 react-native-baidu-map/ios/RCTBaiduMap.xcodeproj
@@ -50,9 +50,9 @@
         onMarkerClick: PropTypes.func
     }
 #### MapModule 方法
-    setMarker(double lat, double lng) (Android only)
-    setMapType(int mapType)  (Android only)
-    moveToCenter(double lat, double lng, float zoom)  (Android only)
+    setMarker(double lat, double lng)
+    setMapType(int mapType)
+    moveToCenter(double lat, double lng, float zoom)
     Promise reverseGeoCode(double lat, double lng)
     Promise reverseGeoCodeGPS(double lat, double lng)
     Promise geocode(String city, String addr)
