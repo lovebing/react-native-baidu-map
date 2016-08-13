@@ -1,7 +1,12 @@
 package org.lovebing.reactnative.baidumap;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -42,6 +47,8 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
     private static GeoCoder geoCoder;
 
     private ReactApplicationContext context;
+
+    private LocationClient locationClient;
 
     public BaiduMapModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -99,6 +106,34 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
     public void reverseGeoCodeGPS(double lat, double lng) {
         getGeoCoder().reverseGeoCode(new ReverseGeoCodeOption()
                 .location(getBaiduCoorFromGPSCoor(new LatLng(lat, lng))));
+    }
+
+    @ReactMethod
+    public void getCurrentPosition() {
+        if(locationClient == null) {
+            initLocationClient();
+        }
+        locationClient.start();
+    }
+
+    private void initLocationClient() {
+        LocationClientOption option = new LocationClientOption();
+        option.setCoorType("bd09ll");
+
+        locationClient = new LocationClient(context.getApplicationContext());
+        locationClient.setLocOption(option);
+        Log.i("locationClient", "locationClient");
+        locationClient.registerLocationListener(new BDLocationListener() {
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                WritableMap params = Arguments.createMap();
+                params.putDouble("latitude", bdLocation.getLatitude());
+                params.putDouble("longitude", bdLocation.getLongitude());
+                Log.i("onReceiveLocation", "onGetCurrentLocationPosition");
+                sendEvent("onGetCurrentLocationPosition", params);
+                locationClient.stop();
+            }
+        });
     }
 
     /**

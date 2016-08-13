@@ -64,6 +64,17 @@ export default class BaiduMapDemo extends Component {
             MapModule.setMapType(MapTypes.SATELLITE);
           }} />
         </View>
+
+        <Buttton label="定位" onPress={() => {
+          MapModule.getCurrentPosition()
+            .then(data => {
+              MapModule.moveToCenter(data.latitude, data.longitude, 15);
+              MapModule.setMarker(data.latitude, data.longitude);
+            })
+            .catch(e =>{
+              console.warn(e)
+            })
+        }} />
       </View>
     );
   }

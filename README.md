@@ -55,5 +55,6 @@
     moveToCenter(double lat, double lng, float zoom)
     Promise reverseGeoCode(double lat, double lng)
     Promise reverseGeoCodeGPS(double lat, double lng)
-    Promise geocode(String city, String addr)
+    Promise geocode(String city, String addr),
+    Promise getCurrentPosition()
       

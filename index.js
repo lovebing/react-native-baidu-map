@@ -102,6 +102,20 @@ export const MapModule = {
             });
         });
     },
+    getCurrentPosition() {
+        return new Promise((resolve, reject) => {
+            try {
+                _module.getCurrentPosition();
+            }
+            catch(e) {
+                reject(e);
+                return;
+            }
+            DeviceEventEmitter.once('onGetCurrentLocationPosition', resp => {
+                resolve(resp);
+            });
+        });
+    },
     geocode(city, addr) {
         return new Promise((resolve, reject) => {
             try {

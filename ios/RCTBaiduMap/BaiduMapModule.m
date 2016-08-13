@@ -14,6 +14,7 @@
 @synthesize bridge = _bridge;
 
 static BMKGeoCodeSearch *geoCodeSearch;
+static BMKLocationService *locationService;
 
 RCT_EXPORT_MODULE();
 
@@ -74,6 +75,14 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     //[reverseGeoCodeSearchOption release];
 }
 
+RCT_EXPORT_METHOD(getCurrentPosition) {
+    [[self getLocationService] startUserLocationService];
+    if(locationService.userLocation != nil) {
+        [self onGetCurrentLocationPosition:locationService.userLocation];
+    }
+    
+}
+
 -(BMKGeoCodeSearch *)getGeocodesearch{
     if(geoCodeSearch == nil) {
         geoCodeSearch = [[BMKGeoCodeSearch alloc]init];
@@ -131,8 +140,52 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     
     return baiduCoor;
 }
+//处理方向变更信息
+-(void)didUpdateUserHeading:(BMKUserLocation *)userLocation {
+    NSLog(@"didUpdateUserHeading");
+}
+
+//处理位置坐标更新
+-(void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation {
+    NSLog(@"didUpdateBMKUserLocation");
+    [self onGetCurrentLocationPosition:userLocation];
+}
+-(void)didFailToLocateUserWithError:(NSError *)error {
+    NSLog(@"didFailToLocateUserWithError");
+}
+- (void)willStartLocatingUser {
+    NSLog(@"willStartLocatingUser");
+}
+
+-(void)onGetCurrentLocationPosition:(BMKUserLocation *)userLocation {
+    if(userLocation.location != nil) {
+        NSLog(@"send onGetCurrentLocationPosition");
+        NSMutableDictionary *body = [self getEmptyBody];
+        NSString *latitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.latitude];
+        NSString *longitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.longitude];
+        body[@"latitude"] = latitude;
+        body[@"longitude"] = longitude;
+        [self sendEvent:@"onGetCurrentLocationPosition" body:body];
+        
+        [[self getLocationService] stopUserLocationService];
+        [self getLocationService].delegate = nil;
+    }
+}
 
 -(RCTBaiduMapView *) getBaiduMapView {
     return [RCTBaiduMapViewManager getBaiduMapView];
+}
+
+-(BMKLocationService *) getLocationService {
+    NSLog(@"getLocationService");
+    if(locationService == nil) {
+        NSLog(@"BMKLocationService init");
+        locationService = [[BMKLocationService alloc]init];
+    }
+    if(locationService.delegate != self) {
+        NSLog(@"locationService delegate");
+        locationService.delegate = self;
+    }
+    return locationService;
 }
 @end
