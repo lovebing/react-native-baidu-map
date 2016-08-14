@@ -122,6 +122,7 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
         if(locationClient == null) {
             initLocationClient();
         }
+        Log.i("getCurrentPosition", "getCurrentPosition");
         locationClient.start();
     }
 
