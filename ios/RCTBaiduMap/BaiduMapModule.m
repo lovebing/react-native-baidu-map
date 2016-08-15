@@ -9,7 +9,9 @@
 
 #import "BaiduMapModule.h"
 
-@implementation BaiduMapModule
+@implementation BaiduMapModule {
+    BMKPointAnnotation* _annotation;
+}
 
 @synthesize bridge = _bridge;
 
@@ -19,12 +21,18 @@ static BMKLocationService *locationService;
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(setMarker:(double)lat lng:(double)lng) {
-    BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
+    if(_annotation == nil) {
+      _annotation = [[BMKPointAnnotation alloc]init];
+    }
+    else {
+        [[self getBaiduMapView] removeAnnotation:_annotation];
+    }
+
     CLLocationCoordinate2D coor;
     coor.latitude = lat;
     coor.longitude = lng;
-    annotation.coordinate = coor;
-    [[self getBaiduMapView] addAnnotation:annotation];
+    _annotation.coordinate = coor;
+    [[self getBaiduMapView] addAnnotation:_annotation];
 }
 
 RCT_EXPORT_METHOD(setMapType:(int)type) {
