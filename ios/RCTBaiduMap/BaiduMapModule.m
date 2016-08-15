@@ -19,7 +19,12 @@ static BMKLocationService *locationService;
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(setMarker:(double)lat lng:(double)lng) {
-    
+    BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
+    CLLocationCoordinate2D coor;
+    coor.latitude = lat;
+    coor.longitude = lng;
+    annotation.coordinate = coor;
+    [[self getBaiduMapView] addAnnotation:annotation];
 }
 
 RCT_EXPORT_METHOD(setMapType:(int)type) {
@@ -27,16 +32,30 @@ RCT_EXPORT_METHOD(setMapType:(int)type) {
 }
 
 RCT_EXPORT_METHOD(setZoom:(float)zoom) {
-    [[self getBaiduMapView] setZoom:zoom];
+    [[self getBaiduMapView] setZoomLevel:zoom];
 }
 
-RCT_EXPORT_METHOD(moveToCenter:(double)lat lng:(double)lng zoom:(double)zoom) {
+RCT_EXPORT_METHOD(getBaiduCoorFromGPSCoor:(double)lat lng:(double)lng
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    NSLog(@"getBaiduCoorFromGPSCoor");
+    CLLocationCoordinate2D baiduCoor = [self getBaiduCoor:lat lng:lng];
+    
+    NSDictionary* coor = @{
+                             @"latitude": @(baiduCoor.latitude),
+                             @"longitude": @(baiduCoor.longitude)
+                             };
+    
+    resolve(coor);
+}
+
+RCT_EXPORT_METHOD(moveToCenter:(double)lat lng:(double)lng zoom:(float)zoom) {
     NSDictionary* center = @{
                              @"lat": @(lat),
                              @"lng": @(lng)
                              };
     [[self getBaiduMapView] setCenterLatLng:center];
-    [[self getBaiduMapView] setZoom:zoom];
+    [[self getBaiduMapView] setZoomLevel:zoom];
 }
 
 RCT_EXPORT_METHOD(reverseGeoCode:(double)lat lng:(double)lng) {
@@ -73,14 +92,6 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
         NSLog(@"逆向地理编码发送成功");
     }
     //[reverseGeoCodeSearchOption release];
-}
-
-RCT_EXPORT_METHOD(getCurrentPosition) {
-    [[self getLocationService] startUserLocationService];
-    if(locationService.userLocation != nil) {
-        [self onGetCurrentLocationPosition:locationService.userLocation];
-    }
-    
 }
 
 -(BMKGeoCodeSearch *)getGeocodesearch{
@@ -140,52 +151,9 @@ RCT_EXPORT_METHOD(getCurrentPosition) {
     
     return baiduCoor;
 }
-//处理方向变更信息
--(void)didUpdateUserHeading:(BMKUserLocation *)userLocation {
-    NSLog(@"didUpdateUserHeading");
-}
-
-//处理位置坐标更新
--(void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation {
-    NSLog(@"didUpdateBMKUserLocation");
-    [self onGetCurrentLocationPosition:userLocation];
-}
--(void)didFailToLocateUserWithError:(NSError *)error {
-    NSLog(@"didFailToLocateUserWithError");
-}
-- (void)willStartLocatingUser {
-    NSLog(@"willStartLocatingUser");
-}
-
--(void)onGetCurrentLocationPosition:(BMKUserLocation *)userLocation {
-    if(userLocation.location != nil) {
-        NSLog(@"send onGetCurrentLocationPosition");
-        NSMutableDictionary *body = [self getEmptyBody];
-        NSString *latitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.latitude];
-        NSString *longitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.longitude];
-        body[@"latitude"] = latitude;
-        body[@"longitude"] = longitude;
-        [self sendEvent:@"onGetCurrentLocationPosition" body:body];
-        
-        [[self getLocationService] stopUserLocationService];
-        [self getLocationService].delegate = nil;
-    }
-}
 
 -(RCTBaiduMapView *) getBaiduMapView {
     return [RCTBaiduMapViewManager getBaiduMapView];
 }
 
--(BMKLocationService *) getLocationService {
-    NSLog(@"getLocationService");
-    if(locationService == nil) {
-        NSLog(@"BMKLocationService init");
-        locationService = [[BMKLocationService alloc]init];
-    }
-    if(locationService.delegate != self) {
-        NSLog(@"locationService delegate");
-        locationService.delegate = self;
-    }
-    return locationService;
-}
 @end

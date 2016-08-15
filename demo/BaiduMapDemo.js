@@ -47,13 +47,24 @@ class Buttton extends Component {
 };
 
 export default class BaiduMapDemo extends Component {
+
+  constructor() {
+    super();
+
+    this.zoom = 10;
+  }
+
+  componentDidMount() {
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <MapView 
+          zoom={this.zoom}
           style={styles.map}
           onMapClick={(e) => {
-            console.warn(JSON.stringify(e));
+            
           }}
         />
         <View style={styles.row}>
@@ -75,6 +86,21 @@ export default class BaiduMapDemo extends Component {
               console.warn(e)
             })
         }} />
+        <View style={styles.row}>
+          <Buttton label="放大" onPress={() => {
+            this.zoom++;
+            MapModule.setZoom(this.zoom);
+          }} />
+          <Buttton label="缩小" onPress={() => {
+            if(this.zoom > 0) {
+              this.zoom--;
+              MapModule.setZoom(this.zoom);
+            }
+            
+          }} />
+        </View>
+
+
       </View>
     );
   }

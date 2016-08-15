@@ -21,7 +21,7 @@
 
 #import "RCTBaiduMapViewManager.h"
 
-@interface BaiduMapModule : NSObject <RCTBridgeModule, BMKMapViewDelegate, BMKGeoCodeSearchDelegate, BMKLocationServiceDelegate> {
+@interface BaiduMapModule : NSObject <RCTBridgeModule, BMKMapViewDelegate, BMKGeoCodeSearchDelegate> {
     UINavigationController *navigationController;   
     BMKMapManager* _mapManager; 
 }
@@ -35,9 +35,6 @@
 -(CLLocationCoordinate2D)getBaiduCoor:(double)lat lng:(double)lng;
 
 -(RCTBaiduMapView *) getBaiduMapView;
--(BMKLocationService *) getLocationService;
-
--(void)onGetCurrentLocationPosition:(BMKUserLocation *)userLocation;
 @end
 
 #endif /* BaiduMapModule_h */

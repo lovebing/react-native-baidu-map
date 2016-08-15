@@ -30,22 +30,13 @@ RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock)
 
 - (UIView *)view {
     NSLog(@"RCTBaiduMapView");
+    if(_mapView != nil) {
+        [_mapView removeFromSuperview];
+    }
     _mapView = [[RCTBaiduMapView alloc] init];
     _mapView.delegate = self;
     return _mapView;
 }
-
-
-
--(void)viewWillAppear:(BOOL)animated {
-    [_mapView viewWillAppear];
-    _mapView.delegate = self;
-}
--(void)viewWillDisappear:(BOOL)animated {
-    [_mapView viewWillDisappear];
-    _mapView.delegate = nil;
-}
-
 
 -(void)mapview:(BMKMapView *)mapView
  onDoubleClick:(CLLocationCoordinate2D)coordinate {
@@ -96,6 +87,16 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
                                     }
                             };
     [self sendEvent:event];
+}
+
+- (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id <BMKAnnotation>)annotation {
+    if ([annotation isKindOfClass:[BMKPointAnnotation class]]) {
+        BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"myAnnotation"];
+        newAnnotationView.pinColor = BMKPinAnnotationColorPurple;
+        newAnnotationView.animatesDrop = YES;
+        return newAnnotationView;
+    }
+    return nil;
 }
 
 -(void)mapStatusDidChanged: (BMKMapView *)mapView	 {
