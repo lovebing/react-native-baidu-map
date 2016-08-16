@@ -10,6 +10,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -50,6 +51,8 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
 
     private LocationClient locationClient;
 
+    private Marker marker;
+
     public BaiduMapModule(ReactApplicationContext reactContext) {
         super(reactContext);
         context = reactContext;
@@ -61,12 +64,15 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setMarker(double latitude, double longitude) {
+        if(marker != null) {
+            marker.remove();
+        }
         LatLng point = new LatLng(latitude, longitude);
         BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.icon_gcoding);
         OverlayOptions option = new MarkerOptions()
                 .icon(bitmap)
                 .position(point);
-        getMap().addOverlay(option);
+        marker = (Marker)getMap().addOverlay(option);
     }
 
     @ReactMethod

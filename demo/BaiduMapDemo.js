@@ -61,12 +61,16 @@ export default class BaiduMapDemo extends Component {
     return (
       <View style={styles.container}>
         <MapView 
+          childrenPoints={[[330, 50], [580, 200]]}
           zoom={this.zoom}
           style={styles.map}
           onMapClick={(e) => {
-            
           }}
-        />
+        >
+          <Text style={{color: 'red', backgroundColor: null,  width: Dimensions.get('window').width}}>ViewGroup is not allowed (Android)</Text>
+          <Text style={{color: 'black', width: Dimensions.get('window').width}}>This is not a good idea to add children view to Baidu MapView</Text>
+        </MapView>
+
         <View style={styles.row}>
           <Buttton label="普通地图" onPress={() => {
             MapModule.setMapType(MapTypes.NORMAL);
@@ -108,7 +112,8 @@ export default class BaiduMapDemo extends Component {
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   },
   btn: {
     height: 48,

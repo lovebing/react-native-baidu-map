@@ -23,6 +23,7 @@ export class MapView extends Component {
     zoomControlsVisible: PropTypes.bool,
     mapType: PropTypes.number,
     zoom: PropTypes.number,
+    childrenPoints: PropTypes.array,
     onMapStatusChangeStart: PropTypes.func,
     onMapStatusChange: PropTypes.func,
     onMapStatusChangeFinish: PropTypes.func,
@@ -34,7 +35,8 @@ export class MapView extends Component {
 
   static defaultProps = {
     zoomControlsVisible: true,
-    mapType: MapTypes.NORMAL
+    mapType: MapTypes.NORMAL,
+    childrenPoints: []
   };
 
   constructor() {
