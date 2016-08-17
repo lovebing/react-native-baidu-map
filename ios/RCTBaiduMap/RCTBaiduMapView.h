@@ -12,6 +12,8 @@
 
 #import "RCTViewManager.h"
 #import <BaiduMapAPI_Map/BMKMapView.h>
+#import <BaiduMapAPI_Map/BMKPinAnnotationView.h>
+#import <BaiduMapAPI_Map/BMKPointAnnotation.h>
 #import <UIKit/UIKit.h>
 
 @interface RCTBaiduMapView : BMKMapView <BMKMapViewDelegate>
@@ -19,7 +21,7 @@
 @property (nonatomic, copy) RCTBubblingEventBlock onChange;
 
 -(void)setZoom:(float)zoom;
--(void)setMapType:(int)mapType;
+-(void)setCenterLatLng:(NSDictionary *)LatLngObj;
 
 @end
 

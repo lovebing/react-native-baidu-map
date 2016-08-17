@@ -9,23 +9,61 @@
 
 #import "BaiduMapModule.h"
 
-@implementation BaiduMapModule
+@implementation BaiduMapModule {
+    BMKPointAnnotation* _annotation;
+}
 
 @synthesize bridge = _bridge;
 
 static BMKGeoCodeSearch *geoCodeSearch;
+static BMKLocationService *locationService;
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(initSDK:(NSString *)appKey) {
-    _mapManager = [[BMKMapManager alloc]init];
-    BOOL ret = [_mapManager start:appKey  generalDelegate:nil];
-    if (!ret) {
-        NSLog(@"manager start failed!");
+RCT_EXPORT_METHOD(setMarker:(double)lat lng:(double)lng) {
+    if(_annotation == nil) {
+      _annotation = [[BMKPointAnnotation alloc]init];
     }
-    UIWindow *window = [UIApplication sharedApplication].delegate.window;
-    [window addSubview:navigationController.view];
-    [window makeKeyAndVisible];
+    else {
+        [[self getBaiduMapView] removeAnnotation:_annotation];
+    }
+
+    CLLocationCoordinate2D coor;
+    coor.latitude = lat;
+    coor.longitude = lng;
+    _annotation.coordinate = coor;
+    [[self getBaiduMapView] addAnnotation:_annotation];
+}
+
+RCT_EXPORT_METHOD(setMapType:(int)type) {
+    [[self getBaiduMapView] setMapType:type];
+}
+
+RCT_EXPORT_METHOD(setZoom:(float)zoom) {
+    [[self getBaiduMapView] setZoomLevel:zoom];
+}
+
+RCT_EXPORT_METHOD(getBaiduCoorFromGPSCoor:(double)lat lng:(double)lng
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    NSLog(@"getBaiduCoorFromGPSCoor");
+    CLLocationCoordinate2D baiduCoor = [self getBaiduCoor:lat lng:lng];
+    
+    NSDictionary* coor = @{
+                             @"latitude": @(baiduCoor.latitude),
+                             @"longitude": @(baiduCoor.longitude)
+                             };
+    
+    resolve(coor);
+}
+
+RCT_EXPORT_METHOD(moveToCenter:(double)lat lng:(double)lng zoom:(float)zoom) {
+    NSDictionary* center = @{
+                             @"lat": @(lat),
+                             @"lng": @(lng)
+                             };
+    [[self getBaiduMapView] setCenterLatLng:center];
+    [[self getBaiduMapView] setZoomLevel:zoom];
 }
 
 RCT_EXPORT_METHOD(reverseGeoCode:(double)lat lng:(double)lng) {
@@ -120,6 +158,10 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     CLLocationCoordinate2D baiduCoor = BMKCoorDictionaryDecode(testdic);
     
     return baiduCoor;
+}
+
+-(RCTBaiduMapView *) getBaiduMapView {
+    return [RCTBaiduMapViewManager getBaiduMapView];
 }
 
 @end

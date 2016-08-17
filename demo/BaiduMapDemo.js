@@ -47,15 +47,30 @@ class Buttton extends Component {
 };
 
 export default class BaiduMapDemo extends Component {
+
+  constructor() {
+    super();
+
+    this.zoom = 10;
+  }
+
+  componentDidMount() {
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <MapView 
+          childrenPoints={[[330, 50], [580, 200]]}
+          zoom={this.zoom}
           style={styles.map}
           onMapClick={(e) => {
-            console.warn(JSON.stringify(e));
           }}
-        />
+        >
+          <Text style={{color: 'red', backgroundColor: null,  width: Dimensions.get('window').width}}>ViewGroup is not allowed (Android)</Text>
+          <Text style={{color: 'black', width: Dimensions.get('window').width}}>This is not a good idea to add children view to Baidu MapView</Text>
+        </MapView>
+
         <View style={styles.row}>
           <Buttton label="普通地图" onPress={() => {
             MapModule.setMapType(MapTypes.NORMAL);
@@ -64,6 +79,32 @@ export default class BaiduMapDemo extends Component {
             MapModule.setMapType(MapTypes.SATELLITE);
           }} />
         </View>
+
+        <Buttton label="定位" onPress={() => {
+          MapModule.getCurrentPosition()
+            .then(data => {
+              MapModule.moveToCenter(data.latitude, data.longitude, 15);
+              MapModule.setMarker(data.latitude, data.longitude);
+            })
+            .catch(e =>{
+              console.warn(e)
+            })
+        }} />
+        <View style={styles.row}>
+          <Buttton label="放大" onPress={() => {
+            this.zoom++;
+            MapModule.setZoom(this.zoom);
+          }} />
+          <Buttton label="缩小" onPress={() => {
+            if(this.zoom > 0) {
+              this.zoom--;
+              MapModule.setZoom(this.zoom);
+            }
+            
+          }} />
+        </View>
+
+
       </View>
     );
   }
@@ -71,7 +112,8 @@ export default class BaiduMapDemo extends Component {
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   },
   btn: {
     height: 48,

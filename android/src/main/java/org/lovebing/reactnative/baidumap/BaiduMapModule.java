@@ -1,10 +1,16 @@
 package org.lovebing.reactnative.baidumap;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -43,6 +49,10 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
 
     private ReactApplicationContext context;
 
+    private LocationClient locationClient;
+
+    private Marker marker;
+
     public BaiduMapModule(ReactApplicationContext reactContext) {
         super(reactContext);
         context = reactContext;
@@ -54,12 +64,15 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setMarker(double latitude, double longitude) {
+        if(marker != null) {
+            marker.remove();
+        }
         LatLng point = new LatLng(latitude, longitude);
         BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.icon_gcoding);
         OverlayOptions option = new MarkerOptions()
                 .icon(bitmap)
                 .position(point);
-        getMap().addOverlay(option);
+        marker = (Marker)getMap().addOverlay(option);
     }
 
     @ReactMethod
@@ -108,6 +121,35 @@ public class BaiduMapModule extends ReactContextBaseJavaModule {
     public void reverseGeoCodeGPS(double lat, double lng) {
         getGeoCoder().reverseGeoCode(new ReverseGeoCodeOption()
                 .location(getBaiduCoorFromGPSCoor(new LatLng(lat, lng))));
+    }
+
+    @ReactMethod
+    public void getCurrentPosition() {
+        if(locationClient == null) {
+            initLocationClient();
+        }
+        Log.i("getCurrentPosition", "getCurrentPosition");
+        locationClient.start();
+    }
+
+    private void initLocationClient() {
+        LocationClientOption option = new LocationClientOption();
+        option.setCoorType("bd09ll");
+
+        locationClient = new LocationClient(context.getApplicationContext());
+        locationClient.setLocOption(option);
+        Log.i("locationClient", "locationClient");
+        locationClient.registerLocationListener(new BDLocationListener() {
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                WritableMap params = Arguments.createMap();
+                params.putDouble("latitude", bdLocation.getLatitude());
+                params.putDouble("longitude", bdLocation.getLongitude());
+                Log.i("onReceiveLocation", "onGetCurrentLocationPosition");
+                sendEvent("onGetCurrentLocationPosition", params);
+                locationClient.stop();
+            }
+        });
     }
 
     /**

@@ -1,8 +1,12 @@
 package org.lovebing.reactnative.baidumap;
 
 import android.content.Context;
+import android.graphics.Point;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapPoi;
@@ -11,25 +15,30 @@ import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.MapViewLayoutParams;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
 /**
  * Created by lovebing on 12/20/2015.
  */
-public class BaiduMapViewManager extends SimpleViewManager<MapView> {
+public class BaiduMapViewManager extends ViewGroupManager<MapView> {
 
     private static final String REACT_CLASS = "RCTBaiduMapView";
 
     private static MapView mMapView;
     private ThemedReactContext mReactContext;
+
+    private ReadableArray childrenPoints;
 
     public String getName() {
         return REACT_CLASS;
@@ -52,6 +61,24 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> {
         return mMapView;
     }
 
+    @Override
+    public void addView(MapView parent, View child, int index) {
+        if(childrenPoints != null) {
+            Point point = new Point();
+            ReadableArray item = childrenPoints.getArray(index);
+            if(item != null) {
+                point.set(item.getInt(0), item.getInt(1));
+                MapViewLayoutParams mapViewLayoutParams = new MapViewLayoutParams
+                        .Builder()
+                        .layoutMode(MapViewLayoutParams.ELayoutMode.absoluteMode)
+                        .point(point)
+                        .build();
+                parent.addView(child, mapViewLayoutParams);
+            }
+        }
+
+    }
+
     @ReactProp(name = "zoomControlsVisible")
     public void setZoomControlsVisible(MapView mapView, boolean zoomControlsVisible) {
         mapView.showZoomControls(zoomControlsVisible);
@@ -67,6 +94,11 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> {
         MapStatus mapStatus = new MapStatus.Builder().zoom(zoom).build();
         MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
         mapView.getMap().setMapStatus(mapStatusUpdate);
+    }
+
+    @ReactProp(name = "childrenPoints")
+    public void setChildrenPoints(MapView mapView, ReadableArray childrenPoints) {
+        this.childrenPoints = childrenPoints;
     }
 
     /**

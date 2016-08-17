@@ -21,7 +21,7 @@
 - 添加依赖, react-native-baidu-map/ios/lib 下的全部 framwordk， CoreLocation.framework和QuartzCore.framework、OpenGLES.framework、SystemConfiguration.framework、CoreGraphics.framework、Security.framework、libsqlite3.0.tbd（xcode7以前为 libsqlite3.0.dylib）、CoreTelephony.framework 、libstdc++.6.0.9.tbd（xcode7以前为libstdc++.6.0.9.dylib）、CoreTelephony.framework
 - 添加 BaiduMapAPI_Map.framework/Resources/mapapi.bundle
 
-- 其它一些注意事项可参考考百度地图LBS文档
+- 其它一些注意事项可参考百度地图LBS文档
 
 ##### AppDelegate.m 初始化
     #import "RCTBaiduMapViewManager.h"
@@ -55,5 +55,6 @@
     moveToCenter(double lat, double lng, float zoom)
     Promise reverseGeoCode(double lat, double lng)
     Promise reverseGeoCodeGPS(double lat, double lng)
-    Promise geocode(String city, String addr)
+    Promise geocode(String city, String addr),
+    Promise getCurrentPosition()
       
