@@ -1,6 +1,7 @@
 package com.rn;
 
 import com.facebook.react.ReactActivity;
+import org.lovebing.reactnative.baidumap.BaiduMapPackage;
 
 public class MainActivity extends ReactActivity {
 

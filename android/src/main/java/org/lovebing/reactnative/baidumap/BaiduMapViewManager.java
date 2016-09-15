@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
@@ -17,6 +19,8 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapViewLayoutParams;
 import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableArray;
@@ -39,6 +43,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
     private ThemedReactContext mReactContext;
 
     private ReadableArray childrenPoints;
+    private Marker marker;
 
     public String getName() {
         return REACT_CLASS;
@@ -84,6 +89,16 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
         mapView.showZoomControls(zoomControlsVisible);
     }
 
+    @ReactProp(name="trafficEnabled")
+    public void setTrafficEnabled(MapView mapView, boolean trafficEnabled) {
+        mapView.getMap().setTrafficEnabled(trafficEnabled);
+    }
+
+    @ReactProp(name="baiduHeatMapEnabled")
+    public void setBaiduHeatMapEnabled(MapView mapView, boolean baiduHeatMapEnabled) {
+        mapView.getMap().setBaiduHeatMapEnabled(baiduHeatMapEnabled);
+    }
+
     @ReactProp(name = "mapType")
     public void setMapType(MapView mapView, int mapType) {
         mapView.getMap().setMapType(mapType);
@@ -94,6 +109,36 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
         MapStatus mapStatus = new MapStatus.Builder().zoom(zoom).build();
         MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
         mapView.getMap().setMapStatus(mapStatusUpdate);
+    }
+    @ReactProp(name="center")
+    public void setCenter(MapView mapView, ReadableMap position) {
+        if(position != null) {
+            double latitude = position.getDouble("latitude");
+            double longitude = position.getDouble("longitude");
+            LatLng point = new LatLng(latitude, longitude);
+            MapStatus mapStatus = new MapStatus.Builder()
+                    .target(point)
+                    .build();
+            MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
+            mapView.getMap().setMapStatus(mapStatusUpdate);
+        }
+    }
+
+    @ReactProp(name="marker")
+    public void setMarker(MapView mapView, ReadableMap position) {
+        if(position != null) {
+            double latitude = position.getDouble("latitude");
+            double longitude = position.getDouble("longitude");
+            if(marker != null) {
+                marker.remove();
+            }
+            LatLng point = new LatLng(latitude, longitude);
+            BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.icon_gcoding);
+            OverlayOptions option = new MarkerOptions()
+                    .icon(bitmap)
+                    .position(point);
+            marker = (Marker)mapView.getMap().addOverlay(option);
+        }
     }
 
     @ReactProp(name = "childrenPoints")

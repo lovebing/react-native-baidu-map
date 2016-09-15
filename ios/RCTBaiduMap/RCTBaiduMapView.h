@@ -11,6 +11,7 @@
 
 
 #import "RCTViewManager.h"
+#import "RCTConvert+CoreLocation.h"
 #import <BaiduMapAPI_Map/BMKMapView.h>
 #import <BaiduMapAPI_Map/BMKPinAnnotationView.h>
 #import <BaiduMapAPI_Map/BMKPointAnnotation.h>
@@ -22,6 +23,7 @@
 
 -(void)setZoom:(float)zoom;
 -(void)setCenterLatLng:(NSDictionary *)LatLngObj;
+-(void)setMarker:(NSDictionary *)Options;
 
 @end
 

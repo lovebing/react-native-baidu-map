@@ -10,8 +10,8 @@ import React, {
 import {
   MapView,
   MapTypes,
-  MapModule
-} from './react-native-baidu-map.js';
+  Geolocation
+} from 'react-native-baidu-map';
 
 import {
   AppRegistry,
@@ -51,7 +51,13 @@ export default class BaiduMapDemo extends Component {
   constructor() {
     super();
 
-    this.zoom = 10;
+    this.state = {
+      mayType: MapTypes.NORMAL,
+      zoom: 10,
+      center: null,
+      trafficEnabled: false,
+      baiduHeatMapEnabled: false
+    };
   }
 
   componentDidMount() {
@@ -61,47 +67,81 @@ export default class BaiduMapDemo extends Component {
     return (
       <View style={styles.container}>
         <MapView 
-          childrenPoints={[[330, 50], [580, 200]]}
-          zoom={this.zoom}
+          trafficEnabled={this.state.trafficEnabled}
+          baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
+          zoom={this.state.zoom}
+          mapType={this.state.mapType}
+          center={this.state.center}
+          marker={this.state.marker}
           style={styles.map}
           onMapClick={(e) => {
           }}
         >
-          <Text style={{color: 'red', backgroundColor: null,  width: Dimensions.get('window').width}}>ViewGroup is not allowed (Android)</Text>
-          <Text style={{color: 'black', width: Dimensions.get('window').width}}>This is not a good idea to add children view to Baidu MapView</Text>
         </MapView>
 
         <View style={styles.row}>
-          <Buttton label="普通地图" onPress={() => {
-            MapModule.setMapType(MapTypes.NORMAL);
+          <Buttton label="Normal" onPress={() => {
+            this.setState({
+              mapType: MapTypes.NORMAL
+            });
           }} />
-          <Buttton label="卫星地图" onPress={() => {
-            MapModule.setMapType(MapTypes.SATELLITE);
+          <Buttton label="Satellite" onPress={() => {
+            this.setState({
+              mapType: MapTypes.SATELLITE
+            });
+          }} />
+
+          <Buttton label="Locate" onPress={() => {
+            Geolocation.getCurrentPosition()
+              .then(data => {
+                this.setState({
+                  zoom: 15,
+                  marker: {
+                    latitude: data.latitude,
+                    longitude: data.longitude
+                  },
+                  center: {
+                    latitude: data.latitude,
+                    longitude: data.longitude
+                  }
+                });
+              })
+              .catch(e =>{
+                console.warn(e, 'error');
+              })
           }} />
         </View>
 
-        <Buttton label="定位" onPress={() => {
-          MapModule.getCurrentPosition()
-            .then(data => {
-              MapModule.moveToCenter(data.latitude, data.longitude, 15);
-              MapModule.setMarker(data.latitude, data.longitude);
-            })
-            .catch(e =>{
-              console.warn(e)
-            })
-        }} />
         <View style={styles.row}>
-          <Buttton label="放大" onPress={() => {
-            this.zoom++;
-            MapModule.setZoom(this.zoom);
+          <Buttton label="Zoom+" onPress={() => {
+            this.setState({
+              zoom: this.state.zoom + 1
+            });
           }} />
-          <Buttton label="缩小" onPress={() => {
-            if(this.zoom > 0) {
-              this.zoom--;
-              MapModule.setZoom(this.zoom);
+          <Buttton label="Zoom-" onPress={() => {
+            if(this.state.zoom > 0) {
+              this.setState({
+                zoom: this.state.zoom - 1
+              });
             }
             
           }} />
+        </View>
+
+        <View style={styles.row}>
+          <Buttton label="Traffic" onPress={() => {
+            this.setState({
+              trafficEnabled: !this.state.trafficEnabled
+            });
+          }} />
+
+          <Buttton label="Baidu HeatMap" onPress={() => {
+            this.setState({
+              baiduHeatMapEnabled: !this.state.baiduHeatMapEnabled
+            });
+          }} />
+
+
         </View>
 
 
@@ -116,12 +156,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   btn: {
-    height: 48,
-    width: 120,
+    height: 24,
     borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#cccccc',
+    paddingLeft: 8,
+    paddingRight: 8,
     margin: 4
   },
   container: {

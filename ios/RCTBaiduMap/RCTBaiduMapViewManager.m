@@ -13,11 +13,19 @@ static RCTBaiduMapView* _mapView;
 @implementation RCTBaiduMapViewManager;
 
 RCT_EXPORT_MODULE(RCTBaiduMapView)
+
 RCT_EXPORT_VIEW_PROPERTY(mapType, int)
 RCT_EXPORT_VIEW_PROPERTY(zoom, float)
-
+RCT_EXPORT_VIEW_PROPERTY(trafficEnabled, BOOL)
+RCT_EXPORT_VIEW_PROPERTY(baiduHeatMapEnabled, BOOL)
+RCT_EXPORT_VIEW_PROPERTY(marker, NSDictionary*)
 
 RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock)
+
+RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, RCTBaiduMapView) {
+    [view setCenterCoordinate:json ? [RCTConvert CLLocationCoordinate2D:json] : defaultView.centerCoordinate];
+}
+
 
 +(void)initSDK:(NSString*)key {
     
