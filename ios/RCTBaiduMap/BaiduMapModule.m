@@ -66,6 +66,25 @@ RCT_EXPORT_METHOD(moveToCenter:(double)lat lng:(double)lng zoom:(float)zoom) {
     [[self getBaiduMapView] setZoomLevel:zoom];
 }
 
+RCT_EXPORT_METHOD(geocode:(NSString *)city addr:(NSString *)addr) {
+    
+    [self getGeocodesearch].delegate = self;
+    
+    BMKGeoCodeSearchOption *geoCodeSearchOption = [[BMKGeoCodeSearchOption alloc]init];
+    
+    geoCodeSearchOption.city= city;
+    geoCodeSearchOption.address = addr;
+    
+    BOOL flag = [[self getGeocodesearch] geoCode:geoCodeSearchOption];
+    
+    if(flag)
+    {
+        NSLog(@"geo检索发送成功");
+    }else{
+        NSLog(@"geo检索发送失败");
+    }
+}
+
 RCT_EXPORT_METHOD(reverseGeoCode:(double)lat lng:(double)lng) {
     
     [self getGeocodesearch].delegate = self;
