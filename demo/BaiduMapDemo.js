@@ -53,10 +53,22 @@ export default class BaiduMapDemo extends Component {
 
     this.state = {
       mayType: MapTypes.NORMAL,
-      zoom: 10,
-      center: null,
+      zoom: 15,
+      center: {
+        longitude: 113.981718,
+        latitude: 22.542449
+      },
       trafficEnabled: false,
-      baiduHeatMapEnabled: false
+      baiduHeatMapEnabled: false,
+      markers: [{
+        longitude: 113.981718,
+        latitude: 22.542449,
+        title: "Window of the world"
+      },{
+        longitude: 113.995516,
+        latitude: 22.537642,
+        title: ""
+      }]
     };
   }
 
@@ -73,6 +85,7 @@ export default class BaiduMapDemo extends Component {
           mapType={this.state.mapType}
           center={this.state.center}
           marker={this.state.marker}
+          markers={this.state.markers}
           style={styles.map}
           onMapClick={(e) => {
           }}
@@ -98,7 +111,8 @@ export default class BaiduMapDemo extends Component {
                   zoom: 15,
                   marker: {
                     latitude: data.latitude,
-                    longitude: data.longitude
+                    longitude: data.longitude,
+                    title: 'Your location'
                   },
                   center: {
                     latitude: data.latitude,

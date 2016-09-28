@@ -11,6 +11,7 @@
 @implementation RCTBaiduMapView {
     BMKMapView* _mapView;
     BMKPointAnnotation* _annotation;
+    NSMutableArray* _annotations;
 }
 
 -(void)setZoom:(float)zoom {
@@ -24,25 +25,70 @@
     self.centerCoordinate = point;
 }
 
--(void)setMarker:(NSDictionary *)Options {
+-(void)setMarker:(NSDictionary *)option {
     NSLog(@"setMarker");
-    if(Options != nil) {
-        double lat = [RCTConvert double:Options[@"latitude"]];
-        double lng = [RCTConvert double:Options[@"longitude"]];
-        
+    if(option != nil) {
         if(_annotation == nil) {
             _annotation = [[BMKPointAnnotation alloc]init];
+            [self addMarker:_annotation option:option];
         }
         else {
-            [self removeAnnotation:_annotation];
+            [self updateMarker:_annotation option:option];
         }
-        
-        CLLocationCoordinate2D coor;
-        coor.latitude = lat;
-        coor.longitude = lng;
-        _annotation.coordinate = coor;
-        [self addAnnotation:_annotation];
     }
 }
+
+-(void)setMarkers:(NSArray *)markers {
+    int markersCount = [markers count];
+    if(markers != nil) {
+        for (int i = 0; i < markersCount; i++)  {
+            NSDictionary *option = [markers objectAtIndex:i];
+            
+            BMKPointAnnotation *annotation = [_annotations objectAtIndex:i];
+            if(annotation == nil) {
+                annotation = [[BMKPointAnnotation alloc]init];
+                [self addMarker:annotation option:option];
+            }
+            else {
+                [self updateMarker:annotation option:option];
+            }
+        }
+        
+        int _annotationsCount = [_annotations count];
+        if(markersCount < _annotationsCount) {
+            int start = _annotationsCount - markersCount;
+            for(int i = start; i < _annotationsCount; i++) {
+                BMKPointAnnotation *annotation = [_annotations objectAtIndex:i];
+                [self removeAnnotation:annotation];
+                [_annotations removeObject:annotation];
+                annotation = nil;
+            }
+        }
+        
+        
+    }
+}
+
+-(CLLocationCoordinate2D)getCoorFromMarkerOption:(NSDictionary *)option {
+    double lat = [RCTConvert double:option[@"latitude"]];
+    double lng = [RCTConvert double:option[@"longitude"]];
+    CLLocationCoordinate2D coor;
+    coor.latitude = lat;
+    coor.longitude = lng;
+    return coor;
+}
+
+-(void)addMarker:(BMKPointAnnotation *)annotation option:(NSDictionary *)option {
+    [self addAnnotation:annotation];
+    [self updateMarker:annotation option:option];
+}
+
+-(void)updateMarker:(BMKPointAnnotation *)annotation option:(NSDictionary *)option {
+    CLLocationCoordinate2D coor = [self getCoorFromMarkerOption:option];
+    NSString *title = [RCTConvert NSString:option[@"title"]];
+    annotation.coordinate = coor;
+    annotation.title = title;
+}
+
 
 @end

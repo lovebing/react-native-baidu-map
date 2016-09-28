@@ -2,15 +2,12 @@ package org.lovebing.reactnative.baidumap;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
@@ -19,18 +16,18 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapViewLayoutParams;
 import com.baidu.mapapi.map.Marker;
-import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lovebing on 12/20/2015.
@@ -43,7 +40,9 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
     private ThemedReactContext mReactContext;
 
     private ReadableArray childrenPoints;
-    private Marker marker;
+    private Marker mMarker;
+    private List<Marker> mMarkers = new ArrayList<>();
+    private TextView mMarkerText;
 
     public String getName() {
         return REACT_CLASS;
@@ -125,19 +124,34 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
     }
 
     @ReactProp(name="marker")
-    public void setMarker(MapView mapView, ReadableMap position) {
-        if(position != null) {
-            double latitude = position.getDouble("latitude");
-            double longitude = position.getDouble("longitude");
-            if(marker != null) {
-                marker.remove();
+    public void setMarker(MapView mapView, ReadableMap option) {
+        if(option != null) {
+            if(mMarker != null) {
+                MarkerUtil.updateMaker(mMarker, option);
             }
-            LatLng point = new LatLng(latitude, longitude);
-            BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.icon_gcoding);
-            OverlayOptions option = new MarkerOptions()
-                    .icon(bitmap)
-                    .position(point);
-            marker = (Marker)mapView.getMap().addOverlay(option);
+            else {
+                mMarker = MarkerUtil.addMarker(mapView, option);
+            }
+        }
+    }
+
+    @ReactProp(name="markers")
+    public void setMarkers(MapView mapView, ReadableArray options) {
+        for (int i = 0; i < options.size(); i++) {
+            ReadableMap option = options.getMap(i);
+            if(mMarkers.size() > i + 1 && mMarkers.get(i) != null) {
+                MarkerUtil.updateMaker(mMarkers.get(i), option);
+            }
+            else {
+                mMarkers.add(i, MarkerUtil.addMarker(mapView, option));
+            }
+        }
+        if(options.size() < mMarkers.size()) {
+            int start = options.size();
+            for (int i = start; i < mMarkers.size(); i++) {
+                mMarkers.get(i).remove();
+                mMarkers.remove(i);
+            }
         }
     }
 
@@ -150,8 +164,14 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
      *
      * @param mapView
      */
-    private void setListeners(MapView mapView) {
+    private void setListeners(final MapView mapView) {
         BaiduMap map = mapView.getMap();
+
+        if(mMarkerText == null) {
+            mMarkerText = new TextView(mapView.getContext());
+            mMarkerText.setBackgroundResource(R.drawable.popup);
+            mMarkerText.setPadding(32, 32, 32, 32);
+        }
         map.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
 
             private WritableMap getEventParams(MapStatus mapStatus) {
@@ -191,6 +211,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
         map.setOnMapClickListener(new BaiduMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
+                mapView.getMap().hideInfoWindow();
                 WritableMap writableMap = Arguments.createMap();
                 writableMap.putDouble("latitude", latLng.latitude);
                 writableMap.putDouble("longitude", latLng.longitude);
@@ -215,6 +236,14 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
         map.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+                if(marker.getTitle().length() > 0) {
+                    mMarkerText.setText(marker.getTitle());
+                    InfoWindow infoWindow = new InfoWindow(mMarkerText, marker.getPosition(), -80);
+                    mapView.getMap().showInfoWindow(infoWindow);
+                }
+                else {
+                    mapView.getMap().hideInfoWindow();
+                }
                 WritableMap writableMap = Arguments.createMap();
                 WritableMap position = Arguments.createMap();
                 position.putDouble("latitude", marker.getPosition().latitude);

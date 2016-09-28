@@ -52,8 +52,9 @@ project(':react-native-baidu-map').projectDir = new File(settingsDir, '../node_m
 | baiduHeatMapEnabled     | bool  | false    |
 | mapType                 | number| 1        |
 | zoom                    | number| 10       |
-| center                  | object| null     | Like {latitude: 0, longitude: 0}
-| marker                  | object| null     | Like {latitude: 0, longitude: 0}
+| center                  | object| null     | {latitude: 0, longitude: 0}
+| marker                  | object| null     | {latitude: 0, longitude: 0, title: ''}
+| markers                 | array | []       | [marker, maker]
 | onMapStatusChangeStart  | func  | undefined| Android only
 | onMapStatusChange       | func  | undefined|
 | onMapStatusChangeFinish | func  | undefined| Android only

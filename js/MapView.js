@@ -23,6 +23,7 @@ export default class MapView extends Component {
     zoom: PropTypes.number,
     center: PropTypes.object,
     marker: PropTypes.object,
+    markers: PropTypes.array,
     childrenPoints: PropTypes.array,
     onMapStatusChangeStart: PropTypes.func,
     onMapStatusChange: PropTypes.func,
@@ -40,6 +41,7 @@ export default class MapView extends Component {
     mapType: MapTypes.NORMAL,
     childrenPoints: [],
     marker: null,
+    markers: [],
     center: null,
     zoom: 10
   };
