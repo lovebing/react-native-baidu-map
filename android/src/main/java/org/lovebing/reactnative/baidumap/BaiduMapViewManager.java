@@ -147,8 +147,9 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
             }
         }
         if(options.size() < mMarkers.size()) {
-            int start = options.size();
-            for (int i = start; i < mMarkers.size(); i++) {
+            int start = mMarkers.size() - 1;
+            int end = options.size();
+            for (int i = start; i >= end; i--) {
                 mMarkers.get(i).remove();
                 mMarkers.remove(i);
             }
