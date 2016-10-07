@@ -69,9 +69,8 @@
         NSLog(sannotationsCount);
         
         if(markersCount < _annotationsCount) {
-            int start = _annotationsCount - markersCount;
-            for(int i = start; i < _annotationsCount; i++) {
-                NSLog(@"forforforfor");
+            int start = _annotationsCount - 1;
+            for(int i = start; i >= markersCount; i--) {
                 BMKPointAnnotation *annotation = [_annotations objectAtIndex:i];
                 [self removeAnnotation:annotation];
                 [_annotations removeObject:annotation];
