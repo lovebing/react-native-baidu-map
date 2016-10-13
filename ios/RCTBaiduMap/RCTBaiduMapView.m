@@ -74,7 +74,6 @@
                 BMKPointAnnotation *annotation = [_annotations objectAtIndex:i];
                 [self removeAnnotation:annotation];
                 [_annotations removeObject:annotation];
-                annotation = nil;
             }
         }
         
