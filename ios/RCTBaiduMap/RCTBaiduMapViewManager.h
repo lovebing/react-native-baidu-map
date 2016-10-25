@@ -15,7 +15,7 @@
 
 +(void)initSDK:(NSString *)key;
 
--(void)sendEvent:(NSDictionary *) params;
+-(void)sendEvent:(RCTBaiduMapView *)mapView event:(NSDictionary*)event;
 
 +(RCTBaiduMapView *) getBaiduMapView;
 
