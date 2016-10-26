@@ -87,7 +87,8 @@ export default class BaiduMapDemo extends Component {
           marker={this.state.marker}
           markers={this.state.markers}
           style={styles.map}
-          onMapClick={(e) => {
+          onMapClick={(event) => {
+            console.log(event);
           }}
         >
         </MapView>
