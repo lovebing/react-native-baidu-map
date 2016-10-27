@@ -8,6 +8,6 @@
   "dependencies": {
     "react": "15.2.1",
     "react-native": "^0.30.0",
-    "react-native-baidu-map": "^0.2.2"
+    "react-native-baidu-map": "^0.4.3"
   }
 }
