@@ -73,7 +73,10 @@ project(':react-native-baidu-map').projectDir = new File(settingsDir, '../node_m
     Promise getCurrentPosition()
       
 #### Geolocation Methods
-    Promise reverseGeoCode(double lat, double lng)
-    Promise reverseGeoCodeGPS(double lat, double lng)
-    Promise geocode(String city, String addr),
-    Promise getCurrentPosition()
+
+| Method                    | Result 
+| ------------------------- | -------
+| Promise reverseGeoCode(double lat, double lng) | {"address": ""}
+| Promise reverseGeoCodeGPS(double lat, double lng) |  {"address": ""}
+| Promise geocode(String city, String addr) | {"latitude": 0.0, "longitude": 0.0}
+| Promise getCurrentPosition() | IOS: `{"latitude": 0.0, "longitude": 0.0}` Android: `{"latitude": 0.0, "longitude": 0.0, "direction": -1, "altitude": 0.0, "radius": 0.0, "address": "", "countryCode": "", "country": "", "province": "", "cityCode": "", "city": "", "district": "", "street": "", "streetNumber": "", "buildingId": "", "buildingName": ""}`
