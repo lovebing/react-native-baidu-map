@@ -9,22 +9,11 @@
 #ifndef BaiduMapModule_h
 #define BaiduMapModule_h
 
-#import "RCTBridgeModule.h"
-#import "RCTEventDispatcher.h"
-#import "RCTBridge.h"
-
-#import <BaiduMapAPI_Base/BMKBaseComponent.h>
-#import <BaiduMapAPI_Map/BMKMapComponent.h>
-#import <BaiduMapAPI_Search/BMKSearchComponent.h>
-#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
-#import <BaiduMapAPI_Location/BMKLocationService.h>
+#import "BaseModule.h"
 
 #import "RCTBaiduMapViewManager.h"
 
-@interface BaiduMapModule : NSObject <RCTBridgeModule, BMKMapViewDelegate, BMKGeoCodeSearchDelegate> {
-    UINavigationController *navigationController;   
-    BMKMapManager* _mapManager; 
-}
+@interface BaiduMapModule : BaseModule <BMKMapViewDelegate>
 
 -(BMKGeoCodeSearch *)getGeocodesearch;
 

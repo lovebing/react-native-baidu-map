@@ -33,7 +33,8 @@ public class BaiduMapPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         return Arrays.<NativeModule>asList(
-                new BaiduMapModule(reactContext)
+                new BaiduMapModule(reactContext),
+                new GeolocationModule(reactContext)
         );
     }
 

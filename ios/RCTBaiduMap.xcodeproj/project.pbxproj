@@ -12,6 +12,8 @@
 		EF3C225A1CC2C30D0099E9B6 /* RCTBaiduMapView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF3C22591CC2C30D0099E9B6 /* RCTBaiduMapView.h */; };
 		EF3C225C1CC2C30D0099E9B6 /* RCTBaiduMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3C225B1CC2C30D0099E9B6 /* RCTBaiduMapView.m */; };
 		EF3C22641CC2C3D30099E9B6 /* BaiduMapModule.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3C22631CC2C3D30099E9B6 /* BaiduMapModule.m */; };
+		EF4ABB0D1DC378CF008E75C9 /* GeolocationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */; };
+		EF4ABB101DC3793B008E75C9 /* BaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4ABB0F1DC3793A008E75C9 /* BaseModule.m */; };
 		EF6660E91D55E69B00DB8D08 /* RCTBaiduMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6660E81D55E69B00DB8D08 /* RCTBaiduMapViewManager.m */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +38,10 @@
 		EF3C225B1CC2C30D0099E9B6 /* RCTBaiduMapView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTBaiduMapView.m; sourceTree = "<group>"; };
 		EF3C22621CC2C3BE0099E9B6 /* BaiduMapModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaiduMapModule.h; sourceTree = "<group>"; };
 		EF3C22631CC2C3D30099E9B6 /* BaiduMapModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduMapModule.m; sourceTree = "<group>"; };
+		EF4ABB0B1DC378BD008E75C9 /* GeolocationModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeolocationModule.h; sourceTree = "<group>"; };
+		EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeolocationModule.m; sourceTree = "<group>"; };
+		EF4ABB0E1DC37929008E75C9 /* BaseModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseModule.h; sourceTree = "<group>"; };
+		EF4ABB0F1DC3793A008E75C9 /* BaseModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModule.m; sourceTree = "<group>"; };
 		EF6660E71D55E68000DB8D08 /* RCTBaiduMapViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTBaiduMapViewManager.h; sourceTree = "<group>"; };
 		EF6660E81D55E69B00DB8D08 /* RCTBaiduMapViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTBaiduMapViewManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,6 +82,10 @@
 				EF3C22631CC2C3D30099E9B6 /* BaiduMapModule.m */,
 				EF6660E71D55E68000DB8D08 /* RCTBaiduMapViewManager.h */,
 				EF6660E81D55E69B00DB8D08 /* RCTBaiduMapViewManager.m */,
+				EF4ABB0B1DC378BD008E75C9 /* GeolocationModule.h */,
+				EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */,
+				EF4ABB0E1DC37929008E75C9 /* BaseModule.h */,
+				EF4ABB0F1DC3793A008E75C9 /* BaseModule.m */,
 			);
 			path = RCTBaiduMap;
 			sourceTree = "<group>";
@@ -136,6 +146,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF4ABB0D1DC378CF008E75C9 /* GeolocationModule.m in Sources */,
+				EF4ABB101DC3793B008E75C9 /* BaseModule.m in Sources */,
 				EF3C22641CC2C3D30099E9B6 /* BaiduMapModule.m in Sources */,
 				EF3C225C1CC2C30D0099E9B6 /* RCTBaiduMapView.m in Sources */,
 				EF6660E91D55E69B00DB8D08 /* RCTBaiduMapViewManager.m in Sources */,

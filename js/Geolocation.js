@@ -11,7 +11,7 @@ import React, {
 } from 'react';
 
 
-const _module = NativeModules.BaiduMapModule;
+const _module = NativeModules.BaiduGeolocationModule;
 
 export default {
   geocode(city, addr) {
