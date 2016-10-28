@@ -118,6 +118,11 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     
     if (error == BMK_SEARCH_NO_ERROR) {
         body[@"address"] = result.address;
+        body[@"province"] = result.addressDetail.province;
+        body[@"city"] = result.addressDetail.city;
+        body[@"district"] = result.addressDetail.district;
+        body[@"streetName"] = result.addressDetail.streetName;
+        body[@"streetNumber"] = result.addressDetail.streetNumber;
     }
     else {
         body[@"errcode"] = [NSString stringWithFormat:@"%d", error];

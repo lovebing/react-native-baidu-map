@@ -148,7 +148,13 @@ public class GeolocationModule extends BaseModule
             params.putInt("errcode", -1);
         }
         else {
-            params.putString("address",  result.getAddress());
+            ReverseGeoCodeResult.AddressComponent addressComponent = result.getAddressDetail();
+            params.putString("address", result.getAddress());
+            params.putString("province", addressComponent.province);
+            params.putString("city", addressComponent.city);
+            params.putString("district", addressComponent.district);
+            params.putString("street", addressComponent.street);
+            params.putString("streetNumber", addressComponent.streetNumber);
         }
         sendEvent("onGetReverseGeoCodeResult", params);
     }
