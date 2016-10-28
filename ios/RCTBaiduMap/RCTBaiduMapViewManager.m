@@ -81,6 +81,20 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
     [self sendEvent:event];
 }
 
+-(void)mapView:(BMKMapView *)mapView
+didSelectAnnotationView:(BMKAnnotationView *)view {
+    NSDictionary* event = @{
+                            @"type": @"onMarkerClick",
+                            @"params": @{
+                                    @"title": [[view annotation] title],
+                                    @"position": @{
+                                            @"latitude": @([[view annotation] coordinate].latitude),
+                                            @"longitude": @([[view annotation] coordinate].longitude)
+                                            }
+                                    }
+                            };
+    [self sendEvent:event];
+}
 
 - (void) mapView:(BMKMapView *)mapView
  onClickedMapPoi:(BMKMapPoi *)mapPoi {
