@@ -240,6 +240,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
                 if(marker.getTitle().length() > 0) {
                     mMarkerText.setText(marker.getTitle());
                     InfoWindow infoWindow = new InfoWindow(mMarkerText, marker.getPosition(), -80);
+                    mMarkerText.setVisibility(View.GONE);
                     mapView.getMap().showInfoWindow(infoWindow);
                 }
                 else {
