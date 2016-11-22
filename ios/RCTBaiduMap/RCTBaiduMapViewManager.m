@@ -8,8 +8,6 @@
 
 #import "RCTBaiduMapViewManager.h"
 
-static RCTBaiduMapView* _mapView;
-
 @implementation RCTBaiduMapViewManager;
 
 RCT_EXPORT_MODULE(RCTBaiduMapView)
@@ -38,13 +36,9 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, RCTBaiduMapView) {
 }
 
 - (UIView *)view {
-    NSLog(@"RCTBaiduMapView");
-    if(_mapView != nil) {
-        [_mapView removeFromSuperview];
-    }
-    _mapView = [[RCTBaiduMapView alloc] init];
-    _mapView.delegate = self;
-    return _mapView;
+    RCTBaiduMapView* mapView = [[RCTBaiduMapView alloc] init];
+    mapView.delegate = self;
+    return mapView;
 }
 
 -(void)mapview:(BMKMapView *)mapView
@@ -57,7 +51,7 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, RCTBaiduMapView) {
                                     @"longitude": @(coordinate.longitude)
                                     }
                             };
-    [self sendEvent:event];
+    [self sendEvent:mapView params:event];
 }
 
 -(void)mapView:(BMKMapView *)mapView
@@ -70,7 +64,7 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
                                     @"longitude": @(coordinate.longitude)
                                     }
                             };
-    [self sendEvent:event];
+    [self sendEvent:mapView params:event];
 }
 
 -(void)mapViewDidFinishLoading:(BMKMapView *)mapView {
@@ -78,7 +72,7 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
                             @"type": @"onMapLoaded",
                             @"params": @{}
                             };
-    [self sendEvent:event];
+    [self sendEvent:mapView params:event];
 }
 
 -(void)mapView:(BMKMapView *)mapView
@@ -93,7 +87,7 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
                                             }
                                     }
                             };
-    [self sendEvent:event];
+    [self sendEvent:mapView params:event];
 }
 
 - (void) mapView:(BMKMapView *)mapView
@@ -108,7 +102,7 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
                                     @"longitude": @(mapPoi.pt.longitude)
                                     }
                             };
-    [self sendEvent:event];
+    [self sendEvent:mapView params:event];
 }
 
 - (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id <BMKAnnotation>)annotation {
@@ -135,19 +129,14 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
                                     @"overlook": @""
                                     }
                             };
-    [self sendEvent:event];
-    
+    [self sendEvent:mapView params:event];
 }
 
--(void)sendEvent:(NSDictionary *) params {
-    if (!_mapView.onChange) {
+-(void)sendEvent:(RCTBaiduMapView *) mapView params:(NSDictionary *) params {
+    if (!mapView.onChange) {
         return;
     }
-    _mapView.onChange(params);
-}
-
-+(RCTBaiduMapView *) getBaiduMapView {
-    return _mapView;
+    mapView.onChange(params);
 }
 
 @end
