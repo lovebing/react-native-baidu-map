@@ -3,6 +3,7 @@ package org.lovebing.reactnative.baidumap;
 import android.content.Context;
 import android.graphics.Point;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -40,8 +42,8 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
     private ThemedReactContext mReactContext;
 
     private ReadableArray childrenPoints;
-    private Marker mMarker;
-    private List<Marker> mMarkers = new ArrayList<>();
+    private HashMap<String, Marker> mMarkerMap = new HashMap<>();
+    private HashMap<String, List<Marker>> mMarkersMap = new HashMap<>();
     private TextView mMarkerText;
 
     public String getName() {
@@ -59,9 +61,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
             mMapView.onDestroy();
         }
         mMapView =  new MapView(context);
-
         setListeners(mMapView);
-
         return mMapView;
     }
 
@@ -126,34 +126,43 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
     @ReactProp(name="marker")
     public void setMarker(MapView mapView, ReadableMap option) {
         if(option != null) {
-            if(mMarker != null) {
-                MarkerUtil.updateMaker(mMarker, option);
+            String key = "marker_" + mapView.getId();
+            Marker marker = mMarkerMap.get(key);
+            if(marker != null) {
+                MarkerUtil.updateMaker(marker, option);
             }
             else {
-                mMarker = MarkerUtil.addMarker(mapView, option);
+                marker = MarkerUtil.addMarker(mapView, option);
+                mMarkerMap.put(key, marker);
             }
         }
     }
 
     @ReactProp(name="markers")
     public void setMarkers(MapView mapView, ReadableArray options) {
+        String key = "markers_" + mapView.getId();
+        List<Marker> markers = mMarkersMap.get(key);
+        if(markers == null) {
+            markers = new ArrayList<>();
+        }
         for (int i = 0; i < options.size(); i++) {
             ReadableMap option = options.getMap(i);
-            if(mMarkers.size() > i + 1 && mMarkers.get(i) != null) {
-                MarkerUtil.updateMaker(mMarkers.get(i), option);
+            if(markers.size() > i + 1 && markers.get(i) != null) {
+                MarkerUtil.updateMaker(markers.get(i), option);
             }
             else {
-                mMarkers.add(i, MarkerUtil.addMarker(mapView, option));
+                markers.add(i, MarkerUtil.addMarker(mapView, option));
             }
         }
-        if(options.size() < mMarkers.size()) {
-            int start = mMarkers.size() - 1;
+        if(options.size() < markers.size()) {
+            int start = markers.size() - 1;
             int end = options.size();
             for (int i = start; i >= end; i--) {
-                mMarkers.get(i).remove();
-                mMarkers.remove(i);
+                markers.get(i).remove();
+                markers.remove(i);
             }
         }
+        mMarkersMap.put(key, markers);
     }
 
     @ReactProp(name = "childrenPoints")
@@ -198,6 +207,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
 
             @Override
             public void onMapStatusChangeFinish(MapStatus mapStatus) {
+                mMarkerText.setVisibility(View.GONE);
                 sendEvent("onMapStatusChangeFinish", getEventParams(mapStatus));
             }
         });
