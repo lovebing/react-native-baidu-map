@@ -31,7 +31,8 @@ export default class MapView extends Component {
     onMapLoaded: PropTypes.func,
     onMapClick: PropTypes.func,
     onMapDoubleClick: PropTypes.func,
-    onMarkerClick: PropTypes.func
+    onMarkerClick: PropTypes.func,
+    onMapPoiClick: PropTypes.func
   };
 
   static defaultProps = {

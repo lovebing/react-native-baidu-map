@@ -100,13 +100,12 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
  onClickedMapPoi:(BMKMapPoi *)mapPoi {
     NSLog(@"onClickedMapPoi");
     NSDictionary* event = @{
-                            @"type": @"onClickedMapPoi",
+                            @"type": @"onMapPoiClick",
                             @"params": @{
-                                    @"title": mapPoi.text,
-                                    @"position": @{
-                                            @"latitude": @(mapPoi.pt.latitude),
-                                            @"longitude": @(mapPoi.pt.longitude)
-                                            }
+                                    @"name": mapPoi.text,
+                                    @"uid": mapPoi.uid,
+                                    @"latitude": @(mapPoi.pt.latitude),
+                                    @"longitude": @(mapPoi.pt.longitude)
                                     }
                             };
     [self sendEvent:event];

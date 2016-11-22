@@ -17,19 +17,15 @@ const _module = NativeModules.BaiduMapModule;
 export default {
   setMarker (lat, lng) {
     console.warn('This method was deprecated, please use MapView prop instead');
-    _module.setMarker(lat, lng);
   },
   setMapType (type) {
     console.warn('This method was deprecated, please use MapView prop instead');
-    _module.setMapType(type);
   },
   setZoom (zoom) {
     console.warn('This method was deprecated, please use MapView prop instead');
-    _module.setZoom(zoom);
   },
   moveToCenter (lat, lng, zoom) {
     console.warn('This method was deprecated, please use MapView prop instead');
-    _module.moveToCenter(lat, lng, zoom);
   },
   geocode(city, addr) {
     console.warn('This method was deprecated, please use Geolocation.geocode instead');

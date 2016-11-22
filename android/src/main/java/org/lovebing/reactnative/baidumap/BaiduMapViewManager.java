@@ -38,7 +38,6 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
 
     private static final String REACT_CLASS = "RCTBaiduMapView";
 
-    private static MapView mMapView;
     private ThemedReactContext mReactContext;
 
     private ReadableArray childrenPoints;
@@ -57,12 +56,9 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
 
     public MapView createViewInstance(ThemedReactContext context) {
         mReactContext = context;
-        if(mMapView != null) {
-            mMapView.onDestroy();
-        }
-        mMapView =  new MapView(context);
-        setListeners(mMapView);
-        return mMapView;
+        MapView mapView =  new MapView(context);
+        setListeners(mapView);
+        return mapView;
     }
 
     @Override
@@ -197,25 +193,27 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
 
             @Override
             public void onMapStatusChangeStart(MapStatus mapStatus) {
-                sendEvent("onMapStatusChangeStart", getEventParams(mapStatus));
+                sendEvent(mapView, "onMapStatusChangeStart", getEventParams(mapStatus));
             }
 
             @Override
             public void onMapStatusChange(MapStatus mapStatus) {
-                sendEvent("onMapStatusChange", getEventParams(mapStatus));
+                sendEvent(mapView, "onMapStatusChange", getEventParams(mapStatus));
             }
 
             @Override
             public void onMapStatusChangeFinish(MapStatus mapStatus) {
-                mMarkerText.setVisibility(View.GONE);
-                sendEvent("onMapStatusChangeFinish", getEventParams(mapStatus));
+                if(mMarkerText.getVisibility() != View.GONE) {
+                    mMarkerText.setVisibility(View.GONE);
+                }
+                sendEvent(mapView, "onMapStatusChangeFinish", getEventParams(mapStatus));
             }
         });
 
         map.setOnMapLoadedCallback(new BaiduMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
-                sendEvent("onMapLoaded", null);
+                sendEvent(mapView, "onMapLoaded", null);
             }
         });
 
@@ -226,12 +224,18 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
                 WritableMap writableMap = Arguments.createMap();
                 writableMap.putDouble("latitude", latLng.latitude);
                 writableMap.putDouble("longitude", latLng.longitude);
-                sendEvent("onMapClick", writableMap);
+                sendEvent(mapView, "onMapClick", writableMap);
             }
 
             @Override
             public boolean onMapPoiClick(MapPoi mapPoi) {
-                return false;
+                WritableMap writableMap = Arguments.createMap();
+                writableMap.putString("name", mapPoi.getName());
+                writableMap.putString("uid", mapPoi.getUid());
+                writableMap.putDouble("latitude", mapPoi.getPosition().latitude);
+                writableMap.putDouble("longitude", mapPoi.getPosition().longitude);
+                sendEvent(mapView, "onMapPoiClick", writableMap);
+                return true;
             }
         });
         map.setOnMapDoubleClickListener(new BaiduMap.OnMapDoubleClickListener() {
@@ -240,7 +244,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
                 WritableMap writableMap = Arguments.createMap();
                 writableMap.putDouble("latitude", latLng.latitude);
                 writableMap.putDouble("longitude", latLng.longitude);
-                sendEvent("onMapDoubleClick", writableMap);
+                sendEvent(mapView, "onMapDoubleClick", writableMap);
             }
         });
 
@@ -262,7 +266,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
                 position.putDouble("longitude", marker.getPosition().longitude);
                 writableMap.putMap("position", position);
                 writableMap.putString("title", marker.getTitle());
-                sendEvent("onMarkerClick", writableMap);
+                sendEvent(mapView, "onMarkerClick", writableMap);
                 return true;
             }
         });
@@ -274,23 +278,14 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
      * @param eventName
      * @param params
      */
-    private void sendEvent(String eventName, @Nullable WritableMap params) {
+    private void sendEvent(MapView mapView, String eventName, @Nullable WritableMap params) {
         WritableMap event = Arguments.createMap();
         event.putMap("params", params);
         event.putString("type", eventName);
         mReactContext
                 .getJSModule(RCTEventEmitter.class)
-                .receiveEvent(mMapView.getId(),
+                .receiveEvent(mapView.getId(),
                         "topChange",
                         event);
-    }
-
-
-    /**
-     *
-     * @return
-     */
-    public static MapView getMapView() {
-        return mMapView;
     }
 }
