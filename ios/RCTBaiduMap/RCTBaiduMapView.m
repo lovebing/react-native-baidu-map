@@ -91,8 +91,8 @@
 }
 
 -(void)addMarker:(BMKPointAnnotation *)annotation option:(NSDictionary *)option {
-    [self addAnnotation:annotation];
     [self updateMarker:annotation option:option];
+    [self addAnnotation:annotation];
 }
 
 -(void)updateMarker:(BMKPointAnnotation *)annotation option:(NSDictionary *)option {
