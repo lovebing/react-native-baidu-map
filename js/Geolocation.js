@@ -60,13 +60,23 @@ export default {
     if (Platform.OS == 'ios') {
       return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition((position) => {
-          _module.getBaiduCoorFromGPSCoor(position.coords.latitude, position.coords.longitude)
-            .then((data) => {
-              resolve(data);
-            })
-            .catch((e) => {
-              reject(e);
-            });
+          // _module.getBaiduCoorFromGPSCoor(position.coords.latitude, position.coords.longitude)
+          //   .then((data) => {
+          //     resolve(data);
+          //   })
+          //   .catch((e) => {
+          //     reject(e);
+          //   });
+          try {
+            _module.reverseGeoCodeGPS(position.coords.latitude, position.coords.longitude);
+          }
+          catch (e) {
+            reject(e);
+            return;
+          }
+          DeviceEventEmitter.once('onGetReverseGeoCodeResult', resp => {
+            resolve(resp);
+          });
         }, (error) => {
           reject(error);
         }, {

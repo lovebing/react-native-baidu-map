@@ -117,6 +117,19 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     NSMutableDictionary *body = [self getEmptyBody];
     
     if (error == BMK_SEARCH_NO_ERROR) {
+        // 使用离线地图之前，需要先初始化百度地图
+        [[BMKMapView alloc] initWithFrame:CGRectZero];
+        // 离线地图api或去citycode
+        BMKOfflineMap *offlineMap = [[BMKOfflineMap alloc] init];
+        NSArray *cityCodeArr = [offlineMap searchCity:result.addressDetail.city];
+        if (cityCodeArr.count) {
+            BMKOLSearchRecord *searchRecord = cityCodeArr.firstObject;
+            body[@"cityCode"] = @(searchRecord.cityID).stringValue;
+            searchRecord = nil;
+            
+        }
+        cityCodeArr = nil;
+        offlineMap = nil;
         body[@"address"] = result.address;
         body[@"province"] = result.addressDetail.province;
         body[@"city"] = result.addressDetail.city;
