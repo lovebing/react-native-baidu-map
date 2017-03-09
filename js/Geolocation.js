@@ -52,6 +52,8 @@ export default {
         return;
       }
       DeviceEventEmitter.once('onGetReverseGeoCodeResult', resp => {
+        resp.latitude = parseFloat(resp.latitude);
+        resp.longitude = parseFloat(resp.longitude);
         resolve(resp);
       });
     });
@@ -60,13 +62,6 @@ export default {
     if (Platform.OS == 'ios') {
       return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition((position) => {
-          // _module.getBaiduCoorFromGPSCoor(position.coords.latitude, position.coords.longitude)
-          //   .then((data) => {
-          //     resolve(data);
-          //   })
-          //   .catch((e) => {
-          //     reject(e);
-          //   });
           try {
             _module.reverseGeoCodeGPS(position.coords.latitude, position.coords.longitude);
           }
@@ -75,6 +70,8 @@ export default {
             return;
           }
           DeviceEventEmitter.once('onGetReverseGeoCodeResult', resp => {
+            resp.latitude = parseFloat(resp.latitude);
+            resp.longitude = parseFloat(resp.longitude);
             resolve(resp);
           });
         }, (error) => {

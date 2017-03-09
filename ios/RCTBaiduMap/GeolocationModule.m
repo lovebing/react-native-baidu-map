@@ -130,6 +130,9 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
         }
         cityCodeArr = nil;
         offlineMap = nil;
+        
+        body[@"latitude"] = [NSString stringWithFormat:@"%f", result.location.latitude];
+        body[@"longitude"] = [NSString stringWithFormat:@"%f", result.location.longitude];
         body[@"address"] = result.address;
         body[@"province"] = result.addressDetail.province;
         body[@"city"] = result.addressDetail.city;
