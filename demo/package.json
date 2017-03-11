@@ -9,7 +9,7 @@
   "dependencies": {
     "react": "15.4.2",
     "react-native": "0.42.0",
-    "react-native-baidu-map": "^0.5.0",
+    "react-native-baidu-map": "^0.6.0",
     "react-native-fs": "2.1.0-rc.1"
   },
   "devDependencies": {
