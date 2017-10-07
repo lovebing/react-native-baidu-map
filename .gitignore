@@ -8,3 +8,4 @@ android/local.properties
 .DS_Store
 .idea
 npm-debug.log
+ios/RCTBaiduMap.xcodeproj/xcuserdata/

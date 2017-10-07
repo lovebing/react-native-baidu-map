@@ -9,7 +9,7 @@
 #ifndef BaseModule_h
 #define BaseModule_h
 
-#import "RCTBridgeModule.h"
+#import "React/RCTBridgeModule.h"
 #import "React/RCTEventDispatcher.h"
 #import "React/RCTBridge.h"
 
