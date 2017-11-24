@@ -13,7 +13,7 @@
 @interface BMKShape : NSObject <BMKAnnotation> {
 }
 
-/// 要显示的标题
+/// 要显示的标题；注意：如果不设置title,无法点击annotation,也无法使用回调函数；
 @property (copy) NSString *title;
 /// 要显示的副标题
 @property (copy) NSString *subtitle;
