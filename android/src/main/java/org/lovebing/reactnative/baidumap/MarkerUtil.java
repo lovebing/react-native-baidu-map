@@ -13,9 +13,6 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.react.bridge.ReadableMap;
 
-/**
- * Created by lovebing on Sept 28, 2016.
- */
 public class MarkerUtil {
 
     public static void updateMaker(Marker maker, ReadableMap option) {

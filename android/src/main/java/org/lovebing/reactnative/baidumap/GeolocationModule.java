@@ -20,9 +20,6 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
 
-/**
- * Created by lovebing on 2016/10/28.
- */
 public class GeolocationModule extends BaseModule
         implements BDLocationListener, OnGetGeoCoderResultListener {
 
