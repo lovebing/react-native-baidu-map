@@ -1,31 +1,29 @@
 package org.lovebing.reactnative.baidumap;
+import com.baidu.mapapi.search.route.BikingRoutePlanOption;
+import com.baidu.mapapi.search.route.BikingRouteResult;
 
-import android.util.Log;
-
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.search.core.SearchResult;
-import com.baidu.mapapi.search.geocode.GeoCodeOption;
-import com.baidu.mapapi.search.geocode.GeoCodeResult;
-import com.baidu.mapapi.search.geocode.GeoCoder;
-import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
-import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
-import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
-import com.baidu.mapapi.utils.CoordinateConverter;
-import com.facebook.react.bridge.Arguments;
+import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
+import com.baidu.mapapi.search.route.DrivingRouteResult;
+import com.baidu.mapapi.search.route.IndoorRouteResult;
+import com.baidu.mapapi.search.route.MassTransitRouteResult;
+import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
+import com.baidu.mapapi.search.route.PlanNode;
+import com.baidu.mapapi.search.route.RoutePlanSearch;
+import com.baidu.mapapi.search.route.TransitRoutePlanOption;
+import com.baidu.mapapi.search.route.TransitRouteResult;
+import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
+import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
+
 
 public class GuideModule extends ReactContextBaseJavaModule{
 
     RoutePlanSearch mSearch;
     ReactApplicationContext context;
 
-    public GeolocationModule(ReactApplicationContext reactContext) {
+    public GuideModule(ReactApplicationContext reactContext) {
         super(reactContext);
         context=reactContext;
     }
@@ -36,48 +34,173 @@ public class GuideModule extends ReactContextBaseJavaModule{
 
 
 
-    private void initLocationClient() {
-        android.widget.Toast.makeText(context, "initLocationClient", Toast.LENGTH_SHORT).show();
+    private void initLocationClient(int type) {
         mSearch = RoutePlanSearch.newInstance();
-        mSearch.setOnGetRoutePlanResultListener(new OnGetRoutePlanResultListener() {
-
-            public void onGetWalkingRouteResult(WalkingRouteResult result) {
-                android.widget.Toast.makeText(context, "hello", Toast.LENGTH_SHORT).show();
-            }
-
-        };
-        );
-
-        PlanNode stNode = PlanNode.withCityNameAndPlaceName("北京", "西二旗地铁站");
-
-        PlanNode enNode = PlanNode.withCityNameAndPlaceName("北京", "百度科技园");
-        mSearch.walkingSearch((new WalkingRoutePlanOption()).from(stNode).to(enNode));
-        android.widget.Toast.makeText(context, "end", Toast.LENGTH_SHORT).show();
+        guideType(type);
     }
 
 
     @ReactMethod
     public void getStart(int type) {
-        android.widget.Toast.makeText(context, type, Toast.LENGTH_SHORT).show();
-        if(locationClient == null) {
-            initLocationClient();
+        if(mSearch == null) {
+            initLocationClient(type);
         }else{
-            android.widget.Toast.makeText(context, "getStart", Toast.LENGTH_SHORT).show();
+            guideType(type);
+        }
+    }
+
+
+
+    public void guideType(int type){
+        PlanNode stNode = PlanNode.withCityNameAndPlaceName("北京", "西二旗地铁站");
+        PlanNode enNode = PlanNode.withCityNameAndPlaceName("北京", "百度科技园");
+
+        if(type==0){
             mSearch.setOnGetRoutePlanResultListener(new OnGetRoutePlanResultListener() {
 
-                public void onGetWalkingRouteResult(WalkingRouteResult result) {
-                    android.widget.Toast.makeText(context, "hello", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onGetWalkingRouteResult(WalkingRouteResult walkingRouteResult) {
+
                 }
 
-            };
-        );
+                @Override
+                public void onGetTransitRouteResult(TransitRouteResult transitRouteResult) {
 
-            PlanNode stNode = PlanNode.withCityNameAndPlaceName("北京", "西二旗地铁站");
+                }
 
-            PlanNode enNode = PlanNode.withCityNameAndPlaceName("北京", "百度科技园");
-            mSearch.walkingSearch((new WalkingRoutePlanOption()).from(stNode).to(enNode));
-            android.widget.Toast.makeText(context, "end", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onGetMassTransitRouteResult(MassTransitRouteResult massTransitRouteResult) {
+
+                }
+
+                @Override
+                public void onGetDrivingRouteResult(DrivingRouteResult drivingRouteResult) {
+
+                }
+
+                @Override
+                public void onGetIndoorRouteResult(IndoorRouteResult indoorRouteResult) {
+
+                }
+
+                @Override
+                public void onGetBikingRouteResult(BikingRouteResult bikingRouteResult) {
+
+                }
+
+            });
+            mSearch.drivingSearch((new DrivingRoutePlanOption()).from(stNode).to(enNode));
+
+        }else if(type==1){
+            mSearch.setOnGetRoutePlanResultListener(new OnGetRoutePlanResultListener(){
+
+                @Override
+                public void onGetWalkingRouteResult(WalkingRouteResult walkingRouteResult) {
+
+                }
+
+                @Override
+                public void onGetTransitRouteResult(TransitRouteResult transitRouteResult) {
+
+                }
+
+                @Override
+                public void onGetMassTransitRouteResult(MassTransitRouteResult massTransitRouteResult) {
+
+                }
+
+                @Override
+                public void onGetDrivingRouteResult(DrivingRouteResult drivingRouteResult) {
+
+                }
+
+                @Override
+                public void onGetIndoorRouteResult(IndoorRouteResult indoorRouteResult) {
+
+                }
+
+                @Override
+                public void onGetBikingRouteResult(BikingRouteResult bikingRouteResult) {
+
+                }
+            });
+
+           mSearch.transitSearch(new TransitRoutePlanOption().from(stNode).to(enNode));
+
+        }else if(type==2){
+            mSearch.setOnGetRoutePlanResultListener(new OnGetRoutePlanResultListener() {
+                @Override
+                public void onGetWalkingRouteResult(WalkingRouteResult walkingRouteResult) {
+
+                }
+
+                @Override
+                public void onGetTransitRouteResult(TransitRouteResult transitRouteResult) {
+
+                }
+
+                @Override
+                public void onGetMassTransitRouteResult(MassTransitRouteResult massTransitRouteResult) {
+
+                }
+
+                @Override
+                public void onGetDrivingRouteResult(DrivingRouteResult drivingRouteResult) {
+
+                }
+
+                @Override
+                public void onGetIndoorRouteResult(IndoorRouteResult indoorRouteResult) {
+
+                }
+
+                @Override
+                public void onGetBikingRouteResult(BikingRouteResult bikingRouteResult) {
+
+                }
+
+            });
+            mSearch.bikingSearch((new BikingRoutePlanOption())
+                    .from(stNode)
+                    .to(enNode));
         }
+        else if(type==3){
+            mSearch.setOnGetRoutePlanResultListener(new OnGetRoutePlanResultListener() {
+
+                @Override
+                public void onGetWalkingRouteResult(WalkingRouteResult walkingRouteResult) {
+
+                }
+
+                @Override
+                public void onGetTransitRouteResult(TransitRouteResult transitRouteResult) {
+
+                }
+
+                @Override
+                public void onGetMassTransitRouteResult(MassTransitRouteResult massTransitRouteResult) {
+
+                }
+
+                @Override
+                public void onGetDrivingRouteResult(DrivingRouteResult drivingRouteResult) {
+
+                }
+
+                @Override
+                public void onGetIndoorRouteResult(IndoorRouteResult indoorRouteResult) {
+
+                }
+
+                @Override
+                public void onGetBikingRouteResult(BikingRouteResult bikingRouteResult) {
+
+                }
+
+            });
+            mSearch.walkingSearch((new WalkingRoutePlanOption()).from(stNode).to(enNode));
+        }
+
     }
 
 }

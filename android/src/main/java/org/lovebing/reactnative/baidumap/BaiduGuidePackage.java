@@ -16,15 +16,14 @@ public class BaiduGuidePackage implements ReactPackage {
 
     private Context mContext;
 
-    public BaiduMapPackage(Context context) {
+    public BaiduGuidePackage(Context context) {
         this.mContext = context;
-
     }
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         return Arrays.<NativeModule>asList(
-                new GuideModule(reactContext),
+            new GuideModule(reactContext)
         );
     }
 

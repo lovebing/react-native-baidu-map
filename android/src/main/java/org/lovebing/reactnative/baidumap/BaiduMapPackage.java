@@ -40,9 +40,11 @@ public class BaiduMapPackage implements ReactPackage {
     public List<ViewManager> createViewManagers(
             ReactApplicationContext reactContext) {
         return Arrays.<ViewManager>asList(
-                baiduMapViewManager,
+                baiduMapViewManager
         );
+
     }
+
 
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return Collections.emptyList();
