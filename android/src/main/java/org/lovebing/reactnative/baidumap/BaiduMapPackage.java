@@ -13,9 +13,6 @@ import java.util.Collections;
 import java.util.List;
 
 
-/**
- * Created by lovebing on 4/17/16.
- */
 public class BaiduMapPackage implements ReactPackage {
 
     private Context mContext;

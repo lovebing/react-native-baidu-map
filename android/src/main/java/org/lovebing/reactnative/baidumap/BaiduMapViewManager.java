@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.InfoWindow;
@@ -31,9 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by lovebing on 12/20/2015.
- */
+
 public class BaiduMapViewManager extends ViewGroupManager<MapView> {
 
     private static final String REACT_CLASS = "RCTBaiduMapView";
@@ -44,10 +43,13 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
     private HashMap<String, Marker> mMarkerMap = new HashMap<>();
     private HashMap<String, List<Marker>> mMarkersMap = new HashMap<>();
     private TextView mMarkerText;
+    Context context;
+
 
     public String getName() {
         return REACT_CLASS;
     }
+
 
 
     public void initSDK(Context context) {
@@ -58,6 +60,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
         mReactContext = context;
         MapView mapView =  new MapView(context);
         setListeners(mapView);
+        this.context=context;
         return mapView;
     }
 
@@ -166,10 +169,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
         this.childrenPoints = childrenPoints;
     }
 
-    /**
-     *
-     * @param mapView
-     */
+
     private void setListeners(final MapView mapView) {
         BaiduMap map = mapView.getMap();
 
@@ -178,8 +178,8 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
             mMarkerText.setBackgroundResource(R.drawable.popup);
             mMarkerText.setPadding(32, 32, 32, 32);
         }
-        map.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
 
+        map.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
             private WritableMap getEventParams(MapStatus mapStatus) {
                 WritableMap writableMap = Arguments.createMap();
                 WritableMap target = Arguments.createMap();
@@ -194,6 +194,11 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
             @Override
             public void onMapStatusChangeStart(MapStatus mapStatus) {
                 sendEvent(mapView, "onMapStatusChangeStart", getEventParams(mapStatus));
+            }
+
+            @Override
+            public void onMapStatusChangeStart(MapStatus mapStatus, int i) {
+
             }
 
             @Override
@@ -270,14 +275,8 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
                 return true;
             }
         });
-
     }
 
-    /**
-     *
-     * @param eventName
-     * @param params
-     */
     private void sendEvent(MapView mapView, String eventName, @Nullable WritableMap params) {
         WritableMap event = Arguments.createMap();
         event.putMap("params", params);
