@@ -3,22 +3,35 @@ package org.lovebing.reactnative.baidumap;
 import android.content.Context;
 import android.graphics.Point;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapViewLayoutParams;
 import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.route.BikingRoutePlanOption;
+import com.baidu.mapapi.search.route.BikingRouteResult;
+import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
+import com.baidu.mapapi.search.route.DrivingRouteResult;
+import com.baidu.mapapi.search.route.IndoorRouteResult;
+import com.baidu.mapapi.search.route.MassTransitRoutePlanOption;
+import com.baidu.mapapi.search.route.MassTransitRouteResult;
+import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
+import com.baidu.mapapi.search.route.PlanNode;
+import com.baidu.mapapi.search.route.RoutePlanSearch;
+import com.baidu.mapapi.search.route.TransitRouteResult;
+import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
+import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
@@ -32,8 +45,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import overlayutil.DrivingRouteOverlay;
 
-public class BaiduMapViewManager extends ViewGroupManager<MapView> {
+
+
+public class BaiduMapViewManager extends ViewGroupManager<TextureMapView> {
 
     private static final String REACT_CLASS = "RCTBaiduMapView";
 
@@ -46,6 +62,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
     Context context;
 
 
+    @Override
     public String getName() {
         return REACT_CLASS;
     }
@@ -56,16 +73,19 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
         SDKInitializer.initialize(context);
     }
 
-    public MapView createViewInstance(ThemedReactContext context) {
-        mReactContext = context;
-        MapView mapView =  new MapView(context);
+
+    @Override
+    protected TextureMapView createViewInstance(ThemedReactContext reactContext) {
+        SDKInitializer.initialize(reactContext.getApplicationContext());
+        mReactContext = reactContext;
+        TextureMapView mapView =  new TextureMapView(reactContext);
         setListeners(mapView);
-        this.context=context;
+        this.context=reactContext;
         return mapView;
     }
 
     @Override
-    public void addView(MapView parent, View child, int index) {
+    public void addView(TextureMapView parent, View child, int index) {
         if(childrenPoints != null) {
             Point point = new Point();
             ReadableArray item = childrenPoints.getArray(index);
@@ -83,33 +103,33 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
     }
 
     @ReactProp(name = "zoomControlsVisible")
-    public void setZoomControlsVisible(MapView mapView, boolean zoomControlsVisible) {
+    public void setZoomControlsVisible(TextureMapView mapView, boolean zoomControlsVisible) {
         mapView.showZoomControls(zoomControlsVisible);
     }
 
     @ReactProp(name="trafficEnabled")
-    public void setTrafficEnabled(MapView mapView, boolean trafficEnabled) {
+    public void setTrafficEnabled(TextureMapView mapView, boolean trafficEnabled) {
         mapView.getMap().setTrafficEnabled(trafficEnabled);
     }
 
     @ReactProp(name="baiduHeatMapEnabled")
-    public void setBaiduHeatMapEnabled(MapView mapView, boolean baiduHeatMapEnabled) {
+    public void setBaiduHeatMapEnabled(TextureMapView mapView, boolean baiduHeatMapEnabled) {
         mapView.getMap().setBaiduHeatMapEnabled(baiduHeatMapEnabled);
     }
 
     @ReactProp(name = "mapType")
-    public void setMapType(MapView mapView, int mapType) {
+    public void setMapType(TextureMapView mapView, int mapType) {
         mapView.getMap().setMapType(mapType);
     }
 
     @ReactProp(name="zoom")
-    public void setZoom(MapView mapView, float zoom) {
+    public void setZoom(TextureMapView mapView, float zoom) {
         MapStatus mapStatus = new MapStatus.Builder().zoom(zoom).build();
         MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
         mapView.getMap().setMapStatus(mapStatusUpdate);
     }
     @ReactProp(name="center")
-    public void setCenter(MapView mapView, ReadableMap position) {
+    public void setCenter(TextureMapView mapView, ReadableMap position) {
         if(position != null) {
             double latitude = position.getDouble("latitude");
             double longitude = position.getDouble("longitude");
@@ -123,7 +143,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
     }
 
     @ReactProp(name="marker")
-    public void setMarker(MapView mapView, ReadableMap option) {
+    public void setMarker(TextureMapView mapView, ReadableMap option) {
         if(option != null) {
             String key = "marker_" + mapView.getId();
             Marker marker = mMarkerMap.get(key);
@@ -138,7 +158,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
     }
 
     @ReactProp(name="markers")
-    public void setMarkers(MapView mapView, ReadableArray options) {
+    public void setMarkers(TextureMapView mapView, ReadableArray options) {
         String key = "markers_" + mapView.getId();
         List<Marker> markers = mMarkersMap.get(key);
         if(markers == null) {
@@ -165,12 +185,12 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
     }
 
     @ReactProp(name = "childrenPoints")
-    public void setChildrenPoints(MapView mapView, ReadableArray childrenPoints) {
+    public void setChildrenPoints(TextureMapView mapView, ReadableArray childrenPoints) {
         this.childrenPoints = childrenPoints;
     }
 
 
-    private void setListeners(final MapView mapView) {
+    private void setListeners(final TextureMapView mapView) {
         BaiduMap map = mapView.getMap();
 
         if(mMarkerText == null) {
@@ -256,7 +276,7 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
         map.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                if(marker.getTitle().length() > 0) {
+                if(marker.getTitle()!=null && marker.getTitle().length() > 0) {
                     mMarkerText.setText(marker.getTitle());
                     InfoWindow infoWindow = new InfoWindow(mMarkerText, marker.getPosition(), -80);
                     mMarkerText.setVisibility(View.GONE);
@@ -276,8 +296,12 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
             }
         });
     }
+    @ReactProp(name = "routeType")
+    public void guideStart(TextureMapView mapView,int type){
+        getGuideStart(mapView,type);
+    }
 
-    private void sendEvent(MapView mapView, String eventName, @Nullable WritableMap params) {
+    private void sendEvent(TextureMapView mapView, String eventName, @Nullable WritableMap params) {
         WritableMap event = Arguments.createMap();
         event.putMap("params", params);
         event.putString("type", eventName);
@@ -286,5 +310,105 @@ public class BaiduMapViewManager extends ViewGroupManager<MapView> {
                 .receiveEvent(mapView.getId(),
                         "topChange",
                         event);
+    }
+
+    RoutePlanSearch mSearch;
+
+    public void getGuideStart(TextureMapView mapView,int type) {
+        if(mSearch == null && type != 10) {
+            initGuideType(mapView,type);
+        }else{
+            guideType(mapView,type);
+        }
+    }
+
+
+    private void initGuideType(final TextureMapView mapView, int type) {
+        mSearch = RoutePlanSearch.newInstance();
+        mSearch.setOnGetRoutePlanResultListener(new OnGetRoutePlanResultListener() {
+
+            @Override
+            public void onGetWalkingRouteResult(WalkingRouteResult walkingRouteResult) {
+
+            }
+
+            @Override
+            public void onGetTransitRouteResult(TransitRouteResult transitRouteResult) {
+
+            }
+
+            @Override
+            public void onGetMassTransitRouteResult(MassTransitRouteResult massTransitRouteResult) {
+                BaiduMap baiduMap = mapView.getMap();
+                baiduMap.clear();
+            }
+
+            @Override
+            public void onGetDrivingRouteResult(DrivingRouteResult result) {
+                BaiduMap baiduMap = mapView.getMap();
+                Toast.makeText(context,"hello",Toast.LENGTH_LONG).show();
+                if(result == null || result.error != SearchResult.ERRORNO.NO_ERROR){
+                    Toast.makeText(context, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+                }
+                if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
+                    //起终点或途经点地址有岐义，通过以下接口获取建议查询信息
+                    //result.getSuggestAddrInfo()
+                    return;
+                }
+                if (result.error == SearchResult.ERRORNO.NO_ERROR) {
+                    Toast.makeText(context, "成功"+result.getRouteLines().size(), Toast.LENGTH_SHORT).show();
+                    baiduMap.clear();
+                    // mroute = result.getRouteLines().get(0);
+                    DrivingRouteOverlay overlay = new DrivingRouteOverlay(baiduMap);
+//                    mrouteOverlay = overlay;
+                    baiduMap.setOnMarkerClickListener(overlay);
+                    overlay.setData(result.getRouteLines().get(0));
+                    overlay.addToMap();
+                    overlay.zoomToSpan();
+                }
+            }
+
+            @Override
+            public void onGetIndoorRouteResult(IndoorRouteResult indoorRouteResult) {
+
+            }
+
+            @Override
+            public void onGetBikingRouteResult(BikingRouteResult bikingRouteResult) {
+
+            }
+
+        });
+        guideType(mapView,type);
+    }
+
+    private static final int WALK = 4;
+    private static final int BIKE = 3;
+    private static final int CAR = 1;
+    private static final int BUS = 2;
+
+
+    public void guideType(final TextureMapView mapView, int type){
+        Toast.makeText(context,"hell0"+type,Toast.LENGTH_LONG).show();
+        PlanNode stNode = PlanNode.withCityNameAndPlaceName("杭州", "福鼎家园");
+        PlanNode enNode = PlanNode.withCityNameAndPlaceName("杭州", "西城广场");
+        switch (type){
+            case WALK:
+                mSearch.walkingSearch((new WalkingRoutePlanOption()).from(stNode).to(enNode));
+                break;
+            case BIKE:
+                mSearch.bikingSearch((new BikingRoutePlanOption()).from(stNode).to(enNode));
+                break;
+            case CAR:
+                mSearch.drivingSearch((new DrivingRoutePlanOption()).from(stNode).to(enNode));
+                break;
+            case BUS:
+                mSearch.masstransitSearch((new MassTransitRoutePlanOption()).from(stNode).to(enNode));
+                break;
+            default:
+                break;
+        }
+
+
     }
 }
