@@ -10,6 +10,8 @@
 #define RCTBaiduMapViewManager_h
 
 #import "RCTBaiduMapView.h"
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>
 
 @interface RCTBaiduMapViewManager : RCTViewManager<BMKMapViewDelegate>
 

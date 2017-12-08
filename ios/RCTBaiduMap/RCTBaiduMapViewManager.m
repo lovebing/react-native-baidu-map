@@ -18,8 +18,10 @@ RCT_EXPORT_VIEW_PROPERTY(trafficEnabled, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(baiduHeatMapEnabled, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(marker, NSDictionary*)
 RCT_EXPORT_VIEW_PROPERTY(markers, NSArray*)
+RCT_EXPORT_VIEW_PROPERTY(overlayPoints, NSArray*)
 
 RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(startLocation, BOOL)
 
 RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, RCTBaiduMapView) {
     [view setCenterCoordinate:json ? [RCTConvert CLLocationCoordinate2D:json] : defaultView.centerCoordinate];
@@ -27,9 +29,10 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, RCTBaiduMapView) {
 
 
 +(void)initSDK:(NSString*)key {
-    
+
     BMKMapManager* _mapManager = [[BMKMapManager alloc]init];
     BOOL ret = [_mapManager start:key  generalDelegate:nil];
+ 
     if (!ret) {
         NSLog(@"manager start failed!");
     }
@@ -37,6 +40,7 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, RCTBaiduMapView) {
 
 - (UIView *)view {
     RCTBaiduMapView* mapView = [[RCTBaiduMapView alloc] init];
+//    RCTBaiduMapView* mapView = [RCTBaiduMapView shareInstance];
     mapView.delegate = self;
     return mapView;
 }
@@ -130,6 +134,17 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
                                     }
                             };
     [self sendEvent:mapView params:event];
+}
+
+- (BMKOverlayView *)mapView:(BMKMapView *)mapView viewForOverlay:(id<BMKOverlay>)overlay {
+    if ([overlay isKindOfClass:[BMKPolyline class]]) {
+        BMKPolylineView* polylineView = [[BMKPolylineView alloc] initWithOverlay:overlay];
+        polylineView.fillColor = [[UIColor alloc] initWithRed:0 green:1 blue:1 alpha:1];
+        polylineView.strokeColor = [[UIColor alloc] initWithRed:0 green:0 blue:1 alpha:0.7];
+        polylineView.lineWidth = 3.0;
+        return polylineView;
+    }
+    return nil;
 }
 
 -(void)sendEvent:(RCTBaiduMapView *) mapView params:(NSDictionary *) params {

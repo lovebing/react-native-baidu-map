@@ -117,20 +117,21 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     NSMutableDictionary *body = [self getEmptyBody];
     
     if (error == BMK_SEARCH_NO_ERROR) {
-        // 使用离线地图之前，需要先初始化百度地图
-        [[BMKMapView alloc] initWithFrame:CGRectZero];
-        // 离线地图api或去citycode
-        BMKOfflineMap *offlineMap = [[BMKOfflineMap alloc] init];
-        NSArray *cityCodeArr = [offlineMap searchCity:result.addressDetail.city];
-        if (cityCodeArr.count) {
-            BMKOLSearchRecord *searchRecord = cityCodeArr.firstObject;
-            body[@"cityCode"] = @(searchRecord.cityID).stringValue;
-            searchRecord = nil;
-            
-        }
-        cityCodeArr = nil;
-        offlineMap = nil;
+//        // 使用离线地图之前，需要先初始化百度地图
+//        [[BMKMapView alloc] initWithFrame:CGRectZero];
+//        // 离线地图api或去citycode
+//        BMKOfflineMap *offlineMap = [[BMKOfflineMap alloc] init];
+//        NSArray *cityCodeArr = [offlineMap searchCity:result.addressDetail.city];
+//        if (cityCodeArr.count) {
+//            BMKOLSearchRecord *searchRecord = cityCodeArr.firstObject;
+//            body[@"cityCode"] = @(searchRecord.cityID).stringValue;
+//            searchRecord = nil;
+//            
+//        }
+//        cityCodeArr = nil;
+//        offlineMap = nil;
         
+        body[@"cityCode"] = result.cityCode;
         body[@"latitude"] = [NSString stringWithFormat:@"%f", result.location.latitude];
         body[@"longitude"] = [NSString stringWithFormat:@"%f", result.location.longitude];
         body[@"address"] = result.address;
@@ -139,6 +140,7 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
         body[@"district"] = result.addressDetail.district;
         body[@"streetName"] = result.addressDetail.streetName;
         body[@"streetNumber"] = result.addressDetail.streetNumber;
+   
     }
     else {
         body[@"errcode"] = [NSString stringWithFormat:@"%d", error];
