@@ -12,6 +12,63 @@
     BMKMapView* _mapView;
     BMKPointAnnotation* _annotation;
     NSMutableArray* _annotations;
+    BMKLocationService *_server;
+}
+
+static RCTBaiduMapView *mapview = nil;
+
++ (RCTBaiduMapView *)shareInstance {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (!mapview) {
+            mapview = [[RCTBaiduMapView alloc] init];
+        }
+    });
+    return mapview;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.userTrackingMode = BMKUserTrackingModeNone;//设置定位的状态
+        self.showsUserLocation = YES;//显示定位图层
+        _server = [[BMKLocationService alloc]init];
+        _server.delegate = self;
+    }
+    return self;
+}
+
+- (void)setStartLocation:(BOOL)startLocation {
+
+    if (startLocation) {
+        //启动LocationService
+        [_server startUserLocationService];
+    }
+    else {
+        //启动LocationService
+        [_server stopUserLocationService];
+    }
+}
+
+/**
+ *用户方向更新后，会调用此函数
+ *@param userLocation 新的用户位置
+ */
+- (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
+{
+    [self updateLocationData:userLocation];
+    NSLog(@"heading is %@",userLocation.heading);
+}
+
+/**
+ *用户位置更新后，会调用此函数
+ *@param userLocation 新的用户位置
+ */
+- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
+{
+    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    [self updateLocationData:userLocation];
 }
 
 -(void)setZoom:(float)zoom {
@@ -23,6 +80,8 @@
     double lng = [RCTConvert double:LatLngObj[@"lng"]];
     CLLocationCoordinate2D point = CLLocationCoordinate2DMake(lat, lng);
     self.centerCoordinate = point;
+    
+    
 }
 
 -(void)setMarker:(NSDictionary *)option {
@@ -105,5 +164,22 @@
     annotation.title = title;
 }
 
+
+- (void)setOverlayPoints:(NSArray *)overlayPoints {
+    [self removeOverlays:self.overlays];
+    NSLog(@"overlay  %@",overlayPoints);
+    BMKMapPoint * temppoints = new BMKMapPoint[overlayPoints.count];
+    for (NSInteger i = 0; i < overlayPoints.count; i ++) {
+        NSDictionary *dic = overlayPoints[i];
+        double x = [dic[@"x"] doubleValue];
+        double y = [dic[@"y"] doubleValue];
+        temppoints[i].x = x;
+        temppoints[i].y = y;
+            NSLog(@"x  %f    y  %f",x,y);
+    }
+
+    BMKPolyline* polyLine = [BMKPolyline polylineWithPoints:temppoints count:overlayPoints.count];
+    [self addOverlay:polyLine];
+}
 
 @end

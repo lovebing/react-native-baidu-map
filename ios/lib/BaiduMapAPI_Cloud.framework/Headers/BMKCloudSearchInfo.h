@@ -6,6 +6,8 @@
  *
  */
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
+
 /// 云检索基础信息类，所有类型云检索的基类
 @interface BMKBaseCloudSearchInfo : NSObject
 {
@@ -32,7 +34,7 @@
     NSInteger       _pageSize;
 
 }
-///检索关键字，必选。最长45个字符
+///检索关键字,可选。最长45个字符
 @property (nonatomic, strong) NSString *keyword;
 ///标签，可选，空格分隔的多字符串，最长45个字符，样例：美食 小吃
 @property (nonatomic, strong) NSString *tags;
@@ -97,5 +99,15 @@
 }
 ///uid为poi点的id值
 @property (nonatomic, strong) NSString *uid;
+@end
+
+///云RGC检索参数信息类
+@interface BMKCloudReverseGeoCodeSearchInfo : NSObject
+
+///geo table 表主键（必须）
+@property (nonatomic, assign) NSInteger geoTableId;
+///经纬度
+@property (nonatomic, assign) CLLocationCoordinate2D reverseGeoPoint;
+
 @end
 

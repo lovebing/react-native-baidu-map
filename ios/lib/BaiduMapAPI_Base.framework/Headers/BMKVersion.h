@@ -801,7 +801,7 @@
  自v2.9.0起，采用分包的形式提供 .framework包，请广大开发者使用时确保各分包的版本保持一致。其中BaiduMapAPI_Base.framework为基础包，使用SDK任何功能都需导入，其他分包可按需导入。
 
  【 新版提示 】
- 1.自v3.0.0起，iOS SDK全面支持ipv6网格
+ 1.自v3.0.0起，iOS SDK全面支持ipv6网络
  
  【 新  增 】
    基础地图
@@ -869,6 +869,268 @@
  3、修复地图网络解析时偶现的crash问题
 
  
+ --------------------
+v3.1.0
+ 
+ 注：百度地图iOS SDK向广大开发者提供了配置更简单的 .framework形式的开发包，请开发者选择此种类型的开发包使用。自v2.9.0起，百度地图iOS SDK将不再提供 .a形式的开发包。
+ 自v2.9.0起，采用分包的形式提供 .framework包，请广大开发者使用时确保各分包的版本保持一致。其中BaiduMapAPI_Base.framework为基础包，使用SDK任何功能都需导入，其他分包可按需导入。
+
+ 【 新  增 】
+   基础地图
+ 1、开放高清4K地图显示（无需设置）
+ 2、瓦片图新增异步加载方法：
+    新增异步加载类：BMKAsyncTileLayer
+ 3、新增地图渲染完成回调方法：
+    - (void)mapViewDidFinishRendering:(BMKMapView *)mapView;
+ 4、新增定位显示类型：BMKUserTrackingModeHeading（在普通定位模式的基础上显示方向）
+ 
+   检索功能
+ 1、新增室内路径规划
+    BMKRouteSearch新增发起室内路径规划接口：
+    - (BOOL)indoorRoutePlanSearch:(BMKIndoorRoutePlanOption*) indoorRoutePlanOption;
+    BMKRouteSearchDelegate新增室内路径规划结果回调：
+    - (void)onGetIndoorRouteResult:(BMKRouteSearch*)searcher result:(BMKIndoorRouteResult*)result errorCode:(BMKSearchErrorCode)error;
+    新增室内路径规划检索参数类：BMKIndoorRoutePlanOption
+    新增室内路径规划检索结果类：BMKIndoorRouteResult
+ 2、增加新的公共交通线路规划（支持同城和跨城）
+    BMKRouteSearch增加新的公共交通线路规划接口：
+    - (BOOL)massTransitSearch:(BMKMassTransitRoutePlanOption*)routePlanOption;
+    BMKRouteSearchDelegate增加新的公共交通线路规划结果回调：
+    - (void)onGetMassTransitRouteResult:(BMKRouteSearch*)searcher result:(BMKMassTransitRouteResult*)result errorCode:(BMKSearchErrorCode)error;
+    增加新的公共交通线路规划检索参数类：BMKMassTransitRoutePlanOption
+    增加新的公共交通线路规划检索结果类：BMKMassTransitRouteResult
+ 
+   LBS云检索
+ 1、新增云RGC检索功能
+    BMKCloudSearch新增发起云RGC检索接口：
+    - (BOOL)cloudReverseGeoCodeSearch:(BMKCloudReverseGeoCodeSearchInfo*)searchInfo;
+    BMKCloudSearchDelegate新增云RGC检索结果回调：
+    - (void)onGetCloudReverseGeoCodeResult:(BMKCloudReverseGeoCodeResult*)cloudRGCResult searchType:(BMKCloudSearchType) type errorCode:(NSInteger) errorCode;
+    新增云RGC检索参数类：BMKCloudReverseGeoCodeSearchInfo
+    新增云RGC检索结果类：BMKCloudReverseGeoCodeResult
+ 
+ 【 优  化 】
+ 1、优化Marker加载性能：添加Marker和加载大量Marker时，性能大幅提高。
+ 2、优化地图内存
+ 
+ 【 修  复 】
+ 1、长按地图某区域，OnLongClick会被不停调用的问题
+ 2、绘制弧线，特殊case提示画弧失败的问题
+ 3、一次点击事件，点击地图空白处回调和点击覆盖物回调都会调用的问题
+ 
+ 
+ --------------------
+ v3.2.0
+ 
+ 注：自v3.2.0起，百度地图iOS SDK全面支持HTTPS，需要广大开发者导入第三方openssl静态库：libssl.a和libcrypto.a（存放于thirdlib目录下）。
+ 
+ 【 新版提示 】
+ 1、自v3.2.0起，全面支持HTTPS
+ 2、自v3.2.0起，地图引擎全面升级，主要升级特征有：
+    渲染架构技术升级，OpenGL ES从1.0升级到2.0
+    地图数据加载升级，加载性能大幅提升
+ 
+ 【 新  增 】
+   检索功能
+ 1、建议检索支持港澳台；建议检索可控制只返回指定城市的检索结果
+ BMKSuggestionSearchOption新增属性：
+ ///是否只返回指定城市检索结果（默认：NO）（提示：海外区域暂不支持设置cityLimit）
+ @property (nonatomic, assign) BOOL cityLimit;
+ 2、反地址编码结果BMKReverseGeoCodeResult新增属性：
+ ///结合当前位置POI的语义化结果描述
+ @property (nonatomic, strong) NSString* sematicDescription;
+ 
+ 【 优  化 】
+ 1、建议检索和反地址编码检索服务升级，提供更加优质的服务
+ 
+ 【 修  复 】
+ 1、修复国外定位偏移的问题
+ 2、修复特殊情况下，移除BMKGroundOverlay时的问题
+ 
+ 
+ --------------------
+ v3.2.1
+ 
+ 注：自v3.2.0起，百度地图iOS SDK全面支持HTTPS，需要广大开发者导入第三方openssl静态库：libssl.a和libcrypto.a（存放于thirdlib目录下）。
+ 
+ 【 新版提示 】
+ 1、自v3.2.0起，全面支持HTTPS
+ 2、自v3.2.0起，地图引擎全面升级，主要升级特征有：
+ 渲染架构技术升级，OpenGL ES从1.0升级到2.0
+ 地图数据加载升级，加载性能大幅提升
+ 
+ 【 修  复 】
+ 修复下载离线地图时，delegate方法返回state错误问题
+ 
+ 
+ --------------------
+ v3.3.0
+ 
+ 
+注：自v3.2.0起，百度地图iOS SDK全面支持HTTPS，需要广大开发者导入第三方openssl静态库：libssl.a和libcrypto.a（存放于thirdlib目录下）。
+ 
+ 新 版 提 示 】
+ 【 注 意 】
+ 1、自v3.2.0起，百度地图iOS SDK全面支持HTTPS，需要广大开发者导入第三方openssl静态库：libssl.a和libcrypto.a（存放于thirdlib目录下）
+ 添加方法：在 TARGETS->Build Phases-> Link Binary With Libaries中点击“+”按钮，在弹出的窗口中点击“Add Other”按钮，选择libssl.a和libcrypto.a添加到工程中 。
+ 
+ 2、支持CocoaPods导入
+ pod setup //更新CocoPods的本地库
+ pod search BaiduMapKit  //下载最新地图SDK
+ 
+ 【 新 增 】
+ [ 基 础 地 图 ]
+ 3D地图下，增加显示天空效果，无需设置
+ 
+ [ 工 具 ]
+ 1．全面支持GCJ02坐标输入/输出，全局设置方法如下：
+ [BMKMapManager setCoordinateTypeUsedInBaiduMapSDK:BMK_COORDTYPE_COMMON];//默认为BD09LL坐标，且此方法仅在国内生效，国外均为WGS84坐标
+ 
+ 2. 新增调启步行AR导航接口：openBaiduMapwalkARNavigation
+ 
+ [ LBS云]
+ 云检索中，keywords 改为非必填项
+ 
+ 【 优 化 】
+ 优化个性化地图元素分类
+ 
+ 【 修 复 】
+ 少部分地铁线及室内图无法显示问题（v3.2.0引入的问题）。
+ 未下载全国离线基础包时，离线状态下全国（球）地图显示异常。
+ 
+ --------------------
+ v3.3.1
+ 
+ 【 新 版 提 示 】
+ 【 注 意 】
+ 1、自v3.2.0起，百度地图iOS SDK全面支持HTTPS，需要广大开发者导入第三方openssl静态库：libssl.a和libcrypto.a（存放于thirdlib目录下）
+ 添加方法：在 TARGETS->Build Phases-> Link Binary With Libaries中点击“+”按钮，在弹出的窗口中点击“Add Other”按钮，选择libssl.a和libcrypto.a添加到工程中 。
+ 
+ 2、支持CocoaPods导入
+ pod setup //更新CocoPods的本地库
+ pod search BaiduMapKit  //下载最新地图SDK
+ 
+ 【 新 增 】
+ [ 检 索 ]
+ 逆地理编码返回结果新增2个属性：cityCode(城市编码) 和adCode（行政区域编码）
+ 
+ 【 优 化 】
+ 1.增加重试机制，优化鉴权时长
+ 2.解决Xcode8.3编译时出现大量warning的问题
+ 3.swift Demo：swift语言升级为 swift v3.1，优化升级swift Demo。
+ 
+ --------------------
+ v3.3.2
+ 
+ 
+ 【 新 版 提 示 】
+ 【 注 意 】
+ 1、自v3.2.0起，百度地图iOS SDK全面支持HTTPS，需要广大开发者导入第三方openssl静态库：libssl.a和libcrypto.a（存放于thirdlib目录下）
+ 添加方法：在 TARGETS->Build Phases-> Link Binary With Libaries中点击“+”按钮，在弹出的窗口中点击“Add Other”按钮，选择libssl.a和libcrypto.a添加到工程中 。
+ 
+ 2、支持CocoaPods导入
+ pod setup //更新CocoPods的本地库
+ pod search BaiduMapKit  //查看最新地图SDK
+ 
+ 【 新 增 】
+ 【 优 化 】
+ 1.修复个性化地图在部分使用场景下，不显示的问题。（受影响版本v3.3.0、v3.3.1）
+ 
+ 
+ --------------------
+ v3.3.4
+ 
+ 
+ 【 新 版 提 示 】
+ 【 注 意 】
+ 1、自v3.2.0起，百度地图iOS SDK全面支持HTTPS，需要广大开发者导入第三方openssl静态库：libssl.a和libcrypto.a（存放于thirdlib目录下）
+ 添加方法：在 TARGETS->Build Phases-> Link Binary With Libaries中点击“+”按钮，在弹出的窗口中点击“Add Other”按钮，选择libssl.a和libcrypto.a添加到工程中 。
+ 
+ 2、支持CocoaPods导入
+ pod setup //更新CocoPods的本地库
+ pod search BaiduMapKit  //查看最新地图SDK
+ 
+ 【 新 增 】
+ 1.BMKLocationViewDisplayParam类中增加 canShowCallOut 属性，用于设定用户点击定位图标时，是否弹出paopaoView。
+ 2.BMKLocationViewDisplayParam类中增加 locationViewHierarchy 属性，用于设定locationView始终处于视图层级的最下层或最上层。
+ 
+ 【 优 化 】
+ 1.修复添加Annotation时，Overlay偶尔绘制不完整的BUG。
+ 2.修复Swift调用SDK时，cityCode countryCode等字段类型不兼容的问题。
+ 3.保证新添加的Annotation会在mapView的视图层级的上层。
+ 4.DEMO中绘制路径规划结果时，修复计算显示区域的BUG。
+ 
+ --------------------
+ v3.4.0
+ 
+ 
+ 
+ 【 新 版 提 示 】
+ 【 注 意 】
+ 1、自v3.2.0起，百度地图iOS SDK全面支持HTTPS，需要广大开发者导入第三方openssl静态库：libssl.a和libcrypto.a（存放于thirdlib目录下）
+ 添加方法：在 TARGETS->Build Phases-> Link Binary With Libaries中点击“+”按钮，在弹出的窗口中点击“Add Other”按钮，选择libssl.a和libcrypto.a添加到工程中 。
+ 
+ 2、支持CocoaPods导入
+ pod setup //更新CocoPods的本地库
+ pod search BaiduMapKit  //查看最新地图SDK
+ 
+ 【 新 增 】
+ 【基 础 地 图】
+ 1.新增当双击手势放大地图时，可以设置地图中心点是否移动至点击处的属性
+ BMKMapView新增：
+ ///双击手势放大地图时, 设置为YES, 地图中心点移动至点击处; 设置为NO，地图中心点不变；默认为YES;
+ @property(nonatomic, getter=isChangeCenterWithDoubleTouchPointEnabled) BOOL ChangeCenterWithDoubleTouchPointEnabled;
+ 
+ 2.支持标注锁定在屏幕固定位置
+ BMKPointAnnotation新增：
+ ///Annotation固定在指定屏幕位置,  必须与screenPointToLock一起使用。 注意：拖动Annotation isLockedToScreen会被设置为false。
+ ///若isLockedToScreen为true，拖动地图时annotaion不会跟随移动；
+ ///若isLockedToScreen为false，拖动地图时annotation会跟随移动。
+ @property (nonatomic, assign) BOOL isLockedToScreen;
+ 
+ ///标注在屏幕中锁定的位置，注意：地图初始化后才能设置screenPointToLock。可以在地图加载完成的回调方法：mapViewDidFinishLoading中使用此属性。
+ @property (nonatomic, assign) CGPoint screenPointToLock;
+ 
+ 3.新增接口：设定地理范围在屏幕中的显示区域
+ BMKMapView新增：
+ ///根据当前mapView的窗口大小，预留insets指定的边界区域后，将mapRect指定的地理范围显示在剩余的区域内，并尽量充满
+ ///@param mapRect 要显示的地图范围，用直角坐标系表示
+ ///@param insets 屏幕四周预留的最小边界（mapRect的内容不会显示在该边界范围内）
+ ///@param animate 是否采用动画效果
+- (void)fitVisibleMapRect:(BMKMapRect)mapRect edgePadding:(UIEdgeInsets)insets withAnimated:(BOOL)animate;
+
+【 优 化 】
+1.解决反复创建和销毁mapView时内存泄漏的问题
+2.对拖动标注时的弹跳动画效果进行优化
+3.修复mapView调用selectAnnotation方法时，回调didSelectAnnotationView不调用的问题。
+4.修复行政区域检索福建和浙江区域没有返回数据的问题
+5.修复部分使用场景下，设置mapPadding时，overlay位置偏移的问题
+6.修复部分使用场景下，加载mapView闪黑屏的问题
+
+ --------------------
+ v3.4.2
+ 
+ 
+ 【 新 版 提 示 】
+ 【 注 意 】
+ 1、自v3.2.0起，百度地图iOS SDK全面支持HTTPS，需要广大开发者导入第三方openssl静态库：libssl.a和libcrypto.a（存放于thirdlib目录下）
+ 添加方法：在 TARGETS->Build Phases-> Link Binary With Libaries中点击“+”按钮，在弹出的窗口中点击“Add Other”按钮，选择libssl.a和libcrypto.a添加到工程中 。
+ 
+ 2、支持CocoaPods导入
+ pod setup //更新CocoPods的本地库
+ pod search BaiduMapKit  //查看最新地图SDK
+ 
+ 【修复】
+ 1.修复多页面多地图场景下，切换页面导致的crash问题。
+ 2.修复检索对象对delegate的强引用问题。
+ 3.修复在一些罕见场景下，Bugly报告的crash问题。
+ 4.修复第一次通过setBuildingsEnabled接口设置不显示3D楼块效果失效的BUG。
+ 
+ 【优化】
+ 1.删除annotation后，不再删除其对应的annotationView的subView。开发者dequeue出可重用的annotationView后，为了避免内容堆叠问题，可以自行去避免，如remove subview或者使用不同的reuseIdentifier等。
+ 2.每个reuseIdentifier可缓存多个annotationView，当开发者removeAnnotation时，SDK会将对应的annotationView加入缓存队列。
+
+
  *********************/
 /**
  *获取当前地图API的版本号
@@ -876,12 +1138,12 @@
  */
 UIKIT_STATIC_INLINE NSString* BMKGetMapApiVersion()
 {
-    return @"3.0.0";
+    return @"3.4.2";
 }
 
 /**
  *获取当前地图API base组件 的版本号
- *当前base组件版本 : 3.0.0
+ *当前base组件版本 : 3.4.2
  *return  返回当前API base组件 的版本号
  */
 UIKIT_EXTERN NSString* BMKGetMapApiBaseComponentVersion();

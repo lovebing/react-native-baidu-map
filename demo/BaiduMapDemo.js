@@ -69,6 +69,7 @@ export default class BaiduMapDemo extends Component {
             console.warn(JSON.stringify(e));
           }}
           onMapClick={(e) => {
+
           }}
         >
         </MapView>
