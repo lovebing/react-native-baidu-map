@@ -6,6 +6,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.location.LocationClientOption.LocationMode;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.geocode.GeoCodeOption;
@@ -38,9 +39,9 @@ public class GeolocationModule extends BaseModule
         return "BaiduGeolocationModule";
     }
 
-
     private void initLocationClient() {
         LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationMode.Hight_Accuracy);
         option.setCoorType("bd09ll");
         option.setIsNeedAddress(true);
         option.setIsNeedAltitude(true);
