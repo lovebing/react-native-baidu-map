@@ -16,6 +16,7 @@ import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.utils.CoordinateConverter;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
@@ -77,6 +78,16 @@ public class GeolocationModule extends BaseModule
         LatLng desLatLng = converter.convert();
         return desLatLng;
 
+    }
+
+    @ReactMethod
+    public void convertGPSCoor(double lat, double lng, Promise promise) {
+        Log.i("convertGPSCoor", "convertGPSCoor");
+        LatLng latLng = getBaiduCoorFromGPSCoor(new LatLng(lat, lng));
+        WritableMap map = Arguments.createMap();
+        map.putDouble("latitude", latLng.latitude);
+        map.putDouble("longitude", latLng.longitude);
+        promise.resolve(map);
     }
 
     @ReactMethod
