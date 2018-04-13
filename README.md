@@ -7,10 +7,17 @@ Baidu Map SDK modules and view for React Native(Android & IOS), support react na
 ![Android](https://raw.githubusercontent.com/lovebing/react-native-baidu-map/master/images/android.jpg)
 ![IOS](https://raw.githubusercontent.com/lovebing/react-native-baidu-map/master/images/ios.jpg)
 
-### Install 安装
+## Install 安装
     npm install react-native-baidu-map --save
-### Import 导入
+    
+## Import 导入
+### 自动导入
+使用命令自动导入所需要的包，包括android和iOS的：
+```
+react-native link react-native-baidu-map
+```
 
+### 手动导入
 #### Android Studio
 - settings.gradle `
 include ':react-native-baidu-map'
@@ -22,7 +29,7 @@ project(':react-native-baidu-map').projectDir = new File(settingsDir, '../node_m
 - AndroidMainifest.xml `<meta-data
             android:name="com.baidu.lbsapi.API_KEY" android:value="xx"/>`
 
-#### Xcode
+### Xcode
 - Project navigator->Libraries->Add Files to 选择 react-native-baidu-map/ios/RCTBaiduMap.xcodeproj
 - Project navigator->Build Phases->Link Binary With Libraries 加入 libRCTBaiduMap.a
 - Project navigator->Build Settings->Search Paths， Framework search paths 添加 react-native-baidu-map/ios/lib，Header search paths 添加 react-native-baidu-map/ios/RCTBaiduMap
@@ -31,7 +38,7 @@ project(':react-native-baidu-map').projectDir = new File(settingsDir, '../node_m
 
 - 其它一些注意事项可参考百度地图LBS文档
 
-##### AppDelegate.m init 初始化
+#### AppDelegate.m init 初始化
     #import "RCTBaiduMapViewManager.h"
     - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     {
@@ -40,11 +47,11 @@ project(':react-native-baidu-map').projectDir = new File(settingsDir, '../node_m
         ...
     }
 
-### Usage 使用方法
+## Usage 使用方法
 
     import { MapView, MapTypes, MapModule, Geolocation } from 'react-native-baidu-map
 
-#### MapView Props 属性
+### MapView Props 属性
 | Name                    | Type  | Default  | Extra
 | ----------------------- |:-----:| :-------:| -------
 | zoomControlsVisible     | bool  | true     | Android only
@@ -64,7 +71,7 @@ project(':react-native-baidu-map').projectDir = new File(settingsDir, '../node_m
 | onMarkerClick           | func  | undefined|
 | onMapPoiClick           | func  | undefined|
 
-#### MapModule Methods (Deprecated)
+### MapModule Methods (Deprecated)
     setMarker(double lat, double lng)
     setMapType(int mapType)
     moveToCenter(double lat, double lng, float zoom)
@@ -73,7 +80,7 @@ project(':react-native-baidu-map').projectDir = new File(settingsDir, '../node_m
     Promise geocode(String city, String addr),
     Promise getCurrentPosition()
 
-#### Geolocation Methods
+### Geolocation Methods
 
 | Method                    | Result
 | ------------------------- | -------
