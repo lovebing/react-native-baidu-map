@@ -1,8 +1,10 @@
+// @flow
+
 import {
   requireNativeComponent,
   NativeModules,
   Platform,
-  DeviceEventEmitter
+  NativeEventEmitter
 } from 'react-native';
 
 import React, {
@@ -12,6 +14,7 @@ import React, {
 
 
 const _module = NativeModules.BaiduGeolocationModule;
+const geoLocationEmitter = new NativeEventEmitter(_module);
 
 export default {
   geocode(city, addr) {
@@ -23,9 +26,11 @@ export default {
         reject(e);
         return;
       }
-      DeviceEventEmitter.once('onGetGeoCodeResult', resp => {
+
+      const subscription = geoLocationEmitter.addListener('onGetGeoCodeResult', resp => {
         resolve(resp);
-      });
+        subscription.remove();
+      })
     });
   },
   reverseGeoCode(lat, lng) {
@@ -37,8 +42,10 @@ export default {
         reject(e);
         return;
       }
-      DeviceEventEmitter.once('onGetReverseGeoCodeResult', resp => {
+
+      const subscription = geoLocationEmitter.addListener('onGetReverseGeoCodeResult', resp => {
         resolve(resp);
+        subscription.remove();
       });
     });
   },
@@ -51,10 +58,13 @@ export default {
         reject(e);
         return;
       }
-      DeviceEventEmitter.once('onGetReverseGeoCodeResult', resp => {
+
+      const subscription = geoLocationEmitter.addListener('onGetReverseGeoCodeResult', resp => {
         resp.latitude = parseFloat(resp.latitude);
         resp.longitude = parseFloat(resp.longitude);
         resolve(resp);
+
+        subscription.remove();
       });
     });
   },
@@ -69,11 +79,14 @@ export default {
             reject(e);
             return;
           }
-          DeviceEventEmitter.once('onGetReverseGeoCodeResult', resp => {
+
+          const subscription = geoLocationEmitter.addListener('onGetReverseGeoCodeResult', resp => {
             resp.latitude = parseFloat(resp.latitude);
             resp.longitude = parseFloat(resp.longitude);
             resolve(resp);
-          });
+
+            subscription.remove();
+          })
         }, (error) => {
           reject(error);
         }, {
@@ -91,9 +104,12 @@ export default {
         reject(e);
         return;
       }
-      DeviceEventEmitter.once('onGetCurrentLocationPosition', resp => {
+
+      const subscription = geoLocationEmitter.addListener('onGetCurrentLocationPosition', resp => {
         resolve(resp);
-      });
+
+        subscription.remove();
+      })
     });
   }
 };

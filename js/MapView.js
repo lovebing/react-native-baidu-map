@@ -5,13 +5,20 @@ import {
   Platform,
   DeviceEventEmitter
 } from 'react-native';
-import React, { Component } from 'react';
+
+import React, {
+  Component,
+} from 'react';
+
 import PropTypes from 'prop-types';
+
 import MapTypes from './MapTypes';
 
 export default class MapView extends Component {
   static propTypes = {
     ...View.propTypes,
+    allGesturesEnabled: PropTypes.bool,
+    draggable: PropTypes.bool,
     zoomControlsVisible: PropTypes.bool,
     trafficEnabled: PropTypes.bool,
     baiduHeatMapEnabled: PropTypes.bool,
@@ -40,7 +47,8 @@ export default class MapView extends Component {
     marker: null,
     markers: [],
     center: null,
-    zoom: 10
+    zoom: 10,
+    draggable: false,
   };
 
   constructor() {

@@ -1,23 +1,53 @@
 {
-  "name": "react-native-baidu-map",
-  "version": "0.6.0",
+  "_args": [
+    [
+      "react-native-baidu-map@0.6.0",
+      "/Users/challenger/Documents/Work/forceClouds/mobile/phone/MobileCRM"
+    ]
+  ],
+  "_from": "react-native-baidu-map@0.6.0",
+  "_id": "react-native-baidu-map@0.6.0",
+  "_inBundle": false,
+  "_integrity": "sha1-y0k3GB6ODNISXTR6W4fKE5cWR90=",
+  "_location": "/react-native-baidu-map",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "react-native-baidu-map@0.6.0",
+    "name": "react-native-baidu-map",
+    "escapedName": "react-native-baidu-map",
+    "rawSpec": "0.6.0",
+    "saveSpec": null,
+    "fetchSpec": "0.6.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-baidu-map/-/react-native-baidu-map-0.6.0.tgz",
+  "_spec": "0.6.0",
+  "_where": "/Users/challenger/Documents/Work/forceClouds/mobile/phone/MobileCRM",
+  "author": {
+    "name": "lovebing"
+  },
+  "bugs": {
+    "url": "https://github.com/lovebing/react-native-baidu-map/issues"
+  },
   "description": "Baidu Map SDK modules and view for React Native(Android & IOS), support react native 0.40+.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lovebing/react-native-baidu-map.git"
-  },
+  "homepage": "https://github.com/lovebing/react-native-baidu-map#readme",
   "keywords": [
     "Baidu Map",
     "React Native"
   ],
-  "author": "lovebing",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/lovebing/react-native-baidu-map/issues"
+  "main": "index.js",
+  "name": "react-native-baidu-map",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lovebing/react-native-baidu-map.git"
   },
-  "homepage": "https://github.com/lovebing/react-native-baidu-map#readme"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.6.0"
 }
