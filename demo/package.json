@@ -7,10 +7,10 @@
     "test": "jest"
   },
   "dependencies": {
-    "react": "15.4.2",
-    "react-native": "0.42.0",
+    "react": "^16.3.1",
+    "react-native": "^0.55.3",
     "react-native-baidu-map": "^0.6.0",
-    "react-native-fs": "2.1.0-rc.1"
+    "react-native-fs": "^2.1.0-rc.1"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",
