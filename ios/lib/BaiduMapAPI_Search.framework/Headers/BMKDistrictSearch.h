@@ -49,7 +49,7 @@
 /**
  *行政区域检索
  *异步函数，返回结果在BMKDistrictSearchDelegate的onGetDistrictResult通知
- *@param DistrictSearchOption 公交线路检索信息类
+ *@param districtSearchOption 公交线路检索信息类
  *@return 成功返回YES，否则返回NO
  */
 - (BOOL)districtSearch:(BMKDistrictSearchOption*)districtSearchOption;
