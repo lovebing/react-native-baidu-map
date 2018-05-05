@@ -1,0 +1,23 @@
+PODS:
+  - BaiduMapKit (3.4.2)
+  - RCTBaiduMap (0.6.0):
+    - BaiduMapKit
+
+DEPENDENCIES:
+  - RCTBaiduMap (from `../node_modules/react-native-baidu-map`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - BaiduMapKit
+
+EXTERNAL SOURCES:
+  RCTBaiduMap:
+    :path: "../node_modules/react-native-baidu-map"
+
+SPEC CHECKSUMS:
+  BaiduMapKit: f61b19ecf07a3f2deede72b221b366bf698739ed
+  RCTBaiduMap: 68491fab231e733bdb3acf0a5665f174be9cdc42
+
+PODFILE CHECKSUM: 2537b65cae3e8ca08fea942b7c9884c695cc2cee
+
+COCOAPODS: 1.5.0
