@@ -1,5 +1,5 @@
 {
-  "name": "rn",
+  "name": "demo",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -7,16 +7,15 @@
     "test": "jest"
   },
   "dependencies": {
-    "react": "^16.3.1",
-    "react-native": "^0.55.3",
-    "react-native-baidu-map": "https://github.com/futurechallenger/react-native-baidu-map/tarball/develop",
-    "react-native-fs": "^2.1.0-rc.1"
+    "react": "16.3.1",
+    "react-native": "0.55.3",
+    "react-native-baidu-map": "https://github.com/futurechallenger/react-native-baidu-map/tarball/develop"
   },
   "devDependencies": {
-    "babel-jest": "19.0.0",
-    "babel-preset-react-native": "1.9.1",
-    "jest": "19.0.2",
-    "react-test-renderer": "15.4.2"
+    "babel-jest": "22.4.3",
+    "babel-preset-react-native": "4.0.0",
+    "jest": "22.4.3",
+    "react-test-renderer": "16.3.1"
   },
   "jest": {
     "preset": "react-native"

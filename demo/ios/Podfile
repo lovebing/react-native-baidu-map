@@ -1,6 +1,0 @@
-platform: ios, '9.0'
-target 'RNBaiduMapDemo' do
-  pod "BaiduMapKit" #百度地图SDK
-  pod 'RNFS', :path => '../node_modules/react-native-fs'
-
-end
