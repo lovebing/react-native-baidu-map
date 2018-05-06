@@ -1,6 +1,39 @@
 platform :ios, '9.0'
 target 'demo' do
+  # Your 'node_modules' directory is probably in the root of your project,
+  # but if not, adjust the `:path` accordingly
+  pod 'React', :path => '../node_modules/react-native', :subspecs => [
+  'Core',
+  'CxxBridge', # Include this for RN >= 0.47
+  'DevSupport', # Include this to enable In-App Devmenu if RN >= 0.43
+  'RCTText',
+  'RCTNetwork',
+  'RCTWebSocket', # needed for debugging
+  # Add any other subspecs you want to use in your project
+  ]
+  # Explicitly include Yoga if you are using RN >= 0.42.0
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+  
+  # Third party deps podspec link
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+  # pod 'boost-for-react-native', :podspec => '../node_modules/react-native/third-party-podspecs/boost-for-react-native.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+  
   pod 'RCTBaiduMap', :path => '../node_modules/react-native-baidu-map'
 
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      #if target.name == "react-native-google-maps"
+      #  target.build_configurations.each do |config|
+      #    config.build_settings['CLANG_ENABLE_MODULES'] = 'No'
+      #  end
+      #end
+      
+      if target.name == "React"
+        target.remove_from_project
+      end
+    end
+  end
 end
 
