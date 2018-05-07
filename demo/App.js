@@ -46,22 +46,6 @@ export default class App extends Component {
   componentDidMount() {}
 
   render() {
-    /**
-              <MapView
-     trafficEnabled={this.state.trafficEnabled}
-     baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
-     zoom={this.state.zoom}
-     mapType={this.state.mapType}
-     center={this.state.center}
-     marker={this.state.marker}
-     markers={this.state.markers}
-     style={styles.map}
-     onMarkerClick={e => {
-            console.warn(JSON.stringify(e));
-          }}
-     onMapClick={e => {}}
-     />
-     */
     return (
       <View style={styles.container}>
         <MapView
