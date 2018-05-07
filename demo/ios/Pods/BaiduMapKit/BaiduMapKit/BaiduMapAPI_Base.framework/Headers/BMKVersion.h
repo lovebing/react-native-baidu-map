@@ -1130,7 +1130,63 @@ v3.1.0
  1.删除annotation后，不再删除其对应的annotationView的subView。开发者dequeue出可重用的annotationView后，为了避免内容堆叠问题，可以自行去避免，如remove subview或者使用不同的reuseIdentifier等。
  2.每个reuseIdentifier可缓存多个annotationView，当开发者removeAnnotation时，SDK会将对应的annotationView加入缓存队列。
 
-
+ --------------------
+ v3.4.4
+ 
+ 
+ 【 新 版 提 示 】
+ 【 注 意 】
+ 1、自v3.2.0起，百度地图iOS SDK全面支持HTTPS，需要广大开发者导入第三方openssl静态库：libssl.a和libcrypto.a（存放于thirdlib目录下）
+ 添加方法：在 TARGETS->Build Phases-> Link Binary With Libaries中点击“+”按钮，在弹出的窗口中点击“Add Other”按钮，选择libssl.a和libcrypto.a添加到工程中 。
+ 
+ 2、支持CocoaPods导入
+ pod setup //更新CocoPods的本地库
+ pod search BaiduMapKit  //查看最新地图SDK
+ 
+ 【新增】
+ 1.新增 BMKConvertToBaiduMercatorFromBD09LL 与 BMKConvertToBD09LLFromBaiduMercator 方法，用于百度经纬度和百度墨卡托之间的转换。
+ 2.新增 CLLocationCoordinate2D BMKCoordTrans(CLLocationCoordinate2D coordinate, BMK_COORD_TYPE fromType, BMK_COORD_TYPE toType); 方法，支持WGS84LL->BD09LL, GCJ02LL->BD09LL, BD09LL->GCJ02LL三种经纬度之间的直接转换。
+ 
+ 【修复】
+ 1.支持iOS11系统定位权限
+ 2.个性化地图部分catlog不显示的问题
+ 3.室内图无背景色的问题
+ 4.polygon绘制大量节点折线，超出数量，产生飞线问题
+ 5.部分场景下，点击离线地图crash的问题
+ 
+ --------------------
+ v4.0.0
+ 
+ 
+ 【 新 版 提 示 】
+ 【 注 意 】
+ 1、自v3.2.0起，百度地图iOS SDK全面支持HTTPS，需要广大开发者导入第三方openssl静态库：libssl.a和libcrypto.a（存放于thirdlib目录下）
+ 添加方法：在 TARGETS->Build Phases-> Link Binary With Libaries中点击“+”按钮，在弹出的窗口中点击“Add Other”按钮，选择libssl.a和libcrypto.a添加到工程中 。
+ 
+ 2、支持CocoaPods导入
+ pod setup //更新CocoPods的本地库
+ pod search BaiduMapKit  //查看最新地图SDK
+ 
+ 【新增】
+ 1.升级引擎，提升底图加载速度。
+ 2.升级数据服务版本与地图客户端一致。
+ 3.适配V4.1.x(即以上)版本导航SDK。只有V4.0.0及以上版本的地图SDK才能与V4.1.x版本的导航SDK同时使用，否则会编译报错。
+ 4.新增海外离线地图下载控制。
+ 
+ 【优化】
+ 1.BMKPolyline采用多段纹理时，交接处更加绘制效果更平滑。
+ 2.优化高架桥、天桥等高精道路的显示效果，增加阴影，深度效果。
+ 3.室内图下，楼的侧立面增加玻璃罩效果。
+ 4.为了优化小比例尺下的显示效果，将zoomLevel的最小值由3改为4。
+ 5.优化地图释放内存回收机制。
+ 
+ 【修复】
+ 1.BMKPoiDetailResult无法获取到POI地理坐标的BUG。
+ 2.打开百度地图客户端返回后（前后台切换）黑屏的BUG。
+ 3.部分国家和地图的离线地图大小为负数的BUG。
+ 4.修复iOS7系统下使用定位服务会crash的BUG。
+ 
+ 
  *********************/
 /**
  *获取当前地图API的版本号
@@ -1138,12 +1194,12 @@ v3.1.0
  */
 UIKIT_STATIC_INLINE NSString* BMKGetMapApiVersion()
 {
-    return @"3.4.2";
+    return @"4.0.0";
 }
 
 /**
  *获取当前地图API base组件 的版本号
- *当前base组件版本 : 3.4.2
+ *当前base组件版本 : 4.0.0
  *return  返回当前API base组件 的版本号
  */
 UIKIT_EXTERN NSString* BMKGetMapApiBaseComponentVersion();

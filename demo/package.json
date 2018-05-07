@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "react": "16.3.1",
-    "react-native": "0.55.3",
+    "react-native": "^0.55.3",
     "react-native-baidu-map": "https://github.com/futurechallenger/react-native-baidu-map/tarball/develop"
   },
   "devDependencies": {

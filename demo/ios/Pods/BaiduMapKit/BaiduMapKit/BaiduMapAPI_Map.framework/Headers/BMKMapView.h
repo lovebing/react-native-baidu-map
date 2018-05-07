@@ -75,7 +75,7 @@ typedef enum {
 /// 当前地图的中心点，改变该值时，地图的比例尺级别不会发生变化
 @property (nonatomic) CLLocationCoordinate2D centerCoordinate;
 
-/// 地图比例尺级别，在手机上当前可使用的级别为3-21级
+/// 地图比例尺级别，在手机上当前可使用的级别为4-21级
 @property (nonatomic) float zoomLevel;
 /// 地图的自定义最小比例尺级别
 @property (nonatomic) float minZoomLevel;
@@ -153,6 +153,17 @@ typedef enum {
  *@param enable 自定义地图样式是否生效
  */
 + (void)enableCustomMapStyle:(BOOL) enable;
+
+/**
+ 自定义路况颜色。注意：如果需要自定义路况颜色，必须4种路况全都设置。4个参数全部合法时，自定义颜色才有效；否则全部使用默认的。
+ 
+ @param smooth 路况畅通对应的颜色
+ @param slow 路况缓行对应的颜色
+ @param congestion 路况拥堵对应的颜色
+ @param severeCongestion 路况严重拥堵对应的颜色
+ @return 自定义颜色合法返回true，非法返回false
+ */
+- (BOOL)setCustomTrafficColorForSmooth:(UIColor *)smooth slow:(UIColor *)slow congestion:(UIColor *)congestion severeCongestion:(UIColor *)severeCongestion;
 
 /**
  * 2.10.0起废弃，空实现，逻辑由地图SDK控制

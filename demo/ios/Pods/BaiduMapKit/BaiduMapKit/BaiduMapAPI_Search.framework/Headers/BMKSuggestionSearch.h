@@ -27,6 +27,11 @@
 @property (nonatomic, strong) NSArray* poiIdList;
 ///pt列表，成员是：封装成NSValue的CLLocationCoordinate2D
 @property (nonatomic, strong) NSArray* ptList;
+//tag列表，成员是NSString
+@property (nonatomic, copy) NSArray *tagList;
+//address列表， 成员是NSString
+@property (nonatomic, copy) NSArray *addressList;
+
 
 @end
 

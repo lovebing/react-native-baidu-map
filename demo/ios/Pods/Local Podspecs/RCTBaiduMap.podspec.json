@@ -18,6 +18,9 @@
   "public_header_files": "ios/RCTBaiduMap/*.h",
   "preserve_paths": "*.js",
   "dependencies": {
+    "React": [
+
+    ],
     "BaiduMapKit": [
 
     ]
