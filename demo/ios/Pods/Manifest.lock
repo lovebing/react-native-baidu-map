@@ -1,0 +1,91 @@
+PODS:
+  - BaiduMapKit (4.0.0)
+  - boost-for-react-native (1.63.0)
+  - DoubleConversion (1.1.5)
+  - Folly (2016.09.26.00):
+    - boost-for-react-native
+    - DoubleConversion
+    - glog
+  - glog (0.3.4)
+  - RCTBaiduMap (0.6.0):
+    - BaiduMapKit
+    - React
+  - React (0.55.3):
+    - React/Core (= 0.55.3)
+  - React/Core (0.55.3):
+    - yoga (= 0.55.3.React)
+  - React/CxxBridge (0.55.3):
+    - Folly (= 2016.09.26.00)
+    - React/Core
+    - React/cxxreact
+  - React/cxxreact (0.55.3):
+    - boost-for-react-native (= 1.63.0)
+    - Folly (= 2016.09.26.00)
+    - React/jschelpers
+    - React/jsinspector
+  - React/DevSupport (0.55.3):
+    - React/Core
+    - React/RCTWebSocket
+  - React/fishhook (0.55.3)
+  - React/jschelpers (0.55.3):
+    - Folly (= 2016.09.26.00)
+    - React/PrivateDatabase
+  - React/jsinspector (0.55.3)
+  - React/PrivateDatabase (0.55.3)
+  - React/RCTBlob (0.55.3):
+    - React/Core
+  - React/RCTNetwork (0.55.3):
+    - React/Core
+  - React/RCTText (0.55.3):
+    - React/Core
+  - React/RCTWebSocket (0.55.3):
+    - React/Core
+    - React/fishhook
+    - React/RCTBlob
+  - yoga (0.55.3.React)
+
+DEPENDENCIES:
+  - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
+  - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - RCTBaiduMap (from `../node_modules/react-native-baidu-map`)
+  - React/Core (from `../node_modules/react-native`)
+  - React/CxxBridge (from `../node_modules/react-native`)
+  - React/DevSupport (from `../node_modules/react-native`)
+  - React/RCTNetwork (from `../node_modules/react-native`)
+  - React/RCTText (from `../node_modules/react-native`)
+  - React/RCTWebSocket (from `../node_modules/react-native`)
+  - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - BaiduMapKit
+    - boost-for-react-native
+
+EXTERNAL SOURCES:
+  DoubleConversion:
+    :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
+  Folly:
+    :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
+  glog:
+    :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  RCTBaiduMap:
+    :path: "../node_modules/react-native-baidu-map"
+  React:
+    :path: "../node_modules/react-native"
+  yoga:
+    :path: "../node_modules/react-native/ReactCommon/yoga"
+
+SPEC CHECKSUMS:
+  BaiduMapKit: 8fa2eb2ca81b92b740b19d9ff3b59d751d3e92e1
+  boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  DoubleConversion: e22e0762848812a87afd67ffda3998d9ef29170c
+  Folly: 211775e49d8da0ca658aebc8eab89d642935755c
+  glog: 1de0bb937dccdc981596d3b5825ebfb765017ded
+  RCTBaiduMap: d7cdd7dc8e1028b54dafec0befcca97dfdbd5166
+  React: aa2040dbb6f317b95314968021bd2888816e03d5
+  yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
+
+PODFILE CHECKSUM: a515d1cc54d50546072e8fd9a5571b03d1d9f204
+
+COCOAPODS: 1.5.0

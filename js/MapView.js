@@ -4,15 +4,13 @@ import {
   NativeModules,
   Platform,
   DeviceEventEmitter
-} from 'react-native';
+} from "react-native";
 
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import MapTypes from './MapTypes';
+import MapTypes from "./MapTypes";
 
 export default class MapView extends Component {
   static propTypes = {
@@ -48,7 +46,7 @@ export default class MapView extends Component {
     markers: [],
     center: null,
     zoom: 10,
-    draggable: false,
+    draggable: false
   };
 
   constructor() {
@@ -56,16 +54,18 @@ export default class MapView extends Component {
   }
 
   _onChange(event) {
-    if (typeof this.props[event.nativeEvent.type] === 'function') {
+    if (typeof this.props[event.nativeEvent.type] === "function") {
       this.props[event.nativeEvent.type](event.nativeEvent.params);
     }
   }
 
   render() {
-    return <BaiduMapView {...this.props} onChange={this._onChange.bind(this)}/>;
+    return (
+      <BaiduMapView {...this.props} onChange={this._onChange.bind(this)} />
+    );
   }
 }
 
-const BaiduMapView = requireNativeComponent('RCTBaiduMapView', MapView, {
-  nativeOnly: {onChange: true}
+const BaiduMapView = requireNativeComponent("RCTBaiduMapView", MapView, {
+  nativeOnly: { onChange: true }
 });
