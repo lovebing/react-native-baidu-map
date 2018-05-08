@@ -7,11 +7,7 @@ import React, { Component, PropTypes } from "react";
 
 import { MapView, MapTypes, Geolocation } from "react-native-baidu-map";
 
-import {
-  Button,
-  StyleSheet,
-  View,
-} from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 
 import Dimensions from "Dimensions";
 
@@ -23,8 +19,8 @@ export default class App extends Component {
       mayType: MapTypes.NORMAL,
       zoom: 15,
       center: {
-        longitude: 113.981718,
-        latitude: 22.542449
+        longitude: 104.08296,
+        latitude: 38.65777
       },
       trafficEnabled: false,
       baiduHeatMapEnabled: false,
@@ -43,7 +39,13 @@ export default class App extends Component {
     };
   }
 
-  componentDidMount() {}
+  /**
+   * 定位用户的位置，并显示蓝色的定位点marker。
+   * 你也可以使用`GeoLocation`模块的定位来模拟。
+   */
+  startLocate = async () => {
+    await MapView.locateUser();
+  };
 
   render() {
     return (
@@ -54,8 +56,8 @@ export default class App extends Component {
           zoom={this.state.zoom}
           mapType={this.state.mapType}
           center={this.state.center}
-          marker={this.state.marker}
-          markers={this.state.markers}
+          allGesturesEnabled={true}
+          draggable={true}
           style={styles.map}
           onMarkerClick={e => {
             console.warn(JSON.stringify(e));
@@ -150,6 +152,8 @@ export default class App extends Component {
               });
             }}
           />
+
+          <Button title="Locate User" onPress={this.startLocate} />
         </View>
       </View>
     );
