@@ -15,6 +15,10 @@
 
 @synthesize bridge = _bridge;
 
+- (NSArray<NSString *> *)supportedEvents{
+  return nil;
+}
+
 RCT_EXPORT_MODULE();
 
 @end

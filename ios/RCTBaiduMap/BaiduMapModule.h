@@ -6,24 +6,20 @@
 //  Copyright © 2016 lovebing.org. All rights reserved.
 //
 
-#ifndef BaiduMapModule_h
-#define BaiduMapModule_h
-
 #import "BaseModule.h"
 
 #import "RCTBaiduMapViewManager.h"
 
 @interface BaiduMapModule : BaseModule <BMKMapViewDelegate>
 
--(BMKGeoCodeSearch *)getGeocodesearch;
+- (BMKGeoCodeSearch *)getGeocodesearch;
 
--(void)sendEvent:(NSString *)name body:(NSMutableDictionary *)body;
+- (void)sendEvent:(NSString *)name body:(NSMutableDictionary *)body;
 
--(NSMutableDictionary *)getEmptyBody;
+- (NSMutableDictionary *)getEmptyBody;
 
--(CLLocationCoordinate2D)getBaiduCoor:(double)lat lng:(double)lng;
+- (CLLocationCoordinate2D)getBaiduCoor:(double)lat lng:(double)lng;
 
--(RCTBaiduMapView *) getBaiduMapView;
+- (RCTBaiduMapView *) getBaiduMapView;
+
 @end
-
-#endif /* BaiduMapModule_h */
