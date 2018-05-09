@@ -1,6 +1,6 @@
 # react-native-baidu-map [![npm version](https://img.shields.io/npm/v/react-native-baidu-map.svg?style=flat)](https://www.npmjs.com/package/react-native-baidu-map)
 
-Baidu Map SDK modules and view for React Native(Android & IOS), support react native 0.30+
+Baidu Map SDK modules and view for React Native(Android & IOS), support react native 0.40+
 
 百度地图 React Native 模块，支持 react native 0.30+
 
@@ -68,6 +68,7 @@ iOS的导入方式有两种：
 | onMapDoubleClick        | func  | undefined|
 | onMarkerClick           | func  | undefined|
 | onMapPoiClick           | func  | undefined|
+| locateUser              | func  |          | 定位用户，显示蓝色marker，地图以此为中心移动
 
 #### MapModule Methods (Deprecated)
     setMarker(double lat, double lng)
