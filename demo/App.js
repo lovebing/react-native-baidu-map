@@ -17,7 +17,7 @@ export default class App extends Component {
 
     this.state = {
       mayType: MapTypes.NORMAL,
-      zoom: 15,
+      zoom: 10,
       center: {
         longitude: 104.08296,
         latitude: 38.65777

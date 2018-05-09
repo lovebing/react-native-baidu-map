@@ -9,13 +9,17 @@
 #import "RCTBaiduMapViewManager.h"
 #import <BaiduMapAPI_Location/BMKLocationComponent.h>
 
-@interface RCTBaiduMapViewManager() <BMKLocationServiceDelegate>
+@interface RCTBaiduMapViewManager() <BMKLocationServiceDelegate>{
+  @private
+  RCTBaiduMapView *_innerMapView;
+}
 
 @property(strong, nonatomic) BMKLocationService *locationService;
+@property(strong, nonatomic) BMKMapView *mapView;
 
 @end
 
-@implementation RCTBaiduMapViewManager;
+@implementation RCTBaiduMapViewManager
 
 RCT_EXPORT_MODULE(RCTBaiduMapView)
 
@@ -30,22 +34,31 @@ RCT_EXPORT_VIEW_PROPERTY(allGesturesEnabled, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock)
 
 RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, RCTBaiduMapView) {
-  [view setCenterCoordinate:json ? [RCTConvert CLLocationCoordinate2D:json] : defaultView.centerCoordinate];
-
-  // TODO: display user's location
-//  if(!_locationService) {
-//    _locationService = [BMKLocationService new];
-//    _locationService.delegate = self;
-//  }
-//  [_locationService startUserLocationService];
-  
-  view.showsUserLocation = NO;
-  view.userTrackingMode = BMKUserTrackingModeNone;
-  view.showsUserLocation = YES;
+  [_innerMapView setCenterCoordinate:json ? [RCTConvert CLLocationCoordinate2D:json] : defaultView.centerCoordinate];
 }
 
 RCT_CUSTOM_VIEW_PROPERTY(draggable, BOOL, RCTBaiduMapView) {
-  view.scrollEnabled = false;
+  NSLog(@"draggable value %@", json);
+  view.scrollEnabled = json ? [RCTConvert BOOL:json] : NO;
+}
+
+RCT_EXPORT_METHOD(startLocate:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject){
+  @try{
+    if(!_locationService) {
+      _locationService = [[BMKLocationService alloc] init];
+      _locationService.delegate = self;
+    }
+    
+    [_locationService startUserLocationService];
+    
+    self.mapView.showsUserLocation = NO;
+    self.mapView.userTrackingMode = BMKUserTrackingModeNone;
+    self.mapView.showsUserLocation = YES;
+    
+    resolve(nil);
+  } @catch(NSException *ex) {
+    reject(ex.name, ex.reason, nil);
+  }
 }
 
 + (void)initSDK:(NSString*)key {
@@ -56,24 +69,29 @@ RCT_CUSTOM_VIEW_PROPERTY(draggable, BOOL, RCTBaiduMapView) {
   }
 }
 
-- (UIView *)view {
-  RCTBaiduMapView* mapView = [[RCTBaiduMapView alloc] init];
+- (UIView *)view {//0x7fd59b129000 0x7fd59b129000
+  _innerMapView = [[RCTBaiduMapView alloc] init];
+  _innerMapView.delegate = self;
   
-//  BMKLocationViewDisplayParam *displayParam = [BMKLocationViewDisplayParam new];
-//  displayParam.isRotateAngleValid = NO;
-//  displayParam.isAccuracyCircleShow = NO;
-//  displayParam.locationViewImgName = @"icon";
-//  [mapView updateLocationViewWithParam:displayParam];
+  // Location service
+//  if(!_locationService) {
+//    _locationService = [[BMKLocationService alloc] init];
+//    _locationService.delegate = self;
+//  }
   
-  mapView.delegate = self;
-  mapView.showsUserLocation = NO;
-  mapView.userTrackingMode = BMKUserTrackingModeNone;
-  mapView.showsUserLocation = YES;
-  
-  return mapView;
+  return _innerMapView;
 }
 
-- (void)mapview:(BMKMapView *)mapView
+- (dispatch_queue_t)methodQueue
+{
+  return dispatch_get_main_queue();
+}
+
+- (BMKMapView *)mapView {
+  return _innerMapView;
+}
+
+- (void)mapview:(RCTBaiduMapView *)mapView
   onDoubleClick:(CLLocationCoordinate2D)coordinate {
   NSLog(@"onDoubleClick");
   NSDictionary* event = @{
@@ -86,7 +104,9 @@ RCT_CUSTOM_VIEW_PROPERTY(draggable, BOOL, RCTBaiduMapView) {
   [self sendEvent:mapView params:event];
 }
 
-- (void)mapView:(BMKMapView *)mapView
+#pragma mark - BMKMapView delegate
+
+- (void)mapView:(RCTBaiduMapView *)mapView
 onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
   NSLog(@"onClickedMapBlank");
   NSDictionary* event = @{
@@ -99,7 +119,7 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
   [self sendEvent:mapView params:event];
 }
 
-- (void)mapViewDidFinishLoading:(BMKMapView *)mapView {
+- (void)mapViewDidFinishLoading:(RCTBaiduMapView *)mapView {
   NSDictionary* event = @{
                           @"type": @"onMapLoaded",
                           @"params": @{}
@@ -107,7 +127,7 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
   [self sendEvent:mapView params:event];
 }
 
-- (void)mapView:(BMKMapView *)mapView
+- (void)mapView:(RCTBaiduMapView *)mapView
 didSelectAnnotationView:(BMKAnnotationView *)view {
   NSDictionary* event = @{
                           @"type": @"onMarkerClick",
@@ -122,7 +142,7 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
   [self sendEvent:mapView params:event];
 }
 
-- (void) mapView:(BMKMapView *)mapView
+- (void) mapView:(RCTBaiduMapView *)mapView
  onClickedMapPoi:(BMKMapPoi *)mapPoi {
   NSLog(@"onClickedMapPoi");
   NSDictionary* event = @{
@@ -147,7 +167,7 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
   return nil;
 }
 
-- (void)mapStatusDidChanged: (BMKMapView *)mapView   {
+- (void)mapStatusDidChanged: (RCTBaiduMapView *)mapView   {
   NSLog(@"mapStatusDidChanged");
   CLLocationCoordinate2D targetGeoPt = [mapView getMapStatus].targetGeoPt;
   NSDictionary* event = @{
@@ -173,17 +193,23 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
 
 #pragma mark - BMKLocationServiceDelegate
 
+- (void)willStartLocatingUser {
+  NSLog(@"Location service will start locating user");
+}
+
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
 {
-  [(RCTBaiduMapView *)self.view updateLocationData:userLocation];
+  [self.mapView updateLocationData:userLocation];
   NSLog(@"heading is %@",userLocation.heading);
 }
 
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation {
       NSLog(@"didUpdateUserLocation lat %f, long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
-  [(RCTBaiduMapView *)[self view] updateLocationData:userLocation];
+  NSLog(@"is main thread %@", [NSThread isMainThread] ? @"YES" : @"NO");
+  [self.mapView updateLocationData:userLocation];
+  [self.mapView setCenterCoordinate:userLocation.location.coordinate];
+  
   if(_locationService) {
-    [_locationService stopUserLocationService];
     _locationService.delegate = nil;
     _locationService = nil;
   }
@@ -196,7 +222,6 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
 - (void)didFailToLocateUserWithError:(NSError *)error {
   NSLog(@"location error");
   if(_locationService) {
-    [_locationService stopUserLocationService];
     _locationService.delegate = nil;
     _locationService = nil;
   }
