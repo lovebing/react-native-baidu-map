@@ -49,6 +49,10 @@ export default class MapView extends Component {
     draggable: false
   };
 
+  static locateUser() {
+    return BaiduMapModule.startLocate();
+  }
+
   constructor() {
     super();
   }
@@ -69,3 +73,6 @@ export default class MapView extends Component {
 const BaiduMapView = requireNativeComponent("RCTBaiduMapView", MapView, {
   nativeOnly: { onChange: true }
 });
+
+const BaiduMapModule = NativeModules.BaiduMapView;
+
