@@ -18,7 +18,6 @@ import com.baidu.mapapi.map.MapViewLayoutParams;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
-import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.react.bridge.Arguments;
@@ -209,6 +208,11 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> {
 
       @Override
       public void onMapStatusChangeStart(MapStatus mapStatus) {
+        sendEvent(mMapView, "onMapStatusChangeStart", getEventParams(mapStatus));
+      }
+
+      @Override
+      public void onMapStatusChangeStart(MapStatus mapStatus, int i) {
         sendEvent(mMapView, "onMapStatusChangeStart", getEventParams(mapStatus));
       }
 
