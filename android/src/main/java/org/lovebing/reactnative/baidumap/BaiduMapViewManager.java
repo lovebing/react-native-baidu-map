@@ -1,11 +1,21 @@
 package org.lovebing.reactnative.baidumap;
 
+import static android.content.Context.SENSOR_SERVICE;
+
 import android.content.Context;
 import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.InfoWindow;
@@ -18,9 +28,12 @@ import com.baidu.mapapi.map.MapViewLayoutParams;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
+import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
@@ -35,14 +48,20 @@ import java.util.List;
 /**
  * Created by lovebing on 12/20/2015.
  */
-//public class BaiduMapViewManager extends ViewGroupManager<MapView> {
-public class BaiduMapViewManager extends SimpleViewManager<MapView> {
+public class BaiduMapViewManager extends SimpleViewManager<MapView> implements SensorEventListener {
 
   private static final String REACT_CLASS = "RCTBaiduMapView";
-  private boolean isFirstLocate = true;
+  private boolean isFirstLoc = true;
 
   private ThemedReactContext mReactContext;
 
+  private int mCurrentDirection = 0;
+  private Double lastX = 0.0;
+  private float mCurrentAccuracy;
+  private double mCurrentLat;
+  private double mCurrentLon;
+
+  private Context mAppContext;
   private ReadableArray childrenPoints;
   private HashMap<String, Marker> mMarkerMap = new HashMap<>();
   private HashMap<String, List<Marker>> mMarkersMap = new HashMap<>();
@@ -50,16 +69,24 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> {
   private MapView mMapView;
   private BaiduMap mBaiduMap;
   private UiSettings mUiSettings;
+  private MyLocationData locData;
+  private LocationClient mLocationClient;
+  private SensorManager mSensorManager;
+
+  private MyLocationListenner mLocationListenner;
 
   public String getName() {
     return REACT_CLASS;
   }
 
   public void initSDK(Context context) {
+    mAppContext = context;
     SDKInitializer.initialize(context);
   }
 
   public MapView createViewInstance(ThemedReactContext context) {
+    Log.d(REACT_CLASS, "initilization");
+
     mReactContext = context;
     mMapView = new MapView(context);
 
@@ -116,24 +143,15 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> {
 
   @ReactProp(name = "center")
   public void setCenter(MapView mapView, ReadableMap position) {
-    Log.d(REACT_CLASS, String.format("location: %s", position.toString()));
     if (position == null || !position.hasKey("latitude") || !position.hasKey("longitude")) {
       return;
     }
 
-    Log.d(REACT_CLASS, String.format("===>location: %s", position.toString()));
     double latitude = position.getDouble("latitude");
     double longitude = position.getDouble("longitude");
     LatLng point = new LatLng(latitude, longitude);
 
     BaiduMap map = mapView.getMap();
-    //TODO: show user's location
-//    MyLocationData locationData = new MyLocationData.Builder()
-//        .latitude(latitude)
-//        .longitude(longitude)
-//        .build();
-//    map.setMyLocationData(locationData);
-
     MapStatus mapStatus = new MapStatus.Builder()
         .target(point)
         .build();
@@ -186,6 +204,80 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> {
   @ReactProp(name = "childrenPoints")
   public void setChildrenPoints(MapView mapView, ReadableArray childrenPoints) {
     this.childrenPoints = childrenPoints;
+  }
+
+  @Override
+  public void onSensorChanged(SensorEvent sensorEvent) {
+    double x = sensorEvent.values[SensorManager.DATA_X];
+    if (Math.abs(x - lastX) > 1.0) {
+      mCurrentDirection = (int) x;
+      locData = new MyLocationData.Builder()
+//          .accuracy(mCurrentAccuracy)
+          .direction(mCurrentDirection)
+          .latitude(mCurrentLat)
+          .longitude(mCurrentLon)
+          .build();
+      mBaiduMap.setMyLocationData(locData);
+    }
+    lastX = x;
+  }
+
+  @Override
+  public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+  }
+
+  @ReactMethod
+  public void startLocate(Promise promise) {
+    try {
+      if (mLocationListenner == null) {
+        mLocationListenner = new MyLocationListenner();
+      }
+
+      mBaiduMap.setMyLocationEnabled(true);
+      mBaiduMap
+          .setMyLocationConfiguration(new MyLocationConfiguration(LocationMode.NORMAL,
+              true,
+              null));
+      MapStatus.Builder statusBuilder = new MapStatus.Builder();
+      statusBuilder.overlook(0);
+      mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(statusBuilder.build()));
+
+      if (mSensorManager == null) {
+        mSensorManager = (SensorManager) mAppContext.getSystemService(SENSOR_SERVICE);
+        mSensorManager
+            .registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
+                SensorManager.SENSOR_DELAY_UI);
+      }
+
+      if (mLocationClient == null) {
+        mLocationClient = new LocationClient(mReactContext);
+        mLocationClient.registerLocationListener(mLocationListenner);
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true); // 打开gps
+        option.setCoorType("bd09ll"); // 设置坐标类型
+        option.setScanSpan(1000);
+        mLocationClient.setLocOption(option);
+      }
+
+      mLocationClient.start();
+
+      promise.resolve(null);
+    } catch (Exception e) {
+      promise.reject("Locate user error", e);
+    }
+  }
+
+  public void stopLocate() {
+    if (mLocationClient != null) {
+      mLocationClient.stop();
+      mLocationClient.unRegisterLocationListener(mLocationListenner);
+      mLocationClient = null;
+    }
+
+    if (mSensorManager != null) {
+      mSensorManager.unregisterListener(this);
+    }
   }
 
   private void setListeners() {
@@ -321,6 +413,46 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> {
             .build();
         parent.addView(child, mapViewLayoutParams);
       }
+    }
+  }
+
+  /**
+   * 定位SDK监听函数
+   */
+  public class MyLocationListenner implements BDLocationListener {
+
+    @Override
+    public void onReceiveLocation(BDLocation location) {
+      Log.d(REACT_CLASS, "receive location");
+      // map view 销毁后不在处理新接收的位置
+      if (location == null || mMapView == null) {
+        return;
+      }
+      mCurrentLat = location.getLatitude();
+      mCurrentLon = location.getLongitude();
+      mCurrentAccuracy = location.getRadius();
+      locData = new MyLocationData.Builder()
+//          .accuracy(location.getRadius())
+          .direction(mCurrentDirection)
+          .latitude(mCurrentLat)
+          .longitude(mCurrentLon)
+          .build();
+      mBaiduMap.setMyLocationData(locData);
+      if (isFirstLoc) {
+        isFirstLoc = false;
+        LatLng ll = new LatLng(location.getLatitude(),
+            location.getLongitude());
+        MapStatus.Builder builder = new MapStatus.Builder();
+        builder.target(ll).zoom(18.0f);
+        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+      }
+
+      mLocationClient.stop();
+      isFirstLoc = true;
+    }
+
+    public void onReceivePoi(BDLocation poiLocation) {
+      Log.d(REACT_CLASS, "onReceivePoi");
     }
   }
 }
