@@ -2,7 +2,7 @@
 
 Baidu Map SDK modules and view for React Native(Android & IOS), support react native 0.40+
 
-百度地图 React Native 模块，支持 react native 0.40+
+百度地图 React Native 模块，支持 react native 0.30+
 
 ![Android](https://raw.githubusercontent.com/lovebing/react-native-baidu-map/master/images/android.jpg)
 ![IOS](https://raw.githubusercontent.com/lovebing/react-native-baidu-map/master/images/ios.jpg)
@@ -23,6 +23,11 @@ project(':react-native-baidu-map').projectDir = new File(settingsDir, '../node_m
             android:name="com.baidu.lbsapi.API_KEY" android:value="xx"/>`
 
 #### Xcode
+iOS的导入方式有两种：
+1. 通过项目中的`Podfile`来实现自动导入。这个可以在*demo*目录中找到示例`Podfile`。**注意**：这样是全量的导入了百度地图的SDK。如果开发者不需要全部的地图功能的话可以根据[这个文档](http://lbsyun.baidu.com/index.php?title=iossdk/guide/create-project/oc)适导入合适的库。
+
+2. 手动导入。也可以参考[百度地图的文档](http://lbsyun.baidu.com/index.php?title=iossdk/guide/create-project/oc)来一步一步的导入。
+
 - Project navigator->Libraries->Add Files to 选择 react-native-baidu-map/ios/RCTBaiduMap.xcodeproj
 - Project navigator->Build Phases->Link Binary With Libraries 加入 libRCTBaiduMap.a
 - Project navigator->Build Settings->Search Paths， Framework search paths 添加 react-native-baidu-map/ios/lib，Header search paths 添加 react-native-baidu-map/ios/RCTBaiduMap
@@ -63,6 +68,7 @@ project(':react-native-baidu-map').projectDir = new File(settingsDir, '../node_m
 | onMapDoubleClick        | func  | undefined|
 | onMarkerClick           | func  | undefined|
 | onMapPoiClick           | func  | undefined|
+| locateUser              | func  |          | 定位用户，显示蓝色marker，地图以此为中心移动
 
 #### MapModule Methods (Deprecated)
     setMarker(double lat, double lng)

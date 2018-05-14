@@ -4,14 +4,19 @@ import {
   NativeModules,
   Platform,
   DeviceEventEmitter
-} from 'react-native';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import MapTypes from './MapTypes';
+} from "react-native";
+
+import React, { Component } from "react";
+
+import PropTypes from "prop-types";
+
+import MapTypes from "./MapTypes";
 
 export default class MapView extends Component {
   static propTypes = {
     ...View.propTypes,
+    allGesturesEnabled: PropTypes.bool,
+    draggable: PropTypes.bool,
     zoomControlsVisible: PropTypes.bool,
     trafficEnabled: PropTypes.bool,
     baiduHeatMapEnabled: PropTypes.bool,
@@ -40,24 +45,34 @@ export default class MapView extends Component {
     marker: null,
     markers: [],
     center: null,
-    zoom: 10
+    zoom: 10,
+    draggable: false
   };
+
+  static locateUser() {
+    return BaiduMapModule.startLocate();
+  }
 
   constructor() {
     super();
   }
 
   _onChange(event) {
-    if (typeof this.props[event.nativeEvent.type] === 'function') {
+    if (typeof this.props[event.nativeEvent.type] === "function") {
       this.props[event.nativeEvent.type](event.nativeEvent.params);
     }
   }
 
   render() {
-    return <BaiduMapView {...this.props} onChange={this._onChange.bind(this)}/>;
+    return (
+      <BaiduMapView {...this.props} onChange={this._onChange.bind(this)} />
+    );
   }
 }
 
-const BaiduMapView = requireNativeComponent('RCTBaiduMapView', MapView, {
-  nativeOnly: {onChange: true}
+const BaiduMapView = requireNativeComponent("RCTBaiduMapView", MapView, {
+  nativeOnly: { onChange: true }
 });
+
+const BaiduMapModule = NativeModules.BaiduMapView;
+
