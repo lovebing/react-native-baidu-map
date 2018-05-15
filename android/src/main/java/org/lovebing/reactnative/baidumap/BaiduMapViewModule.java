@@ -1,14 +1,14 @@
 /**
  * Created by Uncle Charlie, 2018/05/14
  */
+
 package org.lovebing.reactnative.baidumap;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 
-public class BaiduMapViewModule extends ReactContextBaseJavaModule {
+public class BaiduMapViewModule extends BaseModule {
 
   private BaiduMapViewManager mViewManager;
 
