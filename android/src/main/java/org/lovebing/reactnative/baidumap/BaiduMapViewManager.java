@@ -73,7 +73,7 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> implements S
   private LocationClient mLocationClient;
   private SensorManager mSensorManager;
 
-  private MyLocationListenner mLocationListenner;
+  private MyLocationListener mLocationListener;
 
   public String getName() {
     return REACT_CLASS;
@@ -95,8 +95,7 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> implements S
     mUiSettings = mBaiduMap.getUiSettings();
 
     mBaiduMap.setMyLocationEnabled(true);
-    mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(
-        LocationMode.NORMAL, true, null));
+    mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(LocationMode.NORMAL, true, null));
 
     setListeners();
     return mMapView;
@@ -152,9 +151,7 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> implements S
     LatLng point = new LatLng(latitude, longitude);
 
     BaiduMap map = mapView.getMap();
-    MapStatus mapStatus = new MapStatus.Builder()
-        .target(point)
-        .build();
+    MapStatus mapStatus = new MapStatus.Builder().target(point).build();
     MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
     map.animateMapStatus(mapStatusUpdate);
   }
@@ -212,11 +209,8 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> implements S
     if (Math.abs(x - lastX) > 1.0) {
       mCurrentDirection = (int) x;
       locData = new MyLocationData.Builder()
-//          .accuracy(mCurrentAccuracy)
-          .direction(mCurrentDirection)
-          .latitude(mCurrentLat)
-          .longitude(mCurrentLon)
-          .build();
+          // .accuracy(mCurrentAccuracy)
+          .direction(mCurrentDirection).latitude(mCurrentLat).longitude(mCurrentLon).build();
       mBaiduMap.setMyLocationData(locData);
     }
     lastX = x;
@@ -230,29 +224,25 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> implements S
   @ReactMethod
   public void startLocate(Promise promise) {
     try {
-      if (mLocationListenner == null) {
-        mLocationListenner = new MyLocationListenner();
+      if (mLocationListener == null) {
+        mLocationListener = new MyLocationListener();
       }
 
       mBaiduMap.setMyLocationEnabled(true);
-      mBaiduMap
-          .setMyLocationConfiguration(new MyLocationConfiguration(LocationMode.NORMAL,
-              true,
-              null));
+      mBaiduMap.setMyLocationConfiguration(new MyLocationConfiguration(LocationMode.NORMAL, true, null));
       MapStatus.Builder statusBuilder = new MapStatus.Builder();
       statusBuilder.overlook(0);
       mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(statusBuilder.build()));
 
       if (mSensorManager == null) {
         mSensorManager = (SensorManager) mAppContext.getSystemService(SENSOR_SERVICE);
-        mSensorManager
-            .registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
-                SensorManager.SENSOR_DELAY_UI);
+        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
+            SensorManager.SENSOR_DELAY_UI);
       }
 
       if (mLocationClient == null) {
         mLocationClient = new LocationClient(mReactContext);
-        mLocationClient.registerLocationListener(mLocationListenner);
+        mLocationClient.registerLocationListener(mLocationListener);
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
@@ -271,7 +261,7 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> implements S
   public void stopLocate() {
     if (mLocationClient != null) {
       mLocationClient.stop();
-      mLocationClient.unRegisterLocationListener(mLocationListenner);
+      mLocationClient.unRegisterLocationListener(mLocationListener);
       mLocationClient = null;
     }
 
@@ -393,11 +383,7 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> implements S
     WritableMap event = Arguments.createMap();
     event.putMap("params", params);
     event.putString("type", eventName);
-    mReactContext
-        .getJSModule(RCTEventEmitter.class)
-        .receiveEvent(mapView.getId(),
-            "topChange",
-            event);
+    mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(mapView.getId(), "topChange", event);
   }
 
   public void addView(MapView parent, View child, int index) {
@@ -406,11 +392,8 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> implements S
       ReadableArray item = childrenPoints.getArray(index);
       if (item != null) {
         point.set(item.getInt(0), item.getInt(1));
-        MapViewLayoutParams mapViewLayoutParams = new MapViewLayoutParams
-            .Builder()
-            .layoutMode(MapViewLayoutParams.ELayoutMode.absoluteMode)
-            .point(point)
-            .build();
+        MapViewLayoutParams mapViewLayoutParams = new MapViewLayoutParams.Builder()
+            .layoutMode(MapViewLayoutParams.ELayoutMode.absoluteMode).point(point).build();
         parent.addView(child, mapViewLayoutParams);
       }
     }
@@ -419,7 +402,7 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> implements S
   /**
    * 定位SDK监听函数
    */
-  public class MyLocationListenner implements BDLocationListener {
+  public class MyLocationListener implements BDLocationListener {
 
     @Override
     public void onReceiveLocation(BDLocation location) {
@@ -432,16 +415,12 @@ public class BaiduMapViewManager extends SimpleViewManager<MapView> implements S
       mCurrentLon = location.getLongitude();
       mCurrentAccuracy = location.getRadius();
       locData = new MyLocationData.Builder()
-//          .accuracy(location.getRadius())
-          .direction(mCurrentDirection)
-          .latitude(mCurrentLat)
-          .longitude(mCurrentLon)
-          .build();
+          // .accuracy(location.getRadius())
+          .direction(mCurrentDirection).latitude(mCurrentLat).longitude(mCurrentLon).build();
       mBaiduMap.setMyLocationData(locData);
       if (isFirstLoc) {
         isFirstLoc = false;
-        LatLng ll = new LatLng(location.getLatitude(),
-            location.getLongitude());
+        LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
         MapStatus.Builder builder = new MapStatus.Builder();
         builder.target(ll).zoom(18.0f);
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
