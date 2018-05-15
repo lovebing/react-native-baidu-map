@@ -1,0 +1,28 @@
+{
+  "name": "RCTBaiduMap",
+  "version": "0.6.0",
+  "summary": "Baidu Map SDK modules and view for React Native(Android & IOS), support react native 0.40+.",
+  "authors": {
+    "name": "lovebing"
+  },
+  "license": "ISC",
+  "homepage": "https://github.com/lovebing/react-native-baidu-map#readme",
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source": {
+    "git": "https://github.com/futurechallenger/react-native-baidu-map.git",
+    "tag": "0.6.0"
+  },
+  "source_files": "ios/RCTBaiduMap/*.{h,m}",
+  "public_header_files": "ios/RCTBaiduMap/*.h",
+  "preserve_paths": "*.js",
+  "dependencies": {
+    "React": [
+
+    ],
+    "BaiduMapKit": [
+
+    ]
+  }
+}

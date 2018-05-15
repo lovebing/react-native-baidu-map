@@ -12,14 +12,17 @@
 
 @synthesize bridge = _bridge;
 
--(NSMutableDictionary *)getEmptyBody {
+- (NSArray<NSString *> *)supportedEvents{
+  return nil;
+}
+
+- (NSMutableDictionary *)getEmptyBody {
     NSMutableDictionary *body = @{}.mutableCopy;
     return body;
 }
 
--(void)sendEvent:(NSString *)name body:(NSMutableDictionary *)body {
-    [self.bridge.eventDispatcher sendDeviceEventWithName:name body:body];
+- (void)sendEvent:(NSString *)name body:(NSMutableDictionary *)body {
+  [self sendEventWithName:name body:body];
 }
-
 
 @end
