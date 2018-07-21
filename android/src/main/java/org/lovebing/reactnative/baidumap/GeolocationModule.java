@@ -8,6 +8,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.geocode.GeoCodeOption;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
@@ -20,7 +21,10 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
+
+import java.util.List;
 
 /**
  * Created by lovebing on 2016/10/28.
@@ -167,6 +171,19 @@ public class GeolocationModule extends BaseModule
             params.putString("district", addressComponent.district);
             params.putString("street", addressComponent.street);
             params.putString("streetNumber", addressComponent.streetNumber);
+
+            WritableArray list = Arguments.createArray();
+            List<PoiInfo> poiList = result.getPoiList();
+            for (PoiInfo info: poiList) {
+                WritableMap attr = Arguments.createMap();
+                attr.putString("name", info.name);
+                attr.putString("address", info.address);
+                attr.putString("city", info.city);
+                attr.putDouble("latitude", info.location.latitude);
+                attr.putDouble("longitude", info.location.longitude);
+                list.pushMap(attr);
+            }
+            params.putArray("poiList", list);
         }
         sendEvent("onGetReverseGeoCodeResult", params);
     }
