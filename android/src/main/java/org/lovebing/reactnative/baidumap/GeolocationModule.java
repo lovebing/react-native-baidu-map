@@ -40,16 +40,20 @@ public class GeolocationModule extends BaseModule
 
 
     private void initLocationClient() {
-        LocationClientOption option = new LocationClientOption();
-        option.setCoorType("bd09ll");
-        option.setIsNeedAddress(true);
-        option.setIsNeedAltitude(true);
-        option.setIsNeedLocationDescribe(true);
-        option.setOpenGps(true);
-        locationClient = new LocationClient(context.getApplicationContext());
-        locationClient.setLocOption(option);
-        Log.i("locationClient", "locationClient");
-        locationClient.registerLocationListener(this);
+        try {
+            LocationClientOption option = new LocationClientOption();
+            option.setCoorType("bd09ll");
+            option.setIsNeedAddress(true);
+            option.setIsNeedAltitude(true);
+            option.setIsNeedLocationDescribe(true);
+            option.setOpenGps(true);
+            locationClient = new LocationClient(context.getApplicationContext());
+            locationClient.setLocOption(option);
+            Log.i("locationClient", "locationClient");
+            locationClient.registerLocationListener(this);
+        } catch (java.lang.Exception exception) {
+            exception.printStackTrace();
+        }
     }
     /**
      *
