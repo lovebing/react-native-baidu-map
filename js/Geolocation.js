@@ -28,6 +28,9 @@ export default {
       });
     });
   },
+  convertGPSCoor(lat, lng) {
+    return _module.convertGPSCoor(lat, lng);
+  },
   reverseGeoCode(lat, lng) {
     return new Promise((resolve, reject) => {
       try {
