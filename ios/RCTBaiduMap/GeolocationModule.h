@@ -10,14 +10,18 @@
 #define GeolocationModule_h
 
 
-#import <BaiduMapAPI_Location/BMKLocationService.h>
-
+#import <BMKLocationkit/BMKLocationComponent.h>
+#import <BaiduMapAPI_Search/BMKGeoCodeSearch.h>
+#import <BaiduMapAPI_Map/BMKOfflineMap.h>
 #import "BaseModule.h"
-#import "RCTBaiduMapViewManager.h"
+#import "BaiduMapViewManager.h"
 
 @interface GeolocationModule : BaseModule <BMKGeoCodeSearchDelegate> {
 }
-
-@end
+    
+-(void)sendEvent:(NSString *)name body:(NSMutableDictionary *)body;
+-(NSMutableDictionary *)getEmptyBody;
+    
+    @end
 
 #endif /* GeolocationModule_h */

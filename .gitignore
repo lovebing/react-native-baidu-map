@@ -6,5 +6,8 @@ android/gradlew
 android/gradlew.bat
 android/local.properties
 .DS_Store
+.gradle/
 .idea
 npm-debug.log
+Pods/
+Podfile.lock

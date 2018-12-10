@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-present, lovebing.org.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import {
   requireNativeComponent,
   View,
@@ -18,9 +25,6 @@ export default class MapView extends Component {
     mapType: PropTypes.number,
     zoom: PropTypes.number,
     center: PropTypes.object,
-    marker: PropTypes.object,
-    markers: PropTypes.array,
-    childrenPoints: PropTypes.array,
     onMapStatusChangeStart: PropTypes.func,
     onMapStatusChange: PropTypes.func,
     onMapStatusChangeFinish: PropTypes.func,
@@ -36,9 +40,6 @@ export default class MapView extends Component {
     trafficEnabled: false,
     baiduHeatMapEnabled: false,
     mapType: MapTypes.NORMAL,
-    childrenPoints: [],
-    marker: null,
-    markers: [],
     center: null,
     zoom: 10
   };
@@ -52,12 +53,35 @@ export default class MapView extends Component {
       this.props[event.nativeEvent.type](event.nativeEvent.params);
     }
   }
-
+  renderIOS() {
+    const children = this.props.children;
+    const markerMap = {};
+    for (let i = 0; i < children.length; i++) {
+      for (let p in children[i]) {
+        if (children[i].type === Overlay.Marker) {
+          const props = children[i].props;
+          markerMap[props.location.latitude + ":" + props.location.longitude] = {
+            title: props.title,
+            latitude: props.location.latitude,
+            longitude: props.location.longitude
+          };
+        }
+      }
+    }
+    const markers = [];
+    for (let p in markerMap) {
+      markers.push(markerMap[p]);
+    }
+    return <BaiduMapView {...this.props} children={[]} markers={markers} onChange={this._onChange.bind(this)}/>;
+  }
   render() {
-    return <BaiduMapView {...this.props} onChange={this._onChange.bind(this)}/>;
+    if (Platform.OS === 'ios') {
+      return this.renderIOS();
+    }
+    return this.renderAndroid();
   }
 }
 
-const BaiduMapView = requireNativeComponent('RCTBaiduMapView', MapView, {
+const BaiduMapView = requireNativeComponent('BaiduMapView', MapView, {
   nativeOnly: {onChange: true}
 });

@@ -7,14 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EF154DCB1D56218D003146DF /* BaiduMapModule.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF3C22621CC2C3BE0099E9B6 /* BaiduMapModule.h */; };
-		EF154DCC1D562193003146DF /* RCTBaiduMapViewManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF6660E71D55E68000DB8D08 /* RCTBaiduMapViewManager.h */; };
-		EF3C225A1CC2C30D0099E9B6 /* RCTBaiduMapView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF3C22591CC2C30D0099E9B6 /* RCTBaiduMapView.h */; };
-		EF3C225C1CC2C30D0099E9B6 /* RCTBaiduMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3C225B1CC2C30D0099E9B6 /* RCTBaiduMapView.m */; };
-		EF3C22641CC2C3D30099E9B6 /* BaiduMapModule.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3C22631CC2C3D30099E9B6 /* BaiduMapModule.m */; };
+		61CCE03E3C444BF6504931B7 /* libPods-RCTBaiduMap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5F782E3B8667B7BDE8FF8F /* libPods-RCTBaiduMap.a */; };
+		EF154DCC1D562193003146DF /* BaiduMapViewManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF6660E71D55E68000DB8D08 /* BaiduMapViewManager.h */; };
+		EF3C225A1CC2C30D0099E9B6 /* BaiduMapView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF3C22591CC2C30D0099E9B6 /* BaiduMapView.h */; };
+		EF3C225C1CC2C30D0099E9B6 /* BaiduMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3C225B1CC2C30D0099E9B6 /* BaiduMapView.m */; };
 		EF4ABB0D1DC378CF008E75C9 /* GeolocationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */; };
-		EF4ABB101DC3793B008E75C9 /* BaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4ABB0F1DC3793A008E75C9 /* BaseModule.m */; };
-		EF6660E91D55E69B00DB8D08 /* RCTBaiduMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6660E81D55E69B00DB8D08 /* RCTBaiduMapViewManager.m */; };
+		EF6660E91D55E69B00DB8D08 /* BaiduMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6660E81D55E69B00DB8D08 /* BaiduMapViewManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,26 +22,24 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				EF154DCC1D562193003146DF /* RCTBaiduMapViewManager.h in CopyFiles */,
-				EF154DCB1D56218D003146DF /* BaiduMapModule.h in CopyFiles */,
-				EF3C225A1CC2C30D0099E9B6 /* RCTBaiduMapView.h in CopyFiles */,
+				EF154DCC1D562193003146DF /* BaiduMapViewManager.h in CopyFiles */,
+				EF3C225A1CC2C30D0099E9B6 /* BaiduMapView.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		055096877345878102757951 /* Pods-RCTBaiduMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RCTBaiduMap.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RCTBaiduMap/Pods-RCTBaiduMap.debug.xcconfig"; sourceTree = "<group>"; };
+		468F7083E3C996DFF330110E /* Pods-RCTBaiduMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RCTBaiduMap.release.xcconfig"; path = "Pods/Target Support Files/Pods-RCTBaiduMap/Pods-RCTBaiduMap.release.xcconfig"; sourceTree = "<group>"; };
+		EB5F782E3B8667B7BDE8FF8F /* libPods-RCTBaiduMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RCTBaiduMap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF3C22561CC2C30D0099E9B6 /* libRCTBaiduMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTBaiduMap.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		EF3C22591CC2C30D0099E9B6 /* RCTBaiduMapView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTBaiduMapView.h; sourceTree = "<group>"; };
-		EF3C225B1CC2C30D0099E9B6 /* RCTBaiduMapView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTBaiduMapView.m; sourceTree = "<group>"; };
-		EF3C22621CC2C3BE0099E9B6 /* BaiduMapModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaiduMapModule.h; sourceTree = "<group>"; };
-		EF3C22631CC2C3D30099E9B6 /* BaiduMapModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduMapModule.m; sourceTree = "<group>"; };
+		EF3C22591CC2C30D0099E9B6 /* BaiduMapView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaiduMapView.h; sourceTree = "<group>"; };
+		EF3C225B1CC2C30D0099E9B6 /* BaiduMapView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaiduMapView.m; sourceTree = "<group>"; };
 		EF4ABB0B1DC378BD008E75C9 /* GeolocationModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeolocationModule.h; sourceTree = "<group>"; };
 		EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeolocationModule.m; sourceTree = "<group>"; };
-		EF4ABB0E1DC37929008E75C9 /* BaseModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseModule.h; sourceTree = "<group>"; };
-		EF4ABB0F1DC3793A008E75C9 /* BaseModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModule.m; sourceTree = "<group>"; };
-		EF6660E71D55E68000DB8D08 /* RCTBaiduMapViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTBaiduMapViewManager.h; sourceTree = "<group>"; };
-		EF6660E81D55E69B00DB8D08 /* RCTBaiduMapViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTBaiduMapViewManager.m; sourceTree = "<group>"; };
+		EF6660E71D55E68000DB8D08 /* BaiduMapViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaiduMapViewManager.h; sourceTree = "<group>"; };
+		EF6660E81D55E69B00DB8D08 /* BaiduMapViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduMapViewManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,17 +47,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61CCE03E3C444BF6504931B7 /* libPods-RCTBaiduMap.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		56ACD5443909B8ED0B517164 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EB5F782E3B8667B7BDE8FF8F /* libPods-RCTBaiduMap.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DA59D7D426FB579A2A142A9F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				055096877345878102757951 /* Pods-RCTBaiduMap.debug.xcconfig */,
+				468F7083E3C996DFF330110E /* Pods-RCTBaiduMap.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		EF3C224D1CC2C30D0099E9B6 = {
 			isa = PBXGroup;
 			children = (
 				EF3C22581CC2C30D0099E9B6 /* RCTBaiduMap */,
 				EF3C22571CC2C30D0099E9B6 /* Products */,
+				DA59D7D426FB579A2A142A9F /* Pods */,
+				56ACD5443909B8ED0B517164 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,16 +92,12 @@
 		EF3C22581CC2C30D0099E9B6 /* RCTBaiduMap */ = {
 			isa = PBXGroup;
 			children = (
-				EF3C22591CC2C30D0099E9B6 /* RCTBaiduMapView.h */,
-				EF3C225B1CC2C30D0099E9B6 /* RCTBaiduMapView.m */,
-				EF3C22621CC2C3BE0099E9B6 /* BaiduMapModule.h */,
-				EF3C22631CC2C3D30099E9B6 /* BaiduMapModule.m */,
-				EF6660E71D55E68000DB8D08 /* RCTBaiduMapViewManager.h */,
-				EF6660E81D55E69B00DB8D08 /* RCTBaiduMapViewManager.m */,
+				EF3C22591CC2C30D0099E9B6 /* BaiduMapView.h */,
+				EF3C225B1CC2C30D0099E9B6 /* BaiduMapView.m */,
+				EF6660E71D55E68000DB8D08 /* BaiduMapViewManager.h */,
+				EF6660E81D55E69B00DB8D08 /* BaiduMapViewManager.m */,
 				EF4ABB0B1DC378BD008E75C9 /* GeolocationModule.h */,
 				EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */,
-				EF4ABB0E1DC37929008E75C9 /* BaseModule.h */,
-				EF4ABB0F1DC3793A008E75C9 /* BaseModule.m */,
 			);
 			path = RCTBaiduMap;
 			sourceTree = "<group>";
@@ -97,9 +109,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EF3C225F1CC2C30D0099E9B6 /* Build configuration list for PBXNativeTarget "RCTBaiduMap" */;
 			buildPhases = (
+				F94669FC245B52F58812BA9A /* [CP] Check Pods Manifest.lock */,
 				EF3C22521CC2C30D0099E9B6 /* Sources */,
 				EF3C22531CC2C30D0099E9B6 /* Frameworks */,
 				EF3C22541CC2C30D0099E9B6 /* CopyFiles */,
+				72D333A98189A0536B2EDB9A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -141,16 +155,53 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		72D333A98189A0536B2EDB9A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-RCTBaiduMap/Pods-RCTBaiduMap-resources.sh",
+				"${PODS_ROOT}/BaiduMapKit/BaiduMapKit/BaiduMapAPI_Map.framework/mapapi.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/mapapi.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RCTBaiduMap/Pods-RCTBaiduMap-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F94669FC245B52F58812BA9A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RCTBaiduMap-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		EF3C22521CC2C30D0099E9B6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				EF4ABB0D1DC378CF008E75C9 /* GeolocationModule.m in Sources */,
-				EF4ABB101DC3793B008E75C9 /* BaseModule.m in Sources */,
-				EF3C22641CC2C3D30099E9B6 /* BaiduMapModule.m in Sources */,
-				EF3C225C1CC2C30D0099E9B6 /* RCTBaiduMapView.m in Sources */,
-				EF6660E91D55E69B00DB8D08 /* RCTBaiduMapViewManager.m in Sources */,
+				EF3C225C1CC2C30D0099E9B6 /* BaiduMapView.m in Sources */,
+				EF6660E91D55E69B00DB8D08 /* BaiduMapViewManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,12 +290,17 @@
 		};
 		EF3C22601CC2C30D0099E9B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 055096877345878102757951 /* Pods-RCTBaiduMap.debug.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/lib";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/BaiduMapKit/BaiduMapKit\"",
+				);
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../react-native/React/**",
-					"$(SRCROOT)/../../react-native/Libraries/**",
+					"$(inherited)",
+					"$(SRCROOT)/../react-native/React/**",
+					"$(SRCROOT)/../react-native/Libraries/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = (
@@ -258,12 +314,17 @@
 		};
 		EF3C22611CC2C30D0099E9B6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 468F7083E3C996DFF330110E /* Pods-RCTBaiduMap.release.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/lib";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/BaiduMapKit/BaiduMapKit\"",
+				);
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../react-native/React/**",
-					"$(SRCROOT)/../../react-native/Libraries/**",
+					"$(inherited)",
+					"$(SRCROOT)/../react-native/React/**",
+					"$(SRCROOT)/../react-native/Libraries/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = (

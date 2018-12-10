@@ -1,18 +1,28 @@
+/**
+ * Copyright (c) 2016-present, lovebing.org.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 package org.lovebing.reactnative.baidumap;
 
-import android.app.Activity;
-import android.content.Context;
+import android.os.Looper;
+import android.support.annotation.MainThread;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 
 import com.facebook.react.uimanager.ViewManager;
+
+import org.lovebing.reactnative.baidumap.module.GeolocationModule;
+import org.lovebing.reactnative.baidumap.module.MapAppModule;
+import org.lovebing.reactnative.baidumap.uimanager.*;
 
 
 /**
@@ -20,34 +30,33 @@ import com.facebook.react.uimanager.ViewManager;
  */
 public class BaiduMapPackage implements ReactPackage {
 
-    private Context mContext;
-
-    BaiduMapViewManager baiduMapViewManager;
-
-    public BaiduMapPackage(Context context) {
-        this.mContext = context;
-        baiduMapViewManager = new BaiduMapViewManager();
-        baiduMapViewManager.initSDK(context);
-    }
-
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        return Arrays.<NativeModule>asList(
-                new BaiduMapModule(reactContext),
-                new GeolocationModule(reactContext)
+        return Arrays.asList(
+                new GeolocationModule(reactContext),
+                new MapAppModule(reactContext)
         );
     }
 
     @Override
     public List<ViewManager> createViewManagers(
             ReactApplicationContext reactContext) {
-        return Arrays.<ViewManager>asList(
-                baiduMapViewManager
+        init(reactContext);
+        return Arrays.asList(
+                new MapViewManager(),
+                new OverlayMarkerManager(),
+                new OverlayOverlayInfoWindowManager(),
+                new OverlayArcManager(),
+                new OverlayCircleManager(),
+                new OverlayPolygonManager(),
+                new OverlayPolylineManager(),
+                new OverlayTextManager()
         );
     }
 
-    // Deprecated RN 0.47
-    public List<Class<? extends JavaScriptModule>> createJSModules() {
-        return Collections.emptyList();
+    @MainThread
+    protected void init(ReactApplicationContext reactContext) {
+        Looper.prepare();
+        SDKInitializer.initialize(reactContext.getApplicationContext());
     }
 }

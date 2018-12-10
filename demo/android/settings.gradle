@@ -1,5 +1,0 @@
-rootProject.name = 'rn'
-
-include ':app'
-include ':react-native-baidu-map'
-project(':react-native-baidu-map').projectDir = new File(settingsDir, '../node_modules/react-native-baidu-map/android')

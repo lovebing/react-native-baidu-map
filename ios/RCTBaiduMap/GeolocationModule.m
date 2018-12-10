@@ -16,7 +16,6 @@
 @synthesize bridge = _bridge;
 
 static BMKGeoCodeSearch *geoCodeSearch;
-static BMKLocationService *locationService;
 
 RCT_EXPORT_MODULE(BaiduGeolocationModule);
 
@@ -59,8 +58,8 @@ RCT_EXPORT_METHOD(reverseGeoCode:(double)lat lng:(double)lng) {
     
     CLLocationCoordinate2D pt = (CLLocationCoordinate2D){baiduCoor.latitude, baiduCoor.longitude};
     
-    BMKReverseGeoCodeOption *reverseGeoCodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
-    reverseGeoCodeSearchOption.reverseGeoPoint = pt;
+    BMKReverseGeoCodeSearchOption *reverseGeoCodeSearchOption = [[BMKReverseGeoCodeSearchOption alloc]init];
+    reverseGeoCodeSearchOption.location = pt;
     
     BOOL flag = [[self getGeocodesearch] reverseGeoCode:reverseGeoCodeSearchOption];
     
@@ -77,8 +76,8 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     
     CLLocationCoordinate2D pt = (CLLocationCoordinate2D){baiduCoor.latitude, baiduCoor.longitude};
     
-    BMKReverseGeoCodeOption *reverseGeoCodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
-    reverseGeoCodeSearchOption.reverseGeoPoint = pt;
+    BMKReverseGeoCodeSearchOption *reverseGeoCodeSearchOption = [[BMKReverseGeoCodeSearchOption alloc]init];
+    reverseGeoCodeSearchOption.location = pt;
     
     BOOL flag = [[self getGeocodesearch] reverseGeoCode:reverseGeoCodeSearchOption];
     
@@ -95,7 +94,7 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     return geoCodeSearch;
 }
 
-- (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error{
+- (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeSearchResult *)result errorCode:(BMKSearchErrorCode)error {
     NSMutableDictionary *body = [self getEmptyBody];
     
     if (error == BMK_SEARCH_NO_ERROR) {
@@ -111,8 +110,7 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     [self sendEvent:@"onGetGeoCodeResult" body:body];
     
 }
--(void) onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result
-                        errorCode:(BMKSearchErrorCode)error {
+- (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeSearchResult *)result errorCode:(BMKSearchErrorCode)error {
     
     NSMutableDictionary *body = [self getEmptyBody];
     
@@ -192,15 +190,22 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     }
     return errormsg;
 }
-
+    
 -(CLLocationCoordinate2D)getBaiduCoor:(double)lat lng:(double)lng {
     CLLocationCoordinate2D coor = CLLocationCoordinate2DMake(lat, lng);
-    NSDictionary* testdic = BMKConvertBaiduCoorFrom(coor,BMK_COORDTYPE_COMMON);
-    testdic = BMKConvertBaiduCoorFrom(coor,BMK_COORDTYPE_GPS);
-    CLLocationCoordinate2D baiduCoor = BMKCoorDictionaryDecode(testdic);
-    
+    BMKLocationCoordinateType srctype = BMKLocationCoordinateTypeWGS84;
+    BMKLocationCoordinateType destype = BMKLocationCoordinateTypeBMK09MC;
+    CLLocationCoordinate2D baiduCoor = [BMKLocationManager BMKLocationCoordinateConvert:coor SrcType:srctype DesType:destype];
     return baiduCoor;
 }
-
+    
+-(NSMutableDictionary *)getEmptyBody {
+    NSMutableDictionary *body = @{}.mutableCopy;
+    return body;
+}
+    
+-(void)sendEvent:(NSString *)name body:(NSMutableDictionary *)body {
+    [self.bridge.eventDispatcher sendDeviceEventWithName:name body:body];
+}
 
 @end
