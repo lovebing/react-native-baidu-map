@@ -100,7 +100,7 @@ uploadArchives {
 }
 
 dependencies {
-    compileOnly 'com.facebook.react:react-native:0.56.0'
+    compileOnly 'com.facebook.react:react-native:+'
     implementation files('libs/BaiduLBS_Android.jar')
     provided files('src/main/assets')
 }
