@@ -56,49 +56,6 @@ signing {
     sign configurations.archives
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-            pom.project {
-                name 'BaidMap for React Native'
-                packaging 'jar'
-                description 'BaidMap for React Native'
-                url 'https://github.com/lovebing/react-native-baidu-map/tree/master/android'
-
-                scm {
-                    connection 'scm:https://github.com/lovebing/react-native-baidu-map.git'
-                    developerConnection 'scm:https://github.com/lovebing/react-native-baidu-map.git'
-                    url 'https://github.com/lovebing/react-native-baidu-map.git'
-                }
-
-                licenses {
-                    license {
-                        name 'The MIT License (MIT)'
-                        url 'https://mit-license.org/'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'lovebing'
-                        name 'Tang Yangjian'
-                        email 'tangyangjian@gmail.com'
-                    }
-                }
-            }
-        }
-    }
-}
-
 dependencies {
     compileOnly 'com.facebook.react:react-native:+'
     implementation files('libs/BaiduLBS_Android.jar')
