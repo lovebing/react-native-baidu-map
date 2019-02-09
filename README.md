@@ -4,6 +4,8 @@ Baidu Map SDK modules and view for React Native(Android & IOS), support react na
 
 百度地图 React Native 模块，支持 react native 0.57+，已更新到最新的百度地图SDK版本。
 
+Marker icon 的实现参考了 https://github.com/react-native-community/react-native-maps 的相关代码。
+
 ![Android](https://raw.githubusercontent.com/lovebing/react-native-baidu-map/master/images/android.jpg)
 ![IOS](https://raw.githubusercontent.com/lovebing/react-native-baidu-map/master/images/ios.jpg)
 ### 环境要求
@@ -12,7 +14,7 @@ Baidu Map SDK modules and view for React Native(Android & IOS), support react na
 
 2.Android
 - Android SDK: api 28 及上以上
-- gradle: 4.6
+- gradle: 4.5
 - Android Studio: 3.1.3 及以上
 
 3.IOS
@@ -86,7 +88,7 @@ public class MainApplication extends Application implements ReactApplication {
 
 ### Usage 使用方法
 
-    import { MapView, MapTypes, Geolocation, Overelay } from 'react-native-baidu-map
+    `import { MapView, MapTypes, Geolocation, Overelay } from 'react-native-baidu-map'`
 
 #### MapView Props 属性
 | Prop                    | Type  | Default  | Description
@@ -185,3 +187,14 @@ public class MainApplication extends Application implements ReactApplication {
 | Promise reverseGeoCodeGPS(double lat, double lng) |  `{"address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}`
 | Promise geocode(String city, String addr) | {"latitude": 0.0, "longitude": 0.0}
 | Promise getCurrentPosition() | IOS: `{"latitude": 0.0, "longitude": 0.0, "address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}` Android: `{"latitude": 0.0, "longitude": 0.0, "direction": -1, "altitude": 0.0, "radius": 0.0, "address": "", "countryCode": "", "country": "", "province": "", "cityCode": "", "city": "", "district": "", "street": "", "streetNumber": "", "buildingId": "", "buildingName": ""}`
+
+
+
+### 开发和测试说明
+
+https://stackoverflow.com/questions/44061155/react-native-npm-link-local-dependency-unable-to-resolve-module
+mkdir example/node_modules/react-native-baidu-map
+cp -R package.json js ios index.js android example/node_modules/react-native-baidu-map/
+
+cd example
+react-native link react-native-baidu-map

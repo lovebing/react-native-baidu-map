@@ -4,7 +4,7 @@ apply plugin: 'signing'
 
 group = "org.lovebing.reactnative"
 archivesBaseName = "baidumap"
-version = "1.0.1"
+version = "1.1.0"
 
 buildscript {
     repositories {
@@ -31,7 +31,7 @@ repositories {
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.0'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         minSdkVersion 16
@@ -59,6 +59,6 @@ signing {
 dependencies {
     compileOnly 'com.facebook.react:react-native:+'
     implementation files('libs/BaiduLBS_Android.jar')
-    provided files('src/main/assets')
+    compileOnly files('src/main/assets')
 }
 

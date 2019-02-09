@@ -53,6 +53,7 @@ export default class MapView extends Component {
       this.props[event.nativeEvent.type](event.nativeEvent.params);
     }
   }
+
   renderIOS() {
     const children = this.props.children;
     const markerMap = {};
@@ -74,6 +75,11 @@ export default class MapView extends Component {
     }
     return <BaiduMapView {...this.props} children={[]} markers={markers} onChange={this._onChange.bind(this)}/>;
   }
+
+  renderAndroid() {
+    return <BaiduMapView {...this.props} onChange={this._onChange.bind(this)}/>;
+  }
+
   render() {
     if (Platform.OS === 'ios') {
       return this.renderIOS();
