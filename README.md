@@ -88,7 +88,7 @@ public class MainApplication extends Application implements ReactApplication {
 
 ### Usage 使用方法
 
-    `import { MapView, MapTypes, Geolocation, Overelay } from 'react-native-baidu-map'`
+    import { MapView, MapTypes, Geolocation, Overelay } from 'react-native-baidu-map'
 
 #### MapView Props 属性
 | Prop                    | Type  | Default  | Description
@@ -191,10 +191,14 @@ public class MainApplication extends Application implements ReactApplication {
 
 
 ### 开发和测试说明
-
+react-native 不支持软链，参考：
 https://stackoverflow.com/questions/44061155/react-native-npm-link-local-dependency-unable-to-resolve-module
+
+
+#### 使用本地的包
+```shell
 mkdir example/node_modules/react-native-baidu-map
 cp -R package.json js ios index.js android example/node_modules/react-native-baidu-map/
-
 cd example
 react-native link react-native-baidu-map
+```
