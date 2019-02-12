@@ -10,7 +10,7 @@ PODS:
   - glog (0.3.5)
   - React (0.58.4):
     - React/Core (= 0.58.4)
-  - react-native-baidu-map (1.0.1):
+  - react-native-baidu-map (1.0.2):
     - BaiduMapKit (= 4.2.0)
     - BMKLocationKit (= 1.3.0.2)
     - React
@@ -92,7 +92,7 @@ SPEC CHECKSUMS:
   Folly: de497beb10f102453a1afa9edbf8cf8a251890de
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
   React: 9b873b38b92ed8012d7cdf3b965477095ed364c4
-  react-native-baidu-map: 89d481e54ae5a73201be2d905befb56890417e26
+  react-native-baidu-map: 42940e8262c722f4628bb809e39d858b449f75e7
   yoga: 0885622311729a02c2bc02dca97167787a51488b
 
 PODFILE CHECKSUM: 88204c168c90611fcd40ae53788229777a5a0383
