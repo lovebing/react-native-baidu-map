@@ -10,7 +10,7 @@
 
 @implementation BaiduMapViewManager;
 
-RCT_EXPORT_MODULE(RCTBaiduMapView)
+RCT_EXPORT_MODULE(BaiduMapView)
 
 RCT_EXPORT_VIEW_PROPERTY(mapType, int)
 RCT_EXPORT_VIEW_PROPERTY(zoom, float)
