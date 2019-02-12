@@ -1,11 +1,13 @@
 node_modules/
 android/build/
 android/.idea/
-android/gradle/
-android/gradlew
-android/gradlew.bat
+android/.gradle/
 android/local.properties
 .DS_Store
 .idea
 npm-debug.log
-demo
+example
+package-lock.json
+.git
+.gitignore
+.yarn-metadata.json

@@ -55,7 +55,7 @@ export default class MapView extends Component {
   }
 
   renderIOS() {
-    const children = this.props.children;
+    const children = this.props.children ? this.props.children : [];
     const markerMap = {};
     for (let i = 0; i < children.length; i++) {
       for (let p in children[i]) {
