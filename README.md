@@ -33,7 +33,9 @@ https://stackoverflow.com/questions/44061155/react-native-npm-link-local-depende
 #### 使用本地的包 （以 example 为例）
 ```shell
 mkdir example/node_modules/react-native-baidu-map
-cp -R package.json js lib index.js android LICENSE README.md example/node_modules/react-native-baidu-map/
+cp -R package.json js index.js ios android LICENSE README.md example/node_modules/react-native-baidu-map/
+rm -rf example/node_modules/react-native-baidu-map/ios/RCTBaiduMap.xcodeproj
+
 ```
 #### 使用 npm 源
 npm install react-native-baidu-map --save

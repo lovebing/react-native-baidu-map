@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "react-native-baidu-map"
-  s.version      = "1.0.3"
+  s.version      = "1.0.5"
   s.summary      = "Baidu Map for React Native"
 
   s.description  = <<-DESC
@@ -43,7 +43,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/lovebing/react-native-baidu-map.git", :tag => "#{s.version}" }
 
-  s.source_files  = "lib/ios/RCTBaiduMap/**/*.{h,m}"
+  s.source_files  = "ios/RCTBaiduMap/**/*.{h,m}"
   s.exclude_files = ""
 
   # s.public_header_files = "**/*.h"
