@@ -32,11 +32,22 @@ public class OverlayOverlayInfoWindowManager extends ViewGroupManager<OverlayInf
 
     @Override
     public void addView(OverlayInfoWindow parent, View child, int index) {
-        parent.setChildren(child);
+        //parent.setChildren(child);
+    }
+
+    @ReactProp(name = "title")
+    public void setTitle(OverlayInfoWindow overlayInfoWindow, String title) {
+        if (overlayInfoWindow == null) {
+            return;
+        }
+        overlayInfoWindow.setTitle(title);
     }
 
     @ReactProp(name = "location")
     public void setLocation(OverlayInfoWindow overlayInfoWindow, ReadableMap location) {
+        if (overlayInfoWindow == null) {
+            return;
+        }
         overlayInfoWindow.setLocation(LatLngUtil.fromReadableMap(location));
     }
 
@@ -45,16 +56,6 @@ public class OverlayOverlayInfoWindowManager extends ViewGroupManager<OverlayInf
         if (overlayInfoWindow == null) {
             return;
         }
-        try {
-            if (visible && !_visible) {
-                overlayInfoWindow.show();
-                _visible = true;
-            } else if (!visible && _visible){
-                overlayInfoWindow.hide();
-                _visible = false;
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        overlayInfoWindow.setVisible(visible);
     }
 }

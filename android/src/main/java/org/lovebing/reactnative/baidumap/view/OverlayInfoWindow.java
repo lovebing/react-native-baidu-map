@@ -10,21 +10,27 @@ package org.lovebing.reactnative.baidumap.view;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.model.LatLng;
+
+import java.util.Objects;
 
 /**
  * @author lovebing Created on Dec 09, 2018
  */
 public class OverlayInfoWindow extends ViewGroup implements OverlayView {
 
+    private String title;
     private LatLng location;
-    private View children;
     private InfoWindow infoWindow;
     private BaiduMap baiduMap;
+    private Id prevId;
+    private boolean visible = false;
 
     public OverlayInfoWindow(Context context) {
         super(context);
@@ -48,29 +54,27 @@ public class OverlayInfoWindow extends ViewGroup implements OverlayView {
 
     }
 
-    public LatLng getLocation() {
-        return location;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setLocation(LatLng location) {
         this.location = location;
-        infoWindow = new InfoWindow(children, location, -47);
     }
 
-    public View getChildren() {
-        return children;
-    }
-
-    public void setChildren(View children) {
-        this.children = children;
+    public void setVisible(boolean visible) {
+        if (visible && !this.visible) {
+            show();
+        } else if (!visible && this.visible) {
+            hide();
+        }
+        this.visible = visible;
     }
 
     @Override
     public void addTopMap(BaiduMap baiduMap) {
-        if (infoWindow == null) {
-            infoWindow = new InfoWindow(children, location, -47);
-        }
         this.baiduMap = baiduMap;
+        show();
     }
 
     @Override
@@ -79,10 +83,59 @@ public class OverlayInfoWindow extends ViewGroup implements OverlayView {
     }
 
     public void show() {
-        baiduMap.showInfoWindow(infoWindow);
+        if (baiduMap != null) {
+            updateInfoWindow();
+            baiduMap.showInfoWindow(infoWindow);
+        }
     }
 
     public void hide() {
-        baiduMap.hideInfoWindow();
+        if (baiduMap != null) {
+            baiduMap.hideInfoWindow();
+        }
+    }
+
+    private void updateInfoWindow() {
+        BitmapDescriptor bitmap;
+        Id currentId = new Id(title, location);
+        if (currentId.equals(prevId)) {
+            return;
+        }
+        prevId = currentId;
+        Button children = new Button(getContext());
+        children.setText(title);
+        bitmap = BitmapDescriptorFactory.fromView(children);
+        infoWindow = new InfoWindow(bitmap, location, -47, new InfoWindow.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick() {
+
+            }
+        });
+    }
+
+
+    public static class Id {
+        private String title;
+        private LatLng location;
+
+        public Id(String title, LatLng location) {
+            this.title = title;
+            this.location = location;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Id id = (Id) o;
+            return Objects.equals(title, id.title) &&
+                    Objects.equals(location, id.location);
+        }
+
+        @Override
+        public int hashCode() {
+
+            return Objects.hash(title, location);
+        }
     }
 }

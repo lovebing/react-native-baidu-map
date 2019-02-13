@@ -20,14 +20,17 @@ export default class InfoWindow extends Component {
   static propTypes = {
     ...View.propTypes,
     location: PropTypes.object,
-    visible: PropTypes.bool
+    visible: PropTypes.bool,
+    title: PropTypes.string
   };
 
   static defaultProps = {
     location: {
       latitude: 0,
       longitude: 0
-    }
+    },
+    title: '',
+    visible: false
   };
 
   constructor() {

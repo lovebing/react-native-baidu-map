@@ -21,10 +21,9 @@ export default class Marker extends Component {
   static propTypes = {
     ...View.propTypes,
     title: PropTypes.string,
-    position: PropTypes.object,
-    location: PropTypes.bool,
+    location: PropTypes.object,
     alpha: PropTypes.number,
-    rotate: PropTypes.rotate,
+    rotate: PropTypes.number,
     flat: PropTypes.bool,
     icon: PropTypes.any
   };
@@ -33,7 +32,8 @@ export default class Marker extends Component {
     location: {
       latitude: 0,
       longitude: 0
-    }
+    },
+    rotate: 0
   };
 
   constructor() {
