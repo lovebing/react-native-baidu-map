@@ -68,7 +68,7 @@ Podfile 增加
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'react-native-baidu-map', :podspec => '../node_modules/react-native-baidu-map/lib/ios/react-native-baidu-map.podspec'
+  pod 'react-native-baidu-map', :podspec => '../node_modules/react-native-baidu-map/ios/react-native-baidu-map.podspec'
 ```
 
 ##### AppDelegate.m init 初始化
