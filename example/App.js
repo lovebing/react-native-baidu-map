@@ -15,43 +15,22 @@ const {height, width} = Dimensions.get('window');
 type Props = {};
 export default class App extends Component<Props> {
   state = {
-    infoWindowProps: {
-      location: {
-        longitude: 0,
-        latitude: 0
-      },
-      visible: false,
-      title: ''
-    }
   };
 
   render() {
     const { infoWindowProps } = this.state;
+    console.warn('Overlay', Overlay)
     return (
       <View style={styles.container}>
         <MapView 
           width={width} 
           height={400} 
           zoom={18}
+          trafficEnabled={true}
+          zoomControlsVisible={true}
+          mapType={MapTypes.SATELLITE}
           center={{ longitude: 113.960453, latitude: 22.546045 }}
-          onMarkerClick={(e) => {
-            this.setState({
-              infoWindowProps: {
-                title: e.title,
-                location: e.position,
-                visible: !infoWindowProps.visible
-              }
-            });
-          }}>
-          <Overlay.Marker
-            title="高新园地铁站"
-            rotate={50}
-            location={{ longitude: 113.960453, latitude: 22.546045 }} />
-          <Overlay.InfoWindow 
-            title={infoWindowProps.title} 
-            location={infoWindowProps.location} 
-            visible={infoWindowProps.visible} />
-          
+        >
         </MapView>
       </View>
     );
