@@ -13,7 +13,7 @@ Marker icon 的实现参考了 https://github.com/react-native-community/react-n
 
 
 ### Dev & Test 开发和测试说明
-react-native doesn't support symlinks. see https://stackoverflow.com/questions/44061155/react-native-npm-link-local-dependency-unable-to-resolve-module. Can't not install local package by using `npm link`.
+react-native doesn't support symlinks. see https://stackoverflow.com/questions/44061155/react-native-npm-link-local-dependency-unable-to-resolve-module. Can't install local package by using `npm link`.
 
 react-native 不支持软链，参考：
 https://stackoverflow.com/questions/44061155/react-native-npm-link-local-dependency-unable-to-resolve-module
