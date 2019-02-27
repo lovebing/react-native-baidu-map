@@ -15,6 +15,7 @@ import {
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MapTypes from './MapTypes';
+import Overlay from './Overlay';
 
 export default class MapView extends Component {
   static propTypes = {
