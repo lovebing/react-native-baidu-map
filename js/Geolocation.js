@@ -73,7 +73,7 @@ export default {
       return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition((position) => {
           try {
-            _module.reverseGeoCodeGPS(position.coords.latitude, position.coords.longitude);
+            _module.reverseGeoCode(position.coords.latitude, position.coords.longitude);
           }
           catch (e) {
             reject(e);
