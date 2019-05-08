@@ -56,7 +56,9 @@ public class BaiduMapPackage implements ReactPackage {
 
     @MainThread
     protected void init(ReactApplicationContext reactContext) {
-        Looper.prepare();
+        if (Looper.myLooper()==null){ 
+            Looper.prepare();
+        }
         SDKInitializer.initialize(reactContext.getApplicationContext());
     }
 }
