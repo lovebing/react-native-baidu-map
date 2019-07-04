@@ -12,7 +12,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import android.view.View;
@@ -55,8 +54,8 @@ public class OverlayMarker extends View implements OverlayView {
                 @Override
                 public void onFinalImageSet(
                         String id,
-                        @Nullable final ImageInfo imageInfo,
-                        @Nullable Animatable animatable) {
+                         final ImageInfo imageInfo,
+                         Animatable animatable) {
                     CloseableReference<CloseableImage> imageReference = null;
                     try {
                         imageReference = dataSource.getResult();
@@ -86,12 +85,12 @@ public class OverlayMarker extends View implements OverlayView {
         init();
     }
 
-    public OverlayMarker(Context context, @Nullable AttributeSet attrs) {
+    public OverlayMarker(Context context,  AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public OverlayMarker(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public OverlayMarker(Context context,  AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -106,7 +105,7 @@ public class OverlayMarker extends View implements OverlayView {
     }
 
     @TargetApi(21)
-    public OverlayMarker(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public OverlayMarker(Context context,  AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

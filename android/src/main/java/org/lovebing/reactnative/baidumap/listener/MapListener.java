@@ -6,9 +6,6 @@
  */
 
 package org.lovebing.reactnative.baidumap.listener;
-
-import android.support.annotation.Nullable;
-
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
@@ -114,7 +111,7 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
      * @param eventName
      * @param params
      */
-    private void sendEvent(MapView mapView, String eventName, @Nullable WritableMap params) {
+    private void sendEvent(MapView mapView, String eventName,  WritableMap params) {
         WritableMap event = Arguments.createMap();
         event.putMap("params", params);
         event.putString("type", eventName);

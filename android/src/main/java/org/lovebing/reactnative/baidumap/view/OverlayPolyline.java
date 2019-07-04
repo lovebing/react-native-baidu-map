@@ -9,7 +9,6 @@ package org.lovebing.reactnative.baidumap.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import com.baidu.mapapi.map.BaiduMap;
@@ -32,16 +31,16 @@ public class OverlayPolyline extends View implements OverlayView {
         super(context);
     }
 
-    public OverlayPolyline(Context context, @Nullable AttributeSet attrs) {
+    public OverlayPolyline(Context context,  AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public OverlayPolyline(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public OverlayPolyline(Context context,  AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(21)
-    public OverlayPolyline(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public OverlayPolyline(Context context,  AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

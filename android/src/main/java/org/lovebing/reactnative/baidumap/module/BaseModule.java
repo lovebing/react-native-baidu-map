@@ -7,8 +7,6 @@
 
 package org.lovebing.reactnative.baidumap.module;
 
-import android.support.annotation.Nullable;
-
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.WritableMap;
@@ -31,7 +29,7 @@ abstract public class BaseModule extends ReactContextBaseJavaModule {
      * @param eventName
      * @param params
      */
-    protected void sendEvent(String eventName,@Nullable WritableMap params) {
+    protected void sendEvent(String eventName, WritableMap params) {
         context
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(eventName, params);

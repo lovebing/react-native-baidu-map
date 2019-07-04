@@ -8,7 +8,7 @@
 package org.lovebing.reactnative.baidumap;
 
 import android.os.Looper;
-import android.support.annotation.MainThread;
+import androidx.annotation.MainThread;
 
 import java.util.Arrays;
 import java.util.List;
