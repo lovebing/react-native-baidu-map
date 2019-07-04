@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
-apply plugin: 'signing'
 
 group = "org.lovebing.reactnative"
 archivesBaseName = "baidumap"
@@ -50,10 +49,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-}
-
-signing {
-    sign configurations.archives
 }
 
 dependencies {
