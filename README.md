@@ -161,6 +161,7 @@ Podfile 增加
 | location                | object|{latitude: 0, longitude: 0}
 | visible                 | bool  | false    | 点击 marker 后才能设为 true 
 
+```jsx
 <MapView>
     <Marker/>
     <Arc />
@@ -172,6 +173,7 @@ Podfile 增加
         <View></View>
     </InfoWindow>
 </MapView>
+```
 
 #### Geolocation Methods
 
