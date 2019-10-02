@@ -2916,8 +2916,8 @@ lodash.throttle@^4.1.1:
   resolved "http://registry.npm.taobao.org/lodash.throttle/download/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
 
 lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
-  version "4.17.11"
-  resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
 
 loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.1:
   version "1.4.0"
@@ -3928,6 +3928,10 @@ react-devtools-core@^3.4.2:
 react-is@^16.6.3:
   version "16.8.1"
   resolved "http://registry.npm.taobao.org/react-is/download/react-is-16.8.1.tgz#a80141e246eb894824fb4f2901c0c50ef31d4cdb"
+
+react-native-baidu-map@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-baidu-map/-/react-native-baidu-map-1.0.6.tgz#685af096f0096a514bd7d4fd536c8b257240b207"
 
 react-native@0.58.4:
   version "0.58.4"
