@@ -9,7 +9,6 @@ package org.lovebing.reactnative.baidumap.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import com.baidu.mapapi.map.BaiduMap;
@@ -33,16 +32,16 @@ public class OverlayCircle extends View implements OverlayView {
         super(context);
     }
 
-    public OverlayCircle(Context context, @Nullable AttributeSet attrs) {
+    public OverlayCircle(Context context,  AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public OverlayCircle(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public OverlayCircle(Context context,  AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(21)
-    public OverlayCircle(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public OverlayCircle(Context context,  AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
