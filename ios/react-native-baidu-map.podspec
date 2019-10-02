@@ -49,7 +49,7 @@ Pod::Spec.new do |s|
   # s.public_header_files = "**/*.h"
 
   s.frameworks = "CoreLocation", "QuartzCore", "OpenGLES", "SystemConfiguration", "CoreGraphics", "Security", "CoreTelephony" 
-
+  s.static_framework = true
   s.libraries = "c++", "sqlite3", "ssl", "crypto"
 
   # s.requires_arc = true
