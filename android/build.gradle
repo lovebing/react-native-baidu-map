@@ -15,7 +15,7 @@ buildscript {
         google()
         jcenter()
         maven() {
-            url '/usr/local/node/lib/node_modules/react-native/android'
+            url 'http://mvn2.codeboot.net/'
         }
     }
     dependencies {
@@ -28,7 +28,7 @@ repositories {
     google()
     jcenter()
     maven {
-        url '/usr/local/node/lib/node_modules/react-native/android'
+        url 'http://mvn2.codeboot.net/'
     }
 }
 
@@ -56,7 +56,7 @@ android {
 }
 
 dependencies {
-    compileOnly 'com.facebook.react:react-native:+'
+    compileOnly 'com.facebook.react:react-native:0.60.1'
     implementation files('libs/BaiduLBS_Android.jar')
     compileOnly files('src/main/assets')
 }
