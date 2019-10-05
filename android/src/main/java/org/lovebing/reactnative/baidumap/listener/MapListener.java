@@ -40,14 +40,13 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
     }
 
     @Override
-    public boolean onMapPoiClick(MapPoi mapPoi) {
+    public void onMapPoiClick(MapPoi mapPoi) {
         WritableMap writableMap = Arguments.createMap();
         writableMap.putString("name", mapPoi.getName());
         writableMap.putString("uid", mapPoi.getUid());
         writableMap.putDouble("latitude", mapPoi.getPosition().latitude);
         writableMap.putDouble("longitude", mapPoi.getPosition().longitude);
         sendEvent(mapView, "onMapPoiClick", writableMap);
-        return true;
     }
 
     @Override

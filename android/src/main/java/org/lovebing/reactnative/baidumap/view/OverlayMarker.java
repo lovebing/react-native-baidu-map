@@ -15,7 +15,7 @@ import android.net.Uri;
 import android.util.AttributeSet;
 
 import android.view.View;
-import android.view.ViewGroup;
+import com.baidu.mapapi.clusterutil.clustering.ClusterItem;
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.common.references.CloseableReference;
@@ -36,7 +36,7 @@ import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import org.lovebing.reactnative.baidumap.R;
 
-public class OverlayMarker extends View implements OverlayView {
+public class OverlayMarker extends View implements OverlayView, ClusterItem {
 
     private String title;
     private LatLng position;
@@ -95,6 +95,10 @@ public class OverlayMarker extends View implements OverlayView {
         init();
     }
 
+    public Marker getMarker() {
+        return marker;
+    }
+
     protected void init() {
         GenericDraweeHierarchy genericDraweeHierarchy = new GenericDraweeHierarchyBuilder(getResources())
                 .setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER)
@@ -117,6 +121,7 @@ public class OverlayMarker extends View implements OverlayView {
         this.title = title;
     }
 
+    @Override
     public LatLng getPosition() {
         return position;
     }
@@ -192,6 +197,15 @@ public class OverlayMarker extends View implements OverlayView {
     }
 
     @Override
+    public BitmapDescriptor getBitmapDescriptor() {
+        if (getIconBitmapDescriptor() != null) {
+            return getIconBitmapDescriptor();
+        } else {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.icon_gcoding);
+        }
+    }
+
+    @Override
     public void addTopMap(BaiduMap baiduMap) {
         if (loadingImage) {
             new Thread(() -> {
@@ -209,7 +223,6 @@ public class OverlayMarker extends View implements OverlayView {
         }
     }
 
-
     @Override
     public void removeFromMap(BaiduMap baiduMap) {
         if (marker != null) {
@@ -219,12 +232,7 @@ public class OverlayMarker extends View implements OverlayView {
     }
 
     private void addOverlay(BaiduMap baiduMap) {
-        BitmapDescriptor icon;
-        if (getIconBitmapDescriptor() != null) {
-            icon = getIconBitmapDescriptor();
-        } else {
-            icon = BitmapDescriptorFactory.fromResource(R.mipmap.icon_gcoding);
-        }
+        BitmapDescriptor icon = getBitmapDescriptor();
         MarkerOptions option = new MarkerOptions()
                 .position(position)
                 .title(getTitle())
