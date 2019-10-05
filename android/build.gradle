@@ -15,11 +15,11 @@ buildscript {
         google()
         jcenter()
         maven() {
-            url 'http://mvn2.codeboot.net/'
+            url 'http://repo.codeboot.net/maven/'
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.3'
+        classpath 'com.android.tools.build:gradle:3.3.0'
     }
 }
 
@@ -28,7 +28,7 @@ repositories {
     google()
     jcenter()
     maven {
-        url 'http://mvn2.codeboot.net/'
+        url 'http://repo.codeboot.net/maven/'
     }
 }
 
@@ -56,7 +56,8 @@ android {
 }
 
 dependencies {
-    compileOnly 'com.facebook.react:react-native:0.60.1'
+    compileOnly 'com.facebook.react:react-native:0.61.2'
+    compileOnly 'com.android.support:appcompat-v7:28.0.0'
     implementation files('libs/BaiduLBS_Android.jar')
     compileOnly files('src/main/assets')
 }
