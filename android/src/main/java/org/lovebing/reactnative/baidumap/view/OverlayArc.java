@@ -82,8 +82,11 @@ public class OverlayArc extends View implements OverlayView {
     }
 
     @Override
-    public void remove() {
-
+    public void removeFromMap(BaiduMap baiduMap) {
+        if (arc != null) {
+            arc.remove();
+            arc = null;
+        }
     }
 
     public static final class Points {

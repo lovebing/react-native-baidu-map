@@ -74,7 +74,7 @@ public class OverlayPolyline extends View implements OverlayView {
     }
 
     @Override
-    public void remove() {
+    public void removeFromMap(BaiduMap baiduMap) {
         if (polyline != null) {
             polyline.remove();
             polyline = null;

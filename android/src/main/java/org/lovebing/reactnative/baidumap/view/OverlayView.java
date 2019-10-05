@@ -15,5 +15,5 @@ import com.baidu.mapapi.map.BaiduMap;
 public interface OverlayView {
 
     void addTopMap(BaiduMap baiduMap);
-    void remove();
+    void removeFromMap(BaiduMap baiduMap);
 }

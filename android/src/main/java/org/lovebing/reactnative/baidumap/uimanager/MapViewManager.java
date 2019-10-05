@@ -7,8 +7,8 @@
 
 package org.lovebing.reactnative.baidumap.uimanager;
 
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatus;
@@ -25,7 +25,14 @@ import org.lovebing.reactnative.baidumap.listener.MapListener;
 import org.lovebing.reactnative.baidumap.util.LatLngUtil;
 import org.lovebing.reactnative.baidumap.view.OverlayView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MapViewManager extends ViewGroupManager<MapView> {
+
+    private static Object EMPTY_OBJ = new Object();
+
+    private List<Object> children = new ArrayList<>(10);
 
     @Override
     public String getName() {
@@ -34,12 +41,30 @@ public class MapViewManager extends ViewGroupManager<MapView> {
 
     @Override
     public void addView(MapView parent, View child, int index) {
-        ViewGroup p = (ViewGroup) child.getParent();
-        if (p != null) {
-            //p.removeView(child);
+        Log.i("MapViewManager", "addView:" + index);
+        if (index == 0 && !children.isEmpty()) {
+            for (Object item : children) {
+                if (item instanceof OverlayView) {
+                    ((OverlayView) child).removeFromMap(parent.getMap());
+                }
+            }
+            children.clear();
         }
         if (child instanceof OverlayView) {
             ((OverlayView) child).addTopMap(parent.getMap());
+            children.add(child);
+        } else {
+            children.add(EMPTY_OBJ);
+        }
+    }
+
+    @Override
+    public void removeViewAt(MapView parent, int index) {
+        super.removeViewAt(parent, index);
+        Object child = children.get(index);
+        children.remove(index);
+        if (child instanceof OverlayView) {
+            ((OverlayView) child).removeFromMap(parent.getMap());
         }
     }
 
@@ -94,6 +119,4 @@ public class MapViewManager extends ViewGroupManager<MapView> {
             mapView.getMap().setMapStatus(mapStatusUpdate);
         }
     }
-
-
 }

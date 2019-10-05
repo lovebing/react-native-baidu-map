@@ -209,8 +209,9 @@ public class OverlayMarker extends View implements OverlayView {
         }
     }
 
+
     @Override
-    public void remove() {
+    public void removeFromMap(BaiduMap baiduMap) {
         if (marker != null) {
             marker.remove();
             marker = null;

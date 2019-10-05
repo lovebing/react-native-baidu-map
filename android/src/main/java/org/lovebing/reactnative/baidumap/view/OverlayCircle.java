@@ -98,7 +98,10 @@ public class OverlayCircle extends View implements OverlayView {
     }
 
     @Override
-    public void remove() {
-
+    public void removeFromMap(BaiduMap baiduMap) {
+        if (circle != null) {
+            circle.remove();
+            circle = null;
+        }
     }
 }

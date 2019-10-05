@@ -90,7 +90,10 @@ public class OverlayPolygon extends View implements OverlayView {
     }
 
     @Override
-    public void remove() {
-
+    public void removeFromMap(BaiduMap baiduMap) {
+        if (polygon != null) {
+            polygon.remove();
+            polygon = null;
+        }
     }
 }

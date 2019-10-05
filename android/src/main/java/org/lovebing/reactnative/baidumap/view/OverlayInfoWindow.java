@@ -78,7 +78,7 @@ public class OverlayInfoWindow extends ViewGroup implements OverlayView {
     }
 
     @Override
-    public void remove() {
+    public void removeFromMap(BaiduMap baiduMap) {
 
     }
 
@@ -134,7 +134,6 @@ public class OverlayInfoWindow extends ViewGroup implements OverlayView {
 
         @Override
         public int hashCode() {
-
             return Objects.hash(title, location);
         }
     }

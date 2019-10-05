@@ -130,7 +130,7 @@ public class OverlayText extends View implements OverlayView {
     }
 
     @Override
-    public void remove() {
+    public void removeFromMap(BaiduMap baiduMap) {
         if (textOverlay != null) {
             textOverlay.remove();
             textOverlay = null;
