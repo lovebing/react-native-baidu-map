@@ -4,38 +4,100 @@
  *
  * @format
  * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Dimensions, Button} from 'react-native';
-import { MapView, MapTypes, Geolocation, Overlay } from 'react-native-baidu-map';
-const {height, width} = Dimensions.get('window');
+import React, {
+  Component
+} from 'react';
 
-type Props = {};
-export default class App extends Component<Props> {
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+  Dimensions,
+} from 'react-native';
+
+import { MapView, MapTypes, Geolocation, Overlay } from 'react-native-baidu-map';
+
+import {
+  Header,
+  LearnMoreLinks,
+  Colors,
+  DebugInstructions,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
+
+const { height, width } = Dimensions.get('window');
+
+class App extends Component<Props> {
+  
   state = {
+    markers: [
+      {
+        location: {
+          longitude: 113.960453,
+          latitude: 22.546045
+        }
+      },
+      {
+        location: {
+          longitude: 113.961453,
+          latitude: 22.547045
+        }
+      },
+      {
+        location: {
+          longitude: 113.962453, 
+          latitude: 22.548045
+        }
+      },
+      {
+        location: {
+          longitude: 113.963453, 
+          latitude: 22.545045
+        }
+      },
+      {
+        location: {
+          longitude: 113.964453, 
+          latitude: 22.544045
+        }
+      }
+    ]
   };
 
   render() {
-    const { infoWindowProps } = this.state;
-    console.warn('Overlay', Overlay)
     return (
-      <View style={styles.container}>
-        <MapView 
-          width={width} 
-          height={400} 
-          zoom={18}
-          trafficEnabled={true}
-          zoomControlsVisible={true}
-          mapType={MapTypes.SATELLITE}
-          center={{ longitude: 113.960453, latitude: 22.546045 }}
-        >
-        </MapView>
-      </View>
+    <>
+      <StatusBar barStyle="dark-content" />
+        <SafeAreaView>
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            style={styles.scrollView}>
+            <View style={styles.body}>
+              <MapView 
+                width={width} 
+                clusterEnabled={true}
+                height={400} 
+                zoom={14}
+                trafficEnabled={true}
+                zoomControlsVisible={true}
+                mapType={MapTypes.NORMAL}
+                center={{ longitude: 113.960453, latitude: 22.546045 }}
+              >
+                {this.state.markers.map((marker, index) => <Overlay.Marker key={`marker-` + index} location={marker.location} />)}
+              </MapView>
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </>
     );
   }
-}
+  
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -45,3 +107,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   }
 });
+
+export default App;
