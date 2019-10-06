@@ -23,6 +23,7 @@ export default class MapView extends Component {
     zoomControlsVisible: PropTypes.bool,
     trafficEnabled: PropTypes.bool,
     baiduHeatMapEnabled: PropTypes.bool,
+    clusterEnabled: PropTypes.bool,
     mapType: PropTypes.number,
     zoom: PropTypes.number,
     center: PropTypes.object,
@@ -40,6 +41,7 @@ export default class MapView extends Component {
     zoomControlsVisible: true,
     trafficEnabled: false,
     baiduHeatMapEnabled: false,
+    clusterEnabled: false,
     mapType: MapTypes.NORMAL,
     center: null,
     zoom: 10
@@ -78,7 +80,7 @@ export default class MapView extends Component {
   }
 
   renderAndroid() {
-    return <BaiduMapView {...this.props} onChange={this._onChange.bind(this)}/>;
+    return <BaiduMapView {...this.props} childrenCount={this.props.children.length} onChange={this._onChange.bind(this)}/>;
   }
 
   render() {

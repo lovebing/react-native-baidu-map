@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import _MapView from './js./MapView';
+import _MapView from './js/MapView';
 import _MapTypes from './js/MapTypes';
 import _Geolocation from './js/Geolocation';
 import _MapApp from './js/MapApp';
