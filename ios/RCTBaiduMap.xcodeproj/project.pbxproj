@@ -12,6 +12,18 @@
 		EF3C225C1CC2C30D0099E9B6 /* BaiduMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3C225B1CC2C30D0099E9B6 /* BaiduMapView.m */; };
 		EF4ABB0D1DC378CF008E75C9 /* GeolocationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */; };
 		EF6660E91D55E69B00DB8D08 /* BaiduMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6660E81D55E69B00DB8D08 /* BaiduMapViewManager.m */; };
+		EF824B6F234A18AD009E6523 /* BMKCluster.m in Sources */ = {isa = PBXBuildFile; fileRef = EF824B6A234A18AD009E6523 /* BMKCluster.m */; };
+		EF824B70234A18AD009E6523 /* BMKClusterQuadtree.m in Sources */ = {isa = PBXBuildFile; fileRef = EF824B6B234A18AD009E6523 /* BMKClusterQuadtree.m */; };
+		EF824B72234A18AD009E6523 /* BMKClusterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF824B6E234A18AD009E6523 /* BMKClusterManager.m */; };
+		EFB77A4A234AF69B00A17DDF /* OverlayPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB77A45234AF69B00A17DDF /* OverlayPolyline.m */; };
+		EFB77A4B234AF69B00A17DDF /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB77A47234AF69B00A17DDF /* OverlayView.m */; };
+		EFB77A4C234AF69B00A17DDF /* OverlayMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB77A48234AF69B00A17DDF /* OverlayMarker.m */; };
+		EFB77A52234AF6E300A17DDF /* OverlayPolylineManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB77A4F234AF6E300A17DDF /* OverlayPolylineManager.m */; };
+		EFB77A53234AF6E300A17DDF /* OverlayMarkerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB77A51234AF6E300A17DDF /* OverlayMarkerManager.m */; };
+		EFB77A58234AF73900A17DDF /* OverlayUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB77A56234AF73900A17DDF /* OverlayUtils.m */; };
+		EFB77A65234B0B3B00A17DDF /* ClusterAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB77A64234B0B3B00A17DDF /* ClusterAnnotation.m */; };
+		EFB77A6A234B792F00A17DDF /* OverlayCluster.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB77A66234B792F00A17DDF /* OverlayCluster.m */; };
+		EFB77A6B234B792F00A17DDF /* OverlayClusterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB77A68234B792F00A17DDF /* OverlayClusterManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,6 +48,30 @@
 		EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeolocationModule.m; sourceTree = "<group>"; };
 		EF6660E71D55E68000DB8D08 /* BaiduMapViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaiduMapViewManager.h; sourceTree = "<group>"; };
 		EF6660E81D55E69B00DB8D08 /* BaiduMapViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduMapViewManager.m; sourceTree = "<group>"; };
+		EF824B67234A18AD009E6523 /* BMKCluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKCluster.h; sourceTree = "<group>"; };
+		EF824B68234A18AD009E6523 /* BMKClusterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKClusterManager.h; sourceTree = "<group>"; };
+		EF824B69234A18AD009E6523 /* BMKClusterQuadtree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKClusterQuadtree.h; sourceTree = "<group>"; };
+		EF824B6A234A18AD009E6523 /* BMKCluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMKCluster.m; sourceTree = "<group>"; };
+		EF824B6B234A18AD009E6523 /* BMKClusterQuadtree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMKClusterQuadtree.m; sourceTree = "<group>"; };
+		EF824B6E234A18AD009E6523 /* BMKClusterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMKClusterManager.m; sourceTree = "<group>"; };
+		EFB77A44234AF69A00A17DDF /* OverlayMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayMarker.h; sourceTree = "<group>"; };
+		EFB77A45234AF69B00A17DDF /* OverlayPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayPolyline.m; sourceTree = "<group>"; };
+		EFB77A46234AF69B00A17DDF /* OverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayView.h; sourceTree = "<group>"; };
+		EFB77A47234AF69B00A17DDF /* OverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayView.m; sourceTree = "<group>"; };
+		EFB77A48234AF69B00A17DDF /* OverlayMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayMarker.m; sourceTree = "<group>"; };
+		EFB77A49234AF69B00A17DDF /* OverlayPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayPolyline.h; sourceTree = "<group>"; };
+		EFB77A4E234AF6E300A17DDF /* OverlayMarkerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayMarkerManager.h; sourceTree = "<group>"; };
+		EFB77A4F234AF6E300A17DDF /* OverlayPolylineManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayPolylineManager.m; sourceTree = "<group>"; };
+		EFB77A50234AF6E300A17DDF /* OverlayPolylineManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayPolylineManager.h; sourceTree = "<group>"; };
+		EFB77A51234AF6E300A17DDF /* OverlayMarkerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayMarkerManager.m; sourceTree = "<group>"; };
+		EFB77A56234AF73900A17DDF /* OverlayUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayUtils.m; sourceTree = "<group>"; };
+		EFB77A57234AF73900A17DDF /* OverlayUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayUtils.h; sourceTree = "<group>"; };
+		EFB77A63234B0B3B00A17DDF /* ClusterAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClusterAnnotation.h; sourceTree = "<group>"; };
+		EFB77A64234B0B3B00A17DDF /* ClusterAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClusterAnnotation.m; sourceTree = "<group>"; };
+		EFB77A66234B792F00A17DDF /* OverlayCluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayCluster.m; sourceTree = "<group>"; };
+		EFB77A67234B792F00A17DDF /* OverlayCluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayCluster.h; sourceTree = "<group>"; };
+		EFB77A68234B792F00A17DDF /* OverlayClusterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayClusterManager.m; sourceTree = "<group>"; };
+		EFB77A69234B792F00A17DDF /* OverlayClusterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayClusterManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +112,12 @@
 		EF3C22581CC2C30D0099E9B6 /* RCTBaiduMap */ = {
 			isa = PBXGroup;
 			children = (
+				EFB77A63234B0B3B00A17DDF /* ClusterAnnotation.h */,
+				EFB77A64234B0B3B00A17DDF /* ClusterAnnotation.m */,
+				EFB77A54234AF70200A17DDF /* Utils */,
+				EFB77A4D234AF6B200A17DDF /* ViewManagers */,
+				EFB77A43234AF64200A17DDF /* Views */,
+				EF824B66234A17DA009E6523 /* IndustryPurpose */,
 				EF3C22591CC2C30D0099E9B6 /* BaiduMapView.h */,
 				EF3C225B1CC2C30D0099E9B6 /* BaiduMapView.m */,
 				EF6660E71D55E68000DB8D08 /* BaiduMapViewManager.h */,
@@ -84,6 +126,56 @@
 				EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */,
 			);
 			path = RCTBaiduMap;
+			sourceTree = "<group>";
+		};
+		EF824B66234A17DA009E6523 /* IndustryPurpose */ = {
+			isa = PBXGroup;
+			children = (
+				EF824B67234A18AD009E6523 /* BMKCluster.h */,
+				EF824B6A234A18AD009E6523 /* BMKCluster.m */,
+				EF824B68234A18AD009E6523 /* BMKClusterManager.h */,
+				EF824B6E234A18AD009E6523 /* BMKClusterManager.m */,
+				EF824B69234A18AD009E6523 /* BMKClusterQuadtree.h */,
+				EF824B6B234A18AD009E6523 /* BMKClusterQuadtree.m */,
+			);
+			path = IndustryPurpose;
+			sourceTree = "<group>";
+		};
+		EFB77A43234AF64200A17DDF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EFB77A67234B792F00A17DDF /* OverlayCluster.h */,
+				EFB77A66234B792F00A17DDF /* OverlayCluster.m */,
+				EFB77A69234B792F00A17DDF /* OverlayClusterManager.h */,
+				EFB77A68234B792F00A17DDF /* OverlayClusterManager.m */,
+				EFB77A44234AF69A00A17DDF /* OverlayMarker.h */,
+				EFB77A48234AF69B00A17DDF /* OverlayMarker.m */,
+				EFB77A49234AF69B00A17DDF /* OverlayPolyline.h */,
+				EFB77A45234AF69B00A17DDF /* OverlayPolyline.m */,
+				EFB77A46234AF69B00A17DDF /* OverlayView.h */,
+				EFB77A47234AF69B00A17DDF /* OverlayView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EFB77A4D234AF6B200A17DDF /* ViewManagers */ = {
+			isa = PBXGroup;
+			children = (
+				EFB77A4E234AF6E300A17DDF /* OverlayMarkerManager.h */,
+				EFB77A51234AF6E300A17DDF /* OverlayMarkerManager.m */,
+				EFB77A50234AF6E300A17DDF /* OverlayPolylineManager.h */,
+				EFB77A4F234AF6E300A17DDF /* OverlayPolylineManager.m */,
+			);
+			path = ViewManagers;
+			sourceTree = "<group>";
+		};
+		EFB77A54234AF70200A17DDF /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				EFB77A57234AF73900A17DDF /* OverlayUtils.h */,
+				EFB77A56234AF73900A17DDF /* OverlayUtils.m */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,6 +219,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = EF3C224D1CC2C30D0099E9B6;
@@ -183,9 +276,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFB77A58234AF73900A17DDF /* OverlayUtils.m in Sources */,
+				EFB77A53234AF6E300A17DDF /* OverlayMarkerManager.m in Sources */,
+				EFB77A52234AF6E300A17DDF /* OverlayPolylineManager.m in Sources */,
+				EFB77A4A234AF69B00A17DDF /* OverlayPolyline.m in Sources */,
 				EF4ABB0D1DC378CF008E75C9 /* GeolocationModule.m in Sources */,
+				EFB77A4C234AF69B00A17DDF /* OverlayMarker.m in Sources */,
+				EF824B72234A18AD009E6523 /* BMKClusterManager.m in Sources */,
 				EF3C225C1CC2C30D0099E9B6 /* BaiduMapView.m in Sources */,
+				EFB77A65234B0B3B00A17DDF /* ClusterAnnotation.m in Sources */,
 				EF6660E91D55E69B00DB8D08 /* BaiduMapViewManager.m in Sources */,
+				EFB77A4B234AF69B00A17DDF /* OverlayView.m in Sources */,
+				EFB77A6B234B792F00A17DDF /* OverlayClusterManager.m in Sources */,
+				EFB77A6A234B792F00A17DDF /* OverlayCluster.m in Sources */,
+				EF824B6F234A18AD009E6523 /* BMKCluster.m in Sources */,
+				EF824B70234A18AD009E6523 /* BMKClusterQuadtree.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -44,6 +44,7 @@ public class BaiduMapPackage implements ReactPackage {
         init(reactContext);
         return Arrays.asList(
                 new MapViewManager(),
+                new OverlayClusterManager(),
                 new OverlayMarkerManager(),
                 new OverlayOverlayInfoWindowManager(),
                 new OverlayArcManager(),

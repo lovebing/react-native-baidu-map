@@ -36,6 +36,8 @@ import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import org.lovebing.reactnative.baidumap.R;
 
+import java.util.Objects;
+
 public class OverlayMarker extends View implements OverlayView, ClusterItem {
 
     private String title;
@@ -229,6 +231,20 @@ public class OverlayMarker extends View implements OverlayView, ClusterItem {
             marker.remove();
             marker = null;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OverlayMarker that = (OverlayMarker) o;
+        return position.latitude == that.position.latitude
+                && position.longitude == that.position.longitude;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position.latitude, position.longitude);
     }
 
     private void addOverlay(BaiduMap baiduMap) {

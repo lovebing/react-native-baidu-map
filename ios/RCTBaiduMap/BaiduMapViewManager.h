@@ -10,6 +10,7 @@
 #define RCTBaiduMapViewManager_h
 
 #import "BaiduMapView.h"
+#import "OverlayUtils.h"
 
 @interface BaiduMapViewManager : RCTViewManager<BMKMapViewDelegate>
 

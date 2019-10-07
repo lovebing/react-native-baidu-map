@@ -10,9 +10,6 @@ package org.lovebing.reactnative.baidumap.uimanager;
 import android.util.Log;
 import android.view.View;
 
-import android.widget.Toast;
-import com.baidu.mapapi.clusterutil.clustering.Cluster;
-import com.baidu.mapapi.clusterutil.clustering.ClusterManager;
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.react.bridge.ReadableMap;
@@ -22,7 +19,7 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 
 import org.lovebing.reactnative.baidumap.listener.MapListener;
 import org.lovebing.reactnative.baidumap.util.LatLngUtil;
-import org.lovebing.reactnative.baidumap.view.OverlayMarker;
+import org.lovebing.reactnative.baidumap.view.OverlayCluster;
 import org.lovebing.reactnative.baidumap.view.OverlayView;
 
 import java.util.ArrayList;
@@ -31,12 +28,10 @@ import java.util.List;
 public class MapViewManager extends ViewGroupManager<MapView> {
 
     private static Object EMPTY_OBJ = new Object();
-    private static int MAX_MARKER_COUNT_FOR_CLUSTER = 5;
 
     private List<Object> children = new ArrayList<>(10);
+    private MapListener mapListener;
     private int childrenCount = 0;
-    private boolean clusterEnabled = false;
-    private ClusterManager<OverlayMarker> markerClusterManager;
 
     @Override
     public String getName() {
@@ -50,17 +45,13 @@ public class MapViewManager extends ViewGroupManager<MapView> {
             removeOldChildViews(parent.getMap());
         }
         if (child instanceof OverlayView) {
-            if (child instanceof OverlayMarker && clusterEnabled) {
-
-            } else {
-                ((OverlayView) child).addTopMap(parent.getMap());
+            if (child instanceof OverlayCluster) {
+                ((OverlayCluster) child).setMapListener(mapListener);
             }
+            ((OverlayView) child).addTopMap(parent.getMap());
             children.add(child);
         } else {
             children.add(EMPTY_OBJ);
-        }
-        if (clusterEnabled && children.size() >= childrenCount) {
-            updateMarkerCluster();
         }
     }
 
@@ -70,11 +61,7 @@ public class MapViewManager extends ViewGroupManager<MapView> {
         if (index < children.size()) {
             Object child = children.get(index);
             children.remove(index);
-            if (clusterEnabled && child instanceof OverlayMarker) {
-                if (childrenCount >= children.size()) {
-                    updateMarkerCluster();
-                }
-            } else if (child instanceof OverlayView) {
+            if (child instanceof OverlayView) {
                 ((OverlayView) child).removeFromMap(parent.getMap());
             } else {
                 super.removeViewAt(parent, index);
@@ -86,55 +73,12 @@ public class MapViewManager extends ViewGroupManager<MapView> {
     protected MapView createViewInstance(ThemedReactContext themedReactContext) {
         MapView mapView =  new MapView(themedReactContext);
         BaiduMap map = mapView.getMap();
-        MapListener listener = new MapListener(mapView, themedReactContext);
-
-        markerClusterManager = new ClusterManager<>(themedReactContext, map);
-        markerClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<OverlayMarker>() {
-            @Override
-            public boolean onClusterClick(Cluster<OverlayMarker> cluster) {
-                return false;
-            }
-        });
-        markerClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<OverlayMarker>() {
-            @Override
-            public boolean onClusterItemClick(OverlayMarker item) {
-                return false;
-            }
-        });
-        map.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
-            @Override
-            public void onMapStatusChangeStart(MapStatus mapStatus) {
-                listener.onMapStatusChangeStart(mapStatus);
-                markerClusterManager.onMapStatusChangeStart(mapStatus);
-            }
-
-            @Override
-            public void onMapStatusChangeStart(MapStatus mapStatus, int i) {
-                listener.onMapStatusChangeStart(mapStatus, i);
-                markerClusterManager.onMapStatusChangeStart(mapStatus, i);
-            }
-
-            @Override
-            public void onMapStatusChange(MapStatus mapStatus) {
-                listener.onMapStatusChange(mapStatus);
-                markerClusterManager.onMapStatusChange(mapStatus);
-            }
-
-            @Override
-            public void onMapStatusChangeFinish(MapStatus mapStatus) {
-                listener.onMapStatusChangeFinish(mapStatus);
-                markerClusterManager.onMapStatusChangeFinish(mapStatus);
-            }
-        });
-        map.setOnMapLoadedCallback(listener);
-        map.setOnMapClickListener(listener);
-        map.setOnMapDoubleClickListener(listener);
-        map.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                return listener.onMarkerClick(marker) && markerClusterManager.onMarkerClick(marker);
-            }
-        });
+        mapListener = new MapListener(mapView, themedReactContext);
+        map.setOnMapStatusChangeListener(mapListener);
+        map.setOnMapLoadedCallback(mapListener);
+        map.setOnMapClickListener(mapListener);
+        map.setOnMapDoubleClickListener(mapListener);
+        map.setOnMarkerClickListener(mapListener);
         return mapView;
     }
 
@@ -153,10 +97,6 @@ public class MapViewManager extends ViewGroupManager<MapView> {
         mapView.getMap().setBaiduHeatMapEnabled(baiduHeatMapEnabled);
     }
 
-    @ReactProp(name = "clusterEnabled")
-    public void setClusterEnabled(MapView mapView, boolean clusterEnabled) {
-        this.clusterEnabled = clusterEnabled;
-    }
     @ReactProp(name = "mapType")
     public void setMapType(MapView mapView, int mapType) {
         mapView.getMap().setMapType(mapType);
@@ -190,28 +130,9 @@ public class MapViewManager extends ViewGroupManager<MapView> {
     private void removeOldChildViews(BaiduMap baiduMap) {
         for (Object child : children) {
             if (child instanceof OverlayView) {
-                if (clusterEnabled && child instanceof OverlayMarker) {
-
-                } else {
-                    ((OverlayView) child).removeFromMap(baiduMap);
-                }
+                ((OverlayView) child).removeFromMap(baiduMap);
             }
         }
         children.clear();
-        if (clusterEnabled) {
-            updateMarkerCluster();
-        }
-    }
-
-    private void updateMarkerCluster() {
-        markerClusterManager.clearItems();
-        List<OverlayMarker> markers = new ArrayList<>();
-        for (Object child : children) {
-            if (child instanceof OverlayMarker) {
-                markers.add((OverlayMarker) child);
-            }
-        }
-        markerClusterManager.addItems(markers);
-        markerClusterManager.cluster();
     }
 }

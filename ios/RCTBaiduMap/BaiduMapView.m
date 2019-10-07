@@ -25,85 +25,40 @@
     self.centerCoordinate = point;
 }
 
--(void)setMarker:(NSDictionary *)option {
-    NSLog(@"setMarker");
-    if(option != nil) {
-        if(_annotation == nil) {
-            _annotation = [[BMKPointAnnotation alloc]init];
-            [self addMarker:_annotation option:option];
-        }
-        else {
-            [self updateMarker:_annotation option:option];
-        }
+
+- (void)insertReactSubview:(id <RCTComponent>)subview atIndex:(NSInteger)atIndex {
+    NSLog(@"childrenCount:%d", _childrenCount);
+    if ([subview isKindOfClass:[OverlayView class]]) {
+        OverlayView *overlayView = (OverlayView *) subview;
+        [overlayView addToMap:self];
+        [super insertReactSubview:subview atIndex:atIndex];
     }
 }
 
--(void)setMarkers:(NSArray *)markers {
-    int markersCount = [markers count];
-    if(_annotations == nil) {
-        _annotations = [[NSMutableArray alloc] init];
+- (void)removeReactSubview:(id <RCTComponent>)subview {
+    NSLog(@"removeReactSubview");
+    if ([subview isKindOfClass:[OverlayView class]]) {
+        OverlayView *overlayView = (OverlayView *) subview;
+        [overlayView removeFromMap:self];
+        NSLog(@"overlayView atIndex: %d", overlayView.atIndex);
     }
-    if(markers != nil) {
-        for (int i = 0; i < markersCount; i++)  {
-            NSDictionary *option = [markers objectAtIndex:i];
-            
-            BMKPointAnnotation *annotation = nil;
-            if(i < [_annotations count]) {
-                annotation = [_annotations objectAtIndex:i];
-            }
-            if(annotation == nil) {
-                annotation = [[BMKPointAnnotation alloc]init];
-                [self addMarker:annotation option:option];
-                [_annotations addObject:annotation];
-            }
-            else {
-                [self updateMarker:annotation option:option];
-            }
+    [super removeReactSubview:subview];
+}
+
+-(void)didSetProps:(NSArray<NSString *> *) props {
+    NSLog(@"didSetProps: %d", _childrenCount);
+    [super didSetProps:props];
+}
+
+-(void)didUpdateReactSubviews {
+    for (int i = 0; i < [self.reactSubviews count]; i++) {
+        UIView * view = [self.reactSubviews objectAtIndex:i];
+        if ([view isKindOfClass:[OverlayView class]]) {
+            OverlayView *overlayView = (OverlayView *) view;
+            [overlayView update];
         }
-        
-        int _annotationsCount = [_annotations count];
-        
-        NSString *smarkersCount = [NSString stringWithFormat:@"%d", markersCount];
-        NSString *sannotationsCount = [NSString stringWithFormat:@"%d", _annotationsCount];
-        NSLog(smarkersCount);
-        NSLog(sannotationsCount);
-        
-        if(markersCount < _annotationsCount) {
-            int start = _annotationsCount - 1;
-            for(int i = start; i >= markersCount; i--) {
-                BMKPointAnnotation *annotation = [_annotations objectAtIndex:i];
-                [self removeAnnotation:annotation];
-                [_annotations removeObject:annotation];
-            }
-        }
-        
-        
     }
+    NSLog(@"didUpdateReactSubviews:%d", [self.reactSubviews count]);
 }
-
--(CLLocationCoordinate2D)getCoorFromMarkerOption:(NSDictionary *)option {
-    double lat = [RCTConvert double:option[@"latitude"]];
-    double lng = [RCTConvert double:option[@"longitude"]];
-    CLLocationCoordinate2D coor;
-    coor.latitude = lat;
-    coor.longitude = lng;
-    return coor;
-}
-
--(void)addMarker:(BMKPointAnnotation *)annotation option:(NSDictionary *)option {
-    [self updateMarker:annotation option:option];
-    [self addAnnotation:annotation];
-}
-
--(void)updateMarker:(BMKPointAnnotation *)annotation option:(NSDictionary *)option {
-    CLLocationCoordinate2D coor = [self getCoorFromMarkerOption:option];
-    NSString *title = [RCTConvert NSString:option[@"title"]];
-    if(title.length == 0) {
-        title = nil;
-    }
-    annotation.coordinate = coor;
-    annotation.title = title;
-}
-
 
 @end

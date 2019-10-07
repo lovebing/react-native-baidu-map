@@ -2,9 +2,16 @@
 
 Baidu Map SDK modules and view for React Native(Android & IOS), support react native 0.57+
 
-百度地图 React Native 模块，支持 react native 0.57+，已更新到最新的百度地图SDK版本。
+百度地图 React Native 模块，支持 react native 0.61.2+。
+使用百度地图SDK最新版本版本，包含以下模块：
+- 基础定位
+- 基础地图（含室内图）
+- 检索功能、LBS云检索
+- 计算工具
 
-Overlay for IOS 重构中。
+TODO:
+- IOS 点聚合完善
+- IOS 覆盖物
 
 Marker icon 的实现参考了 https://github.com/react-native-community/react-native-maps 的相关代码。
 
@@ -26,7 +33,7 @@ https://stackoverflow.com/questions/44061155/react-native-npm-link-local-depende
 
 2.Android
 - Android SDK: api 28+
-- gradle: 4.5
+- gradle: 4.10.1
 - Android Studio: 3.1.3+
 
 3.IOS
@@ -54,29 +61,15 @@ npm install react-native-baidu-map --save
 
 Podfile 增加
 ```
-  pod 'React', :path => '../node_modules/react-native', :subspecs => [
-    'Core',
-    'CxxBridge',
-    'DevSupport', 
-    'RCTText',
-    'RCTNetwork',
-    'RCTWebSocket', 
-    'RCTAnimation'
-  ]
-  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
-  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
-  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
-  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
-
   pod 'react-native-baidu-map', :podspec => '../node_modules/react-native-baidu-map/ios/react-native-baidu-map.podspec'
 ```
 
 ##### AppDelegate.m init 初始化
-    #import "RCTBaiduMapViewManager.h"
+    #import "BaiduMapViewManager.h"
     - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     {
         ...
-        [RCTBaiduMapViewManager initSDK:@"api key"];
+        [BaiduMapViewManager initSDK:@"api key"];
         ...
     }
 
@@ -103,7 +96,7 @@ Podfile 增加
 | onMapPoiClick           | func  | undefined|
 
 #### Overlay 覆盖物
-    const { Marker, Arc, Circle, Polyline, Polygon, Text, InfoWindow } = Overlay;
+    const { Marker, Cluster, Arc, Circle, Polyline, Polygon, Text, InfoWindow } = Overlay;
 
 ##### Marker Props 属性
 | Prop                    | Type  | Default  | Description
@@ -115,6 +108,8 @@ Podfile 增加
 | rotate                  | float | 0        |
 | icon                    | any   | null     | icon图片，同 <Image> 的 source 属性
 | alpha                   | float | 1        |
+
+##### Cluster 点聚合
 
 ##### Arc Props 属性
 | Prop                    | Type  | Default  | Description
@@ -164,15 +159,31 @@ Podfile 增加
 ```jsx
 <MapView>
     <Marker/>
+    <Cluster>
+        <Marker/>
+    </Cluster>
     <Arc />
     <Circle />
     <Polyline />
     <Polygon />
     <Text />
     <InfoWindow>
-        <View></View>
+        <View />
     </InfoWindow>
 </MapView>
+```
+
+点聚合示例
+
+```jsx
+<Cluster>
+    <Marker location={{ longitude: 113.969453, latitude: 22.530045 }} />
+    <Marker location={{ longitude: 113.968453, latitude: 22.531045 }} />
+    <Marker location={{ longitude: 113.967453, latitude: 22.532045 }} />
+    <Marker location={{ longitude: 113.966453, latitude: 22.533045 }} />
+    <Marker location={{ longitude: 113.965453, latitude: 22.534045 }} />
+    <Marker location={{ longitude: 113.965453, latitude: 22.535045 }} />
+</Cluster>
 ```
 
 #### Geolocation Methods

@@ -184,7 +184,7 @@ PODS:
     - React-cxxreact (= 0.61.2)
     - React-jsi (= 0.61.2)
   - React-jsinspector (0.61.2)
-  - react-native-baidu-map (1.0.5):
+  - react-native-baidu-map (1.0.6):
     - BaiduMapKit (= 4.2.0)
     - BMKLocationKit (= 1.3.0.2)
     - React
@@ -334,7 +334,7 @@ SPEC CHECKSUMS:
   React-jsi: f9126dd5818fbd8fbf869be9bbc1c0543973e1a1
   React-jsiexecutor: 752f034d0f007d1141a1c52ba9ef3fd9668fbfa7
   React-jsinspector: 044105eea064aec81adc5e4d777a8f6589e7d094
-  react-native-baidu-map: ad43ad22037f0e59f14dae645ee4a3166f263a86
+  react-native-baidu-map: 4010c614ba805921450c631e2f3ffd714b8387da
   React-RCTActionSheet: 49433f6e3659ba5d3ee650e44b9c18743ef9a7fc
   React-RCTAnimation: 12f86a4e3542032329366b03bca2cc254a7c64a9
   React-RCTBlob: ba90a4144ad478a022b79a4e8a1f150548d39425

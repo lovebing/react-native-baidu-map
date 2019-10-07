@@ -17,11 +17,16 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MapListener implements BaiduMap.OnMapStatusChangeListener,
         BaiduMap.OnMapLoadedCallback,
         BaiduMap.OnMapClickListener,
         BaiduMap.OnMapDoubleClickListener,
         BaiduMap.OnMarkerClickListener {
+
+    private List<BaiduMap.OnMapStatusChangeListener> mapStatusChangeListeners = new ArrayList<>();
 
     private ReactContext reactContext;
     private MapView mapView;
@@ -75,6 +80,9 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
     @Override
     public void onMapStatusChange(MapStatus mapStatus) {
         sendEvent(mapView, "onMapStatusChange", getEventParams(mapStatus));
+        for (BaiduMap.OnMapStatusChangeListener mapStatusChangeListener : mapStatusChangeListeners) {
+            mapStatusChangeListener.onMapStatusChange(mapStatus);
+        }
     }
 
     @Override
@@ -92,6 +100,14 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
         writableMap.putString("title", marker.getTitle());
         sendEvent(mapView, "onMarkerClick", writableMap);
         return true;
+    }
+
+    public void addMapStatusChangeListener(BaiduMap.OnMapStatusChangeListener mapStatusChangeListener) {
+        mapStatusChangeListeners.add(mapStatusChangeListener);
+    }
+
+    public void removeMapStatusChangeListener(BaiduMap.OnMapStatusChangeListener mapStatusChangeListener) {
+        mapStatusChangeListeners.remove(mapStatusChangeListener);
     }
 
     private WritableMap getEventParams(MapStatus mapStatus) {

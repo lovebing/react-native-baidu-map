@@ -16,14 +16,19 @@
 #import <BaiduMapAPI_Map/BMKPinAnnotationView.h>
 #import <BaiduMapAPI_Map/BMKPointAnnotation.h>
 #import <UIKit/UIKit.h>
+#import "OverlayUtils.h"
+#import "OverlayPolyline.h"
+#import "OverlayMarker.h"
+#import "ClusterAnnotation.h"
 
 @interface BaiduMapView : BMKMapView <BMKMapViewDelegate>
 
+@property(nonatomic) BOOL clusterEnabled;
+@property(nonatomic) int childrenCount;
 @property (nonatomic, copy) RCTBubblingEventBlock onChange;
 
 -(void)setZoom:(float)zoom;
 -(void)setCenterLatLng:(NSDictionary *)LatLngObj;
--(void)setMarker:(NSDictionary *)Options;
 
 @end
 

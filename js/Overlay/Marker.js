@@ -46,9 +46,6 @@ export default class Marker extends Component {
       icon = resolveAssetSource(this.props.icon) || {};
       icon = icon.uri || this.props.icon;
     }
-    if (Platform.OS === 'ios') {
-      return <View {...this.props} icon={icon} />;
-    }
     return <BaiduMapOverlayMarker {...this.props} icon={icon} />;
   }
 }

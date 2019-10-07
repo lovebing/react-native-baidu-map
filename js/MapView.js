@@ -41,7 +41,6 @@ export default class MapView extends Component {
     zoomControlsVisible: true,
     trafficEnabled: false,
     baiduHeatMapEnabled: false,
-    clusterEnabled: false,
     mapType: MapTypes.NORMAL,
     center: null,
     zoom: 10
@@ -57,38 +56,19 @@ export default class MapView extends Component {
     }
   }
 
-  renderIOS() {
-    const children = this.props.children ? this.props.children : [];
-    const markerMap = {};
-    for (let i = 0; i < children.length; i++) {
-      for (let p in children[i]) {
-        if (children[i].type === Overlay.Marker) {
-          const props = children[i].props;
-          markerMap[props.location.latitude + ":" + props.location.longitude] = {
-            title: props.title,
-            latitude: props.location.latitude,
-            longitude: props.location.longitude
-          };
-        }
+  render() {
+    let childrenCount = 0;
+    for (let i = 0; i < this.props.children.length; i++) {
+      const child = this.props.children[i];
+      if (child.length) {
+        childrenCount += child.length;
+      } else {
+        childrenCount++;
       }
     }
-    const markers = [];
-    for (let p in markerMap) {
-      markers.push(markerMap[p]);
-    }
-    return <BaiduMapView {...this.props} children={[]} markers={markers} onChange={this._onChange.bind(this)}/>;
+    return <BaiduMapView {...this.props} childrenCount={childrenCount} onChange={this._onChange.bind(this)}/>;
   }
-
-  renderAndroid() {
-    return <BaiduMapView {...this.props} childrenCount={this.props.children.length} onChange={this._onChange.bind(this)}/>;
-  }
-
-  render() {
-    if (Platform.OS === 'ios') {
-      return this.renderIOS();
-    }
-    return this.renderAndroid();
-  }
+  
 }
 
 const BaiduMapView = requireNativeComponent('BaiduMapView', MapView, {

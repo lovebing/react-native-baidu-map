@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
+ import {
   requireNativeComponent,
   View,
   NativeModules,
@@ -16,18 +16,17 @@ import {
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class Polyline extends Component {
+export default class Cluster extends Component {
   static propTypes = {
-    ...View.propTypes,
-    points: PropTypes.array,
-    color: PropTypes.string
+    ...View.propTypes
   };
 
   static defaultProps = {
-    points: [{
+    location: {
       latitude: 0,
       longitude: 0
-    }]
+    },
+    rotate: 0
   };
 
   constructor() {
@@ -35,7 +34,7 @@ export default class Polyline extends Component {
   }
 
   render() {
-    return <BaiduMapOverlayPolyline {...this.props} />;
+    return <BaiduMapOverlayCluster {...this.props} />;
   }
 }
-const BaiduMapOverlayPolyline = requireNativeComponent('BaiduMapOverlayPolyline', Polyline);
+const BaiduMapOverlayCluster = requireNativeComponent('BaiduMapOverlayCluster', Cluster);

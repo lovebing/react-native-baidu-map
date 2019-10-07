@@ -12,6 +12,7 @@ import Polyline from './Polyline';
 import Text from './Text';
 import Marker from './Marker';
 import InfoWindow from './InfoWindow';
+import Cluster from './Cluster';
 export default {
   Arc,
   Circle,
@@ -19,5 +20,6 @@ export default {
   Polyline,
   Text,
   Marker,
+  Cluster,
   InfoWindow
 };

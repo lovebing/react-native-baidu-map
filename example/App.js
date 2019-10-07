@@ -69,6 +69,23 @@ class App extends Component<Props> {
     ]
   };
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        markers: [
+          {
+            location: {
+              longitude: 113.967453, 
+              latitude: 22.548045
+            },
+            r: Math.random()
+          }
+        ]
+      });
+    }, 2000);
+
+  }
+
   render() {
     return (
     <>
@@ -80,7 +97,6 @@ class App extends Component<Props> {
             <View style={styles.body}>
               <MapView 
                 width={width} 
-                clusterEnabled={true}
                 height={400} 
                 zoom={14}
                 trafficEnabled={true}
@@ -88,7 +104,27 @@ class App extends Component<Props> {
                 mapType={MapTypes.NORMAL}
                 center={{ longitude: 113.960453, latitude: 22.546045 }}
               >
-                {this.state.markers.map((marker, index) => <Overlay.Marker key={`marker-` + index} location={marker.location} />)}
+                <Overlay.Cluster>
+                  <Overlay.Marker location={{ longitude: 113.969453, latitude: 22.530045 }} />
+                  <Overlay.Marker location={{ longitude: 113.968453, latitude: 22.531045 }} />
+                  <Overlay.Marker location={{ longitude: 113.967453, latitude: 22.532045 }} />
+                  <Overlay.Marker location={{ longitude: 113.966453, latitude: 22.533045 }} />
+                  <Overlay.Marker location={{ longitude: 113.965453, latitude: 22.534045 }} />
+                  <Overlay.Marker location={{ longitude: 113.965453, latitude: 22.535045 }} />
+                </Overlay.Cluster>
+                <Overlay.Cluster>
+                  {this.state.markers.map((marker, index) => <Overlay.Marker key={`marker-` + index} location={marker.location} />)}
+                </Overlay.Cluster>
+                <Overlay.Polyline
+                  longitude={113.960453}
+                  latitude={22.546045}
+                  points={[{ longitude: 113.960453, latitude: 22.546145 }, { longitude: 113.961453, latitude: 22.547045 }, { longitude: 113.962453, latitude: 22.54045 }]} />
+                <Overlay.Arc
+                  longitude={113.960453}
+                  latitude={22.546045}
+                  points={[{ longitude: 113.960453, latitude: 22.546045 }, { longitude: 113.960453, latitude: 22.546145 }, { longitude: 113.960453, latitude: 22.546245 }]} />
+
+                
               </MapView>
             </View>
           </ScrollView>
