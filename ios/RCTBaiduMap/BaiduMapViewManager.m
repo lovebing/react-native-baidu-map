@@ -10,6 +10,9 @@
 
 @implementation BaiduMapViewManager;
 
+static NSString *markerIdentifier = @"markerIdentifier";
+static NSString *clusterIdentifier = @"clusterIdentifier";
+
 RCT_EXPORT_MODULE(BaiduMapView)
 
 RCT_EXPORT_VIEW_PROPERTY(mapType, int)
@@ -137,7 +140,7 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
         annotationView.annotation = annotation;
         return annotationView;
     } else if ([annotation isKindOfClass:[BMKPointAnnotation class]]) {
-        BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"myAnnotation"];
+        BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:markerIdentifier];
         newAnnotationView.pinColor = BMKPinAnnotationColorPurple;
         newAnnotationView.animatesDrop = YES;
         return newAnnotationView;

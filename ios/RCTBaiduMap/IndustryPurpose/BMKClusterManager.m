@@ -29,22 +29,17 @@
         
         _quadtree = [[BMKClusterQuadtree alloc] initWithRect:CGRectMake(0, 0, 1, 1)];
         _quadItems = [[NSMutableArray alloc] init];
-        CLLocationCoordinate2D coor = CLLocationCoordinate2DMake(39.915, 116.404);
-        for (NSInteger i = 0; i < 20; i++) {
-            double lat =  (arc4random() % 100) * 0.001f;
-            double lon =  (arc4random() % 100) * 0.001f;
-            
-            CLLocationCoordinate2D coordinate;
-            coordinate = CLLocationCoordinate2DMake(coor.latitude + lat, coor.longitude + lon);
-            BMKQuadItem *quadItem = [[BMKQuadItem alloc] init];
-            quadItem.coordinate = coordinate;
-            @synchronized(_quadtree) {
-                [_quadItems addObject:quadItem];
-                [_quadtree addItem:quadItem];
-            }
-        }
     }
     return self;
+}
+
+- (void)addClusterItem:(CLLocationCoordinate2D) coordinate {
+    BMKQuadItem *quadItem = [[BMKQuadItem alloc] init];
+    quadItem.coordinate = coordinate;
+    @synchronized(_quadtree) {
+        [_quadItems addObject:quadItem];
+        [_quadtree addItem:quadItem];
+    }
 }
 
 #pragma mark - Clusters

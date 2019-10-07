@@ -13,4 +13,5 @@
 @property (nonatomic, strong) NSMutableArray *clusterCaches;
 - (void)clearClusterItems;
 - (NSArray*)getClusters:(CGFloat)zoomLevel;
+- (void)addClusterItem:(CLLocationCoordinate2D) coordinate;
 @end

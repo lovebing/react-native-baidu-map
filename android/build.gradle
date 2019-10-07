@@ -4,10 +4,11 @@ def safeExtGet(prop, fallback) {
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 group = "org.lovebing.reactnative"
 archivesBaseName = "baidumap"
-version = "1.1.0"
+version = "1.1.1"
 
 buildscript {
     repositories {
@@ -40,7 +41,7 @@ android {
         minSdkVersion safeExtGet('minSdkVersion', 19)
         targetSdkVersion safeExtGet('targetSdkVersion', 28)
         versionCode 1
-        versionName "1.1.0"
+        versionName "${version}"
     }
     buildTypes {
         release {
@@ -52,6 +53,49 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+publishing {
+    publications {
+        Release(MavenPublication) {
+            groupId = "${group}"
+            artifactId = "${archivesBaseName}"
+            version = "${version}"
+            pom.packaging = 'arr'
+            artifact bundleReleaseAar
+            pom.withXml {
+                final dependenciesNode = asNode().appendNode('dependencies')
+                ext.addDependency = { Dependency dep, String scope ->
+                    if (dep.group == null || dep.version == null || dep.name == null || dep.name == "unspecified")
+                        return
+                    final dependencyNode = dependenciesNode.appendNode('dependency')
+                    dependencyNode.appendNode('groupId', dep.group)
+                    dependencyNode.appendNode('artifactId', dep.name)
+                    dependencyNode.appendNode('version', dep.version)
+                    dependencyNode.appendNode('scope', scope)
+
+                    if (!dep.transitive) {
+                        final exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
+                        exclusionNode.appendNode('groupId', '*')
+                        exclusionNode.appendNode('artifactId', '*')
+                    } else if (!dep.properties.excludeRules.empty) {
+                        final exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
+                        dep.properties.excludeRules.each { ExcludeRule rule ->
+                            exclusionNode.appendNode('groupId', rule.group ?: '*')
+                            exclusionNode.appendNode('artifactId', rule.module ?: '*')
+                        }
+                    }
+                }
+                configurations.compile.getAllDependencies().each { dep -> addDependency(dep, "compile") }
+                configurations.compileOnly.getAllDependencies().each { dep -> addDependency(dep, "compileOnly") }
+                configurations.api.getAllDependencies().each { dep -> addDependency(dep, "compile") }
+                configurations.implementation.getAllDependencies().each { dep -> addDependency(dep, "runtime") }
+            }
+        }
+    }
+
+    repositories {
     }
 }
 
