@@ -17,6 +17,7 @@ import {
   View,
   Text,
   StatusBar,
+  Button,
   Dimensions,
 } from 'react-native';
 
@@ -35,6 +36,7 @@ const { height, width } = Dimensions.get('window');
 class App extends Component<Props> {
   
   state = {
+    location: {},
     markers: [
       {
         location: {
@@ -69,21 +71,15 @@ class App extends Component<Props> {
     ]
   };
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        markers: [
-          {
-            location: {
-              longitude: 113.967453, 
-              latitude: 22.548045
-            },
-            r: Math.random()
-          }
-        ]
+  getCurrentPosition() {
+    Geolocation.getCurrentPosition()
+      .then((data) => {
+        this.setState({ location: data });
       });
-    }, 2000);
+  }
 
+  componentDidMount() {
+    
   }
 
   render() {
@@ -98,12 +94,13 @@ class App extends Component<Props> {
               <MapView 
                 width={width} 
                 height={400} 
-                zoom={14}
+                zoom={13}
                 trafficEnabled={true}
                 zoomControlsVisible={true}
                 mapType={MapTypes.NORMAL}
-                center={{ longitude: 113.960453, latitude: 22.546045 }}
+                center={{ longitude: 113.950453, latitude: 22.546045 }}
               >
+                <Overlay.Marker rotate={45} icon={{ uri: 'https://mapopen-website-wiki.cdn.bcebos.com/homePage/images/logox1.png' }} location={{ longitude: 113.975453, latitude: 22.510045 }} />
                 <Overlay.Cluster>
                   <Overlay.Marker location={{ longitude: 113.969453, latitude: 22.530045 }} />
                   <Overlay.Marker location={{ longitude: 113.968453, latitude: 22.531045 }} />
@@ -123,9 +120,17 @@ class App extends Component<Props> {
                   longitude={113.960453}
                   latitude={22.546045}
                   points={[{ longitude: 113.960453, latitude: 22.546045 }, { longitude: 113.960453, latitude: 22.546145 }, { longitude: 113.960453, latitude: 22.546245 }]} />
-
-                
               </MapView>
+              <View style={styles.buttonGroup}>
+                <View style={styles.button}>
+                  <Button onPress={ () => this.getCurrentPosition() } title="Locate" />
+                </View>
+              </View>
+              {this.state.location.address ? (
+                <View style={styles.location}>
+                  <Text>当前位置：{ this.state.location.address }</Text>
+                </View>
+              ) : null}
             </View>
           </ScrollView>
         </SafeAreaView>
@@ -141,6 +146,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  scrollView: {
+
+  },
+  location: {
+    padding: 16
+  },
+  buttonGroup: {
+    padding: 16
+  },
+  button: {
+    width: 80
   }
 });
 
