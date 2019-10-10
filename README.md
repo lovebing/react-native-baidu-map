@@ -1,17 +1,32 @@
 # react-native-baidu-map [![npm version](https://img.shields.io/npm/v/react-native-baidu-map.svg?style=flat)](https://www.npmjs.com/package/react-native-baidu-map)
 
-Baidu Map SDK modules and view for React Native(Android & IOS), support react native 0.57+
+Baidu Map SDK modules and view for React Native(Android & IOS), support react native 0.61.2+
 
 百度地图 React Native 模块，支持 react native 0.61.2+。
-使用百度地图SDK最新版本版本，包含以下模块：
+使用百度地图SDK最新版本。
+Android 版导入的 SDK 包含以下模块：
 - 基础定位
 - 基础地图（含室内图）
 - 检索功能、LBS云检索
 - 计算工具
 
-TODO:
-- IOS 点聚合完善
-- IOS 覆盖物
+### 在线交流
+QQ群：561086908
+
+### 近期 TODO:
+#### Android
+- 完善 Marker
+- 完善坐标转换
+- 显示定位
+- 添加一些常用的方法
+
+#### IOS
+- 完善 Marker
+- 显示定位
+- 完善坐标标转换
+- 完善 Cluster（点聚合）
+- 支持 Overlay（覆盖物）
+- 添加一些常用的方法
 
 Marker icon 的实现参考了 https://github.com/react-native-community/react-native-maps 的相关代码。
 
