@@ -63,7 +63,9 @@ publishing {
             artifactId = "${archivesBaseName}"
             version = "${version}"
             pom.packaging = 'arr'
-            // artifact bundleReleaseAar
+            afterEvaluate { 
+                artifact bundleReleaseAar
+            }
             pom.withXml {
                 final dependenciesNode = asNode().appendNode('dependencies')
                 ext.addDependency = { Dependency dep, String scope ->
