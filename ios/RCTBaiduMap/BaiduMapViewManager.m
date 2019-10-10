@@ -28,7 +28,7 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
 }
 
 
-+(void)initSDK:(NSString*)key {
++ (void)initSDK:(NSString*)key {
     
     BMKMapManager* _mapManager = [[BMKMapManager alloc]init];
     BOOL ret = [_mapManager start:key  generalDelegate:nil];
@@ -43,7 +43,7 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
     return mapView;
 }
 
--(void)mapview:(BMKMapView *)mapView
+- (void)mapview:(BMKMapView *)mapView
  onDoubleClick:(CLLocationCoordinate2D)coordinate {
     NSLog(@"onDoubleClick");
     NSDictionary* event = @{
@@ -56,7 +56,7 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
     [self sendEvent:mapView params:event];
 }
 
--(void)mapView:(BMKMapView *)mapView
+- (void)mapView:(BMKMapView *)mapView
 onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
     NSLog(@"onClickedMapBlank");
     NSDictionary* event = @{
@@ -69,7 +69,7 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
     [self sendEvent:mapView params:event];
 }
 
--(void)mapViewDidFinishLoading:(BMKMapView *)mapView {
+- (void)mapViewDidFinishLoading:(BMKMapView *)mapView {
     NSDictionary* event = @{
                             @"type": @"onMapLoaded",
                             @"params": @{}
@@ -77,7 +77,7 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
     [self sendEvent:mapView params:event];
 }
 
--(void)mapView:(BMKMapView *)mapView
+- (void)mapView:(BMKMapView *)mapView
 didSelectAnnotationView:(BMKAnnotationView *)view {
     NSDictionary* event = @{
                             @"type": @"onMarkerClick",
@@ -148,7 +148,7 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
     return nil;
 }
 
--(BMKOverlayView *)mapView:(BMKMapView *)mapView viewForOverlay:(id<BMKOverlay>)overlay {
+- (BMKOverlayView *)mapView:(BMKMapView *)mapView viewForOverlay:(id<BMKOverlay>)overlay {
     NSLog(@"viewForOverlay");
     if ([overlay isKindOfClass:[BMKArcline class]]) {
         BMKArclineView *arclineView = [[BMKArclineView alloc] initWithArcline:overlay];
@@ -168,7 +168,7 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
     return nil;
 }
 
--(void)mapStatusDidChanged: (BMKMapView *)mapView {
+- (void)mapStatusDidChanged: (BMKMapView *)mapView {
     CLLocationCoordinate2D targetGeoPt = [mapView getMapStatus].targetGeoPt;
     NSDictionary* event = @{
                             @"type": @"onMapStatusChange",
@@ -184,7 +184,7 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
     [self sendEvent:mapView params:event];
 }
 
--(void)sendEvent:(BaiduMapView *) mapView params:(NSDictionary *) params {
+- (void)sendEvent:(BaiduMapView *) mapView params:(NSDictionary *) params {
     if (!mapView.onChange) {
         return;
     }

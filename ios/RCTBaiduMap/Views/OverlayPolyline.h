@@ -17,7 +17,6 @@
 
 @property (nonatomic, weak) RCTBridge *bridge;
 @property (nonatomic, strong) NSArray *points;
-
 @property (nonatomic, strong) BMKPolyline <BMKOverlay> *overlay;
 
 @end

@@ -11,24 +11,24 @@
 
 @implementation OverlayPolyline
 
--(NSString *)getType {
+- (NSString *)getType {
     return @"polyline";
 }
 
--(void)addToMap:(BMKMapView *)mapView {
+- (void)addToMap:(BMKMapView *)mapView {
     NSLog(@"addToMap: %@", _points);
     [mapView addOverlay:[self getOverlay]];
 }
 
--(void)update {
+- (void)update {
     [self updateOverlay:[self getOverlay]];
 }
 
--(void)removeFromMap:(BMKMapView *)mapView {
+- (void)removeFromMap:(BMKMapView *)mapView {
     [mapView removeOverlay:[self getOverlay]];
 }
 
--(BMKPolyline <BMKOverlay> *)getOverlay {
+- (BMKPolyline <BMKOverlay> *)getOverlay {
     if (_overlay == nil) {
         _overlay = [BMKPolyline new];
         [self updateOverlay:_overlay];
@@ -36,7 +36,7 @@
     return _overlay;
 }
 
--(void)updateOverlay:(BMKPolyline <BMKOverlay> *)overlay {
+- (void)updateOverlay:(BMKPolyline <BMKOverlay> *)overlay {
     [overlay setPolylineWithCoordinates:[OverlayUtils getCoords:_points] count:[_points count]];
 }
 

@@ -10,11 +10,11 @@
 
 @implementation OverlayView
 
--(void)addToMap:(BMKMapView *)mapView {
+- (void)addToMap:(BMKMapView *)mapView {
    
 }
 
--(void)removeFromMap:(BMKMapView *)mapView {
+- (void)removeFromMap:(BMKMapView *)mapView {
     
 }
 

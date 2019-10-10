@@ -17,14 +17,14 @@
     return self;
 }
 
--(void)addToMap:(BMKMapView *)mapView {
+- (void)addToMap:(BMKMapView *)mapView {
     _mapView = mapView;
 }
 
--(void)update {
+- (void)update {
 }
 
--(void)removeFromMap:(BMKMapView *)mapView {
+- (void)removeFromMap:(BMKMapView *)mapView {
 }
 
 - (void)insertReactSubview:(id <RCTComponent>)subview atIndex:(NSInteger)atIndex {
@@ -42,7 +42,7 @@
     }
 }
 
--(void)didUpdateReactSubviews {
+- (void)didUpdateReactSubviews {
     [_clusterManager clearClusterItems];
     for (int i = 0; i < [_clusters count]; i++) {
         OverlayMarker *marker = (OverlayMarker *) [_clusters objectAtIndex:i];

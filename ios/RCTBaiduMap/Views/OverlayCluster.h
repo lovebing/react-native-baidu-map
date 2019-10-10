@@ -23,6 +23,7 @@
 @property (nonatomic, strong) BMKClusterManager *clusterManager;
 @property (nonatomic, strong) NSMutableArray *clusters;
 @property (nonatomic, strong) BMKMapView *mapView;
+
 @end
 
 #endif /* OverlayCluster_h */

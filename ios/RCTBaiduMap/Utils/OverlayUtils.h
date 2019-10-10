@@ -25,8 +25,8 @@
 
 @interface OverlayUtils:NSObject
 
-+(CLLocationCoordinate2D)getCoorFromOption:(NSDictionary *)option;
-+(CLLocationCoordinate2D *)getCoords:(NSArray *)points;
++ (CLLocationCoordinate2D)getCoorFromOption:(NSDictionary *)option;
++ (CLLocationCoordinate2D *)getCoords:(NSArray *)points;
 @end
 
 #endif /* OverlayUtils_h */

@@ -27,8 +27,8 @@
 @property(nonatomic) int childrenCount;
 @property (nonatomic, copy) RCTBubblingEventBlock onChange;
 
--(void)setZoom:(float)zoom;
--(void)setCenterLatLng:(NSDictionary *)LatLngObj;
+- (void)setZoom:(float)zoom;
+- (void)setCenterLatLng:(NSDictionary *)LatLngObj;
 
 @end
 

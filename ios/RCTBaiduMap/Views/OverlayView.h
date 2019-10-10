@@ -17,9 +17,10 @@
 
 @property NSInteger atIndex;
 
--(void)addToMap:(BMKMapView *)mapView;
--(void)update;
--(void)removeFromMap:(BMKMapView *)mapView;
+- (void)addToMap:(BMKMapView *)mapView;
+- (void)update;
+- (void)removeFromMap:(BMKMapView *)mapView;
+
 @end
 
 #endif /* OverlayView_h */

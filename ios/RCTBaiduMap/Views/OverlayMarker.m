@@ -10,23 +10,23 @@
 
 @implementation OverlayMarker
 
--(NSString *)getType {
+- (NSString *)getType {
     return @"marker";
 }
 
--(void)addToMap:(BMKMapView *)mapView {
+- (void)addToMap:(BMKMapView *)mapView {
     [mapView addAnnotation:[self getAnnotation]];
 }
 
--(void)update {
+- (void)update {
     [self updateAnnotation:[self getAnnotation]];
 }
 
--(void)removeFromMap:(BMKMapView *)mapView {
+- (void)removeFromMap:(BMKMapView *)mapView {
     [mapView removeAnnotation:[self getAnnotation]];
 }
 
--(BMKPointAnnotation *)getAnnotation {
+- (BMKPointAnnotation *)getAnnotation {
     if (_annotation == nil) {
         _annotation = [[BMKPointAnnotation alloc] init];
         [self updateAnnotation:_annotation];
@@ -34,7 +34,7 @@
     return _annotation;
 }
 
--(void)updateAnnotation:(BMKPointAnnotation *)annotation {
+- (void)updateAnnotation:(BMKPointAnnotation *)annotation {
     CLLocationCoordinate2D coor = [OverlayUtils getCoorFromOption:_location];
     if(_title.length == 0) {
         annotation.title = nil;

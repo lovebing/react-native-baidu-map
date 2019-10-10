@@ -14,9 +14,9 @@
 
 @interface BaiduMapViewManager : RCTViewManager<BMKMapViewDelegate>
 
-+(void)initSDK:(NSString *)key;
++ (void)initSDK:(NSString *)key;
 
--(void)sendEvent:(BaiduMapView *) mapView params:(NSDictionary *) params;
+- (void)sendEvent:(BaiduMapView *) mapView params:(NSDictionary *) params;
 
 @end
 

@@ -13,7 +13,7 @@
 
 @implementation OverlayUtils
 
-+(CLLocationCoordinate2D)getCoorFromOption:(NSDictionary *)option {
++ (CLLocationCoordinate2D)getCoorFromOption:(NSDictionary *)option {
     double lat = [RCTConvert double:option[@"latitude"]];
     double lng = [RCTConvert double:option[@"longitude"]];
     CLLocationCoordinate2D coor;
@@ -22,7 +22,7 @@
     return coor;
 }
 
-+(CLLocationCoordinate2D *)getCoords:(NSArray *)points {
++ (CLLocationCoordinate2D *)getCoords:(NSArray *)points {
     NSUInteger size = [points count];
     CLLocationCoordinate2D coords[size];
     memset(coords, 0, size);

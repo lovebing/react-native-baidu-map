@@ -19,8 +19,8 @@
 @interface GeolocationModule : BaseModule <BMKGeoCodeSearchDelegate> {
 }
     
--(void)sendEvent:(NSString *)name body:(NSMutableDictionary *)body;
--(NSMutableDictionary *)getEmptyBody;
+- (void)sendEvent:(NSString *)name body:(NSMutableDictionary *)body;
+- (NSMutableDictionary *)getEmptyBody;
     
     @end
 

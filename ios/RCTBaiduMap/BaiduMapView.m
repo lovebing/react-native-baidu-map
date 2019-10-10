@@ -14,11 +14,11 @@
     NSMutableArray* _annotations;
 }
 
--(void)setZoom:(float)zoom {
+- (void)setZoom:(float)zoom {
     self.zoomLevel = zoom;
 }
 
--(void)setCenterLatLng:(NSDictionary *)LatLngObj {
+- (void)setCenterLatLng:(NSDictionary *)LatLngObj {
     double lat = [RCTConvert double:LatLngObj[@"lat"]];
     double lng = [RCTConvert double:LatLngObj[@"lng"]];
     CLLocationCoordinate2D point = CLLocationCoordinate2DMake(lat, lng);
@@ -45,12 +45,12 @@
     [super removeReactSubview:subview];
 }
 
--(void)didSetProps:(NSArray<NSString *> *) props {
+- (void)didSetProps:(NSArray<NSString *> *) props {
     NSLog(@"didSetProps: %d", _childrenCount);
     [super didSetProps:props];
 }
 
--(void)didUpdateReactSubviews {
+- (void)didUpdateReactSubviews {
     for (int i = 0; i < [self.reactSubviews count]; i++) {
         UIView * view = [self.reactSubviews objectAtIndex:i];
         if ([view isKindOfClass:[OverlayView class]]) {

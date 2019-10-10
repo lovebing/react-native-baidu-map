@@ -87,7 +87,7 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     //[reverseGeoCodeSearchOption release];
 }
 
--(BMKGeoCodeSearch *)getGeocodesearch{
+- (BMKGeoCodeSearch *)getGeocodesearch{
     if(geoCodeSearch == nil) {
         geoCodeSearch = [[BMKGeoCodeSearch alloc]init];
     }
@@ -146,7 +146,7 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     
     geoCodeSearch.delegate = nil;
 }
--(NSString *)getSearchErrorInfo:(BMKSearchErrorCode)error {
+- (NSString *)getSearchErrorInfo:(BMKSearchErrorCode)error {
     NSString *errormsg = @"未知";
     switch (error) {
         case BMK_SEARCH_AMBIGUOUS_KEYWORD:
@@ -191,7 +191,7 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     return errormsg;
 }
     
--(CLLocationCoordinate2D)getBaiduCoor:(double)lat lng:(double)lng {
+- (CLLocationCoordinate2D)getBaiduCoor:(double)lat lng:(double)lng {
     CLLocationCoordinate2D coor = CLLocationCoordinate2DMake(lat, lng);
     BMKLocationCoordinateType srctype = BMKLocationCoordinateTypeWGS84;
     BMKLocationCoordinateType destype = BMKLocationCoordinateTypeBMK09MC;
@@ -199,12 +199,12 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     return baiduCoor;
 }
     
--(NSMutableDictionary *)getEmptyBody {
+- (NSMutableDictionary *)getEmptyBody {
     NSMutableDictionary *body = @{}.mutableCopy;
     return body;
 }
     
--(void)sendEvent:(NSString *)name body:(NSMutableDictionary *)body {
+- (void)sendEvent:(NSString *)name body:(NSMutableDictionary *)body {
     [self.bridge.eventDispatcher sendDeviceEventWithName:name body:body];
 }
 
