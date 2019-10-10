@@ -1,6 +1,6 @@
 # react-native-baidu-map [![npm version](https://img.shields.io/npm/v/react-native-baidu-map.svg?style=flat)](https://www.npmjs.com/package/react-native-baidu-map)
 
-Baidu Map SDK modules and view for React Native(Android & IOS), support react native 0.61.2+
+Baidu Map SDK modules and views for React Native(Android & IOS), support react native 0.61.2+
 
 百度地图 React Native 模块，支持 react native 0.61.2+。
 使用百度地图SDK最新版本。
