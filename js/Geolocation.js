@@ -69,30 +69,6 @@ export default {
     });
   },
   getCurrentPosition() {
-    if (Platform.OS == 'ios') {
-      return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition((position) => {
-          try {
-            _module.reverseGeoCodeGPS(position.coords.latitude, position.coords.longitude);
-          }
-          catch (e) {
-            reject(e);
-            return;
-          }
-          DeviceEventEmitter.once('onGetReverseGeoCodeResult', resp => {
-            resp.latitude = parseFloat(resp.latitude);
-            resp.longitude = parseFloat(resp.longitude);
-            resolve(resp);
-          });
-        }, (error) => {
-          reject(error);
-        }, {
-          enableHighAccuracy: true,
-          timeout: 20000,
-          maximumAge: 1000
-        });
-      });
-    }
     return new Promise((resolve, reject) => {
       try {
         _module.getCurrentPosition();
@@ -102,6 +78,9 @@ export default {
         return;
       }
       DeviceEventEmitter.once('onGetCurrentLocationPosition', resp => {
+        if (!resp.address) {
+          resp.address = `${resp.province} ${resp.city} ${resp.district} ${resp.streetName}`;
+        }
         resolve(resp);
       });
     });

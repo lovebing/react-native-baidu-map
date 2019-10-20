@@ -29,8 +29,8 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
 
 
 + (void)initSDK:(NSString*)key {
-    
     BMKMapManager* _mapManager = [[BMKMapManager alloc]init];
+    [[BMKLocationAuth sharedInstance] checkPermisionWithKey:key authDelegate:nil];
     BOOL ret = [_mapManager start:key  generalDelegate:nil];
     if (!ret) {
         NSLog(@"manager start failed!");

@@ -9,6 +9,7 @@
 #ifndef RCTBaiduMapViewManager_h
 #define RCTBaiduMapViewManager_h
 
+#import <BMKLocationkit/BMKLocationComponent.h>
 #import "BaiduMapView.h"
 #import "OverlayUtils.h"
 

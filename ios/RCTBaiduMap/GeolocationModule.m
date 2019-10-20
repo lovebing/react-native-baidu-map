@@ -9,15 +9,64 @@
 #import "GeolocationModule.h"
 
 
-@implementation GeolocationModule {
-    BMKPointAnnotation* _annotation;
-}
+@implementation GeolocationModule
 
 @synthesize bridge = _bridge;
 
 static BMKGeoCodeSearch *geoCodeSearch;
 
+- (instancetype)init {
+    _locationManager = [[BMKLocationManager alloc] init];
+    _locationManager.delegate = self;
+    self = [super init];
+    return self;
+}
+
+- (void)intLocationManager {
+    if (_locationManager == nil) {
+        _locationManager = [[BMKLocationManager alloc] init];
+        _locationManager.coordinateType = BMKLocationCoordinateTypeBMK09LL;
+        _locationManager.distanceFilter = kCLDistanceFilterNone;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        _locationManager.activityType = CLActivityTypeAutomotiveNavigation;
+        _locationManager.pausesLocationUpdatesAutomatically = YES;
+    }
+    _locationManager.delegate = self;
+}
+
 RCT_EXPORT_MODULE(BaiduGeolocationModule);
+
+RCT_EXPORT_METHOD(getCurrentPosition) {
+    if (_locating) {
+        return;
+    }
+    _locating = true;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self intLocationManager];
+        [_locationManager requestLocationWithReGeocode:YES withNetworkState:YES completionBlock:^(BMKLocation *location, BMKLocationNetworkState state, NSError *error) {
+            self.locationManager.delegate = nil;
+            self.locating = false;
+            if (error) {
+                NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
+                return;
+            }
+            NSMutableDictionary *body = [self getEmptyBody];
+            
+            body[@"latitude"] = [NSString stringWithFormat:@"%f", location.location.coordinate.latitude];
+            body[@"longitude"] = [NSString stringWithFormat:@"%f", location.location.coordinate.longitude];
+            if (location.rgcData.locationDescribe != nil && location.rgcData.locationDescribe.length > 0) {
+                body[@"address"] = location.rgcData.locationDescribe;
+            }
+            body[@"province"] = location.rgcData.province;
+            body[@"city"] = location.rgcData.city;
+            body[@"district"] = location.rgcData.district;
+            body[@"streetName"] = location.rgcData.street;
+            body[@"streetNumber"] = location.rgcData.streetNumber;
+            
+            [self sendEvent:@"onGetCurrentLocationPosition" body:body];
+        }];
+    });
+}
 
 RCT_EXPORT_METHOD(getBaiduCoorFromGPSCoor:(double)lat lng:(double)lng
                   resolver:(RCTPromiseResolveBlock)resolve
