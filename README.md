@@ -31,7 +31,7 @@ QQ群：561086908
 Marker icon 的实现参考了 https://github.com/react-native-community/react-native-maps 的相关代码。
 
 ![Android](https://raw.githubusercontent.com/lovebing/react-native-baidu-map/master/images/android.jpg)
-![IOS](https://raw.githubusercontent.com/lovebing/react-native-baidu-map/master/images/ios.jpg)
+![iOS](https://raw.githubusercontent.com/lovebing/react-native-baidu-map/master/images/ios.jpg)
 
 
 ### Dev & Test 开发和测试说明
@@ -51,7 +51,7 @@ https://stackoverflow.com/questions/44061155/react-native-npm-link-local-depende
 - gradle: 4.10.1
 - Android Studio: 3.1.3+
 
-3.IOS
+3.iOS
 - XCode: 8.0+
 
 
@@ -67,26 +67,12 @@ rm -rf example/node_modules/react-native-baidu-map/ios/RCTBaiduMap.xcodeproj
 npm install react-native-baidu-map --save
 
 ### 原生模块导入
-
-#### Android Studio
 `react-native link react-native-baidu-map`
 
-#### IOS/Xcode
-使用 pod
+如果 iOS 项目包含 Podfile，会自动加上 react-native-baidu-map 的依赖，只需要执行 `pod install`，不需要做其它处理。
+如果没有 Podfile，则需要手动导入百度地图和定位 SDK 的依赖，参考 http://lbsyun.baidu.com/index.php?title=iossdk/guide/create-project/oc
+和 http://lbsyun.baidu.com/index.php?title=ios-locsdk/guide/create-project/manual-create
 
-Podfile 增加
-```
-  pod 'react-native-baidu-map', :podspec => '../node_modules/react-native-baidu-map/ios/react-native-baidu-map.podspec'
-```
-
-##### AppDelegate.m init 初始化
-    #import "BaiduMapViewManager.h"
-    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-    {
-        ...
-        [BaiduMapViewManager initSDK:@"api key"];
-        ...
-    }
 
 ### Usage 使用方法
 
@@ -218,5 +204,5 @@ Cluster 示例
 | Promise reverseGeoCode(double lat, double lng) | `{"address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}`
 | Promise reverseGeoCodeGPS(double lat, double lng) |  `{"address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}`
 | Promise geocode(String city, String addr) | {"latitude": 0.0, "longitude": 0.0}
-| Promise getCurrentPosition() | IOS: `{"latitude": 0.0, "longitude": 0.0, "address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}` Android: `{"latitude": 0.0, "longitude": 0.0, "direction": -1, "altitude": 0.0, "radius": 0.0, "address": "", "countryCode": "", "country": "", "province": "", "cityCode": "", "city": "", "district": "", "street": "", "streetNumber": "", "buildingId": "", "buildingName": ""}`
+| Promise getCurrentPosition() | iOS: `{"latitude": 0.0, "longitude": 0.0, "address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}` Android: `{"latitude": 0.0, "longitude": 0.0, "direction": -1, "altitude": 0.0, "radius": 0.0, "address": "", "countryCode": "", "country": "", "province": "", "cityCode": "", "city": "", "district": "", "street": "", "streetNumber": "", "buildingId": "", "buildingName": ""}`
 
