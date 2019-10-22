@@ -155,7 +155,7 @@ npm install react-native-baidu-map --save
 | Prop                    | Type  | Default  | Description
 | ----------------------- |:-----:| :-------:| -------
 | location                | object|{latitude: 0, longitude: 0}
-| visible                 | bool  | false    | 点击 marker 后才能设为 true 
+| visible                 | bool  | false    | 点击 marker 后才能设为 true
 
 ```jsx
 <MapView>
@@ -206,3 +206,7 @@ Cluster 示例
 | Promise geocode(String city, String addr) | {"latitude": 0.0, "longitude": 0.0}
 | Promise getCurrentPosition() | iOS: `{"latitude": 0.0, "longitude": 0.0, "address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}` Android: `{"latitude": 0.0, "longitude": 0.0, "direction": -1, "altitude": 0.0, "radius": 0.0, "address": "", "countryCode": "", "country": "", "province": "", "cityCode": "", "city": "", "district": "", "street": "", "streetNumber": "", "buildingId": "", "buildingName": ""}`
 
+#### GetDistance Methods
+| Method                    | Result
+| ------------------------- | -------
+| Promise getLocationDistance([double lat, double lng], [double lat, double lng]) | {"distance": 0}
