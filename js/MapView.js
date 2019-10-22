@@ -58,12 +58,14 @@ export default class MapView extends Component {
 
   render() {
     let childrenCount = 0;
-    for (let i = 0; i < this.props.children.length; i++) {
-      const child = this.props.children[i];
-      if (child.length) {
-        childrenCount += child.length;
-      } else {
-        childrenCount++;
+    if (this.props.children && this.props.children.length) {
+      for (let i = 0; i < this.props.children.length; i++) {
+        const child = this.props.children[i];
+        if (child.length) {
+          childrenCount += child.length;
+        } else {
+          childrenCount++;
+        }
       }
     }
     return <BaiduMapView {...this.props} childrenCount={childrenCount} onChange={this._onChange.bind(this)}/>;
