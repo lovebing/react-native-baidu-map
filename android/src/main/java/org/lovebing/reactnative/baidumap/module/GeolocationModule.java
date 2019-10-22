@@ -51,10 +51,10 @@ public class GeolocationModule extends BaseModule
         return "BaiduGeolocationModule";
     }
 
-    private void initLocationClient() {
+    private void initLocationClient(String coorType) {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationMode.Hight_Accuracy);
-        option.setCoorType("bd09ll");
+        option.setCoorType(coorType);
         option.setIsNeedAddress(true);
         option.setIsNeedAltitude(true);
         option.setIsNeedLocationDescribe(true);
@@ -102,9 +102,9 @@ public class GeolocationModule extends BaseModule
     }
 
     @ReactMethod
-    public void getCurrentPosition() {
+    public void getCurrentPosition(String coorType) {
         if(locationClient == null) {
-            initLocationClient();
+            initLocationClient(coorType);
         }
         Log.i("getCurrentPosition", "getCurrentPosition");
         locationClient.start();
