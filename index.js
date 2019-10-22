@@ -8,11 +8,13 @@
 import _MapView from './js/MapView';
 import _MapTypes from './js/MapTypes';
 import _Geolocation from './js/Geolocation';
+import _GetDistance from './js/GetDistance';
 import _MapApp from './js/MapApp';
 import _Overlay from './js/Overlay/index';
 
 export const MapView = _MapView;
 export const MapTypes = _MapTypes;
 export const Geolocation = _Geolocation;
+export const GetDistance = _GetDistance;
 export const Overlay = _Overlay;
 export const MapApp = _MapApp;
