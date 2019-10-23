@@ -209,4 +209,4 @@ Cluster 示例
 #### GetDistance Methods
 | Method                    | Result
 | ------------------------- | -------
-| Promise getLocationDistance([double lat, double lng], [double lat, double lng]) | `{"distance": 0}`
+| Promise getLocationDistance({latitude: 0.0, longitude: 0.0}, {latitude: 0.0, longitude: 0.0}) | `{"distance": 0.0}`
