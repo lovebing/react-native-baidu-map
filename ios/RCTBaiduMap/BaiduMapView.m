@@ -18,6 +18,15 @@
     self.zoomLevel = zoom;
 }
 
+- (void)setZoomGesturesEnabled:(BOOL)zoomGesturesEnabled{
+    NSLog(@"setZoomGesturesEnabled: %d", zoomGesturesEnabled);
+    self.gesturesEnabled=zoomGesturesEnabled;
+}
+- (void)setScrollGesturesEnabled:(BOOL)scrollGesturesEnabled{
+    NSLog(@"setScrollGesturesEnabled: %d", scrollGesturesEnabled);
+    self.scrollEnabled=scrollGesturesEnabled;
+}
+
 - (void)setCenterLatLng:(NSDictionary *)LatLngObj {
     double lat = [RCTConvert double:LatLngObj[@"lat"]];
     double lng = [RCTConvert double:LatLngObj[@"lng"]];
