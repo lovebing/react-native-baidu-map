@@ -18,14 +18,13 @@
     self.zoomLevel = zoom;
 }
 
-- (void)setGestures:(BOOL)gestures{
-    NSLog(@"setGesturesEnabled: %d", gestures);
-    self.gesturesEnabled=gestures;
+- (void)setZoomGesturesEnabled:(BOOL)zoomGesturesEnabled{
+    NSLog(@"setZoomGesturesEnabled: %d", zoomGesturesEnabled);
+    self.gesturesEnabled=zoomGesturesEnabled;
 }
-- (void)setScroll:(BOOL)scroll{
-    NSLog(@"setScrollEnabled: %d", scroll);
-    self.scrollEnabled=scroll;
-
+- (void)setScrollGesturesEnabled:(BOOL)scrollGesturesEnabled{
+    NSLog(@"setScrollGesturesEnabled: %d", scrollGesturesEnabled);
+    self.scrollEnabled=scrollGesturesEnabled;
 }
 
 - (void)setCenterLatLng:(NSDictionary *)LatLngObj {

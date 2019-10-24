@@ -30,8 +30,8 @@
 - (void)setZoom:(float)zoom;
 - (void)setCenterLatLng:(NSDictionary *)LatLngObj;
 
-- (void)setGestures:(BOOL)gestures;
-- (void)setScroll:(BOOL)scroll;
+- (void)setScrollGesturesEnabled:(BOOL)scrollGesturesEnabled;
+- (void)setZoomGesturesEnabled:(BOOL)zoomGesturesEnabled;
 
 @end
 
