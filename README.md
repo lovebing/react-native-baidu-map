@@ -199,12 +199,12 @@ Cluster 示例
 
 #### Geolocation Methods
 
-| Method                    | Result
-| ------------------------- | -------
-| Promise reverseGeoCode(double lat, double lng) | `{"address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}`
-| Promise reverseGeoCodeGPS(double lat, double lng) |  `{"address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}`
-| Promise geocode(String city, String addr) | {"latitude": 0.0, "longitude": 0.0}
-| Promise getCurrentPosition() | iOS: `{"latitude": 0.0, "longitude": 0.0, "address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}` Android: `{"latitude": 0.0, "longitude": 0.0, "direction": -1, "altitude": 0.0, "radius": 0.0, "address": "", "countryCode": "", "country": "", "province": "", "cityCode": "", "city": "", "district": "", "street": "", "streetNumber": "", "buildingId": "", "buildingName": ""}`
+| Method                    | Description | Result
+| ------------------------- | ---------------- | -------
+| Promise reverseGeoCode(double lat, double lng) | | `{"address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}`
+| Promise reverseGeoCodeGPS(double lat, double lng) | |  `{"address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}`
+| Promise geocode(String city, String addr) | | {"latitude": 0.0, "longitude": 0.0}
+| Promise getCurrentPosition(String coorType) | coorType 为可选参数，默认以 `gcj02` 坐标系，目前仅 Android 端支持使用 `BD09ll` | iOS: `{"latitude": 0.0, "longitude": 0.0, "address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}` Android: `{"latitude": 0.0, "longitude": 0.0, "direction": -1, "altitude": 0.0, "radius": 0.0, "address": "", "countryCode": "", "country": "", "province": "", "cityCode": "", "city": "", "district": "", "street": "", "streetNumber": "", "buildingId": "", "buildingName": ""}`
 
 #### GetDistance Methods
 | Method                    | Result

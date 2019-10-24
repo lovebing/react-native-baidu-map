@@ -68,10 +68,10 @@ export default {
       });
     });
   },
-  getCurrentPosition() {
+  getCurrentPosition(coorType = 'gcj02') {
     return new Promise((resolve, reject) => {
       try {
-        _module.getCurrentPosition();
+        _module.getCurrentPosition(coorType);
       }
       catch (e) {
         reject(e);
