@@ -18,11 +18,11 @@
     self.zoomLevel = zoom;
 }
 
--(void)setGestures:(BOOL)gestures{
+- (void)setGestures:(BOOL)gestures{
     NSLog(@"setGesturesEnabled: %d", gestures);
     self.gesturesEnabled=gestures;
 }
--(void)setScroll:(BOOL)scroll{
+- (void)setScroll:(BOOL)scroll{
     NSLog(@"setScrollEnabled: %d", scroll);
     self.scrollEnabled=scroll;
 
