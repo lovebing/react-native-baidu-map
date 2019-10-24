@@ -109,6 +109,19 @@ public class MapViewManager extends ViewGroupManager<MapView> {
         mapView.getMap().setMapStatus(mapStatusUpdate);
     }
 
+    @ReactProp(name="gestures")
+    public void setGesturesEnabled(MapView mapView, boolean gestures) {
+        UiSettings setting = mapView.getMap().getUiSettings();
+        setting.setZoomGesturesEnabled(gestures);
+
+    }
+    @ReactProp(name="scroll")
+    public void setScrollEnabled(MapView mapView, boolean scroll) {
+        UiSettings setting = mapView.getMap().getUiSettings();
+        setting.setScrollGesturesEnabled(scroll);
+
+    }
+
     @ReactProp(name="center")
     public void setCenter(MapView mapView, ReadableMap position) {
         if(position != null) {

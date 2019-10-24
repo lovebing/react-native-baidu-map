@@ -26,6 +26,8 @@ export default class MapView extends Component {
     clusterEnabled: PropTypes.bool,
     mapType: PropTypes.number,
     zoom: PropTypes.number,
+    scroll: PropTypes.bool, //是否允许拖动
+    gestures: PropTypes.bool,//是否充许手势缩放
     center: PropTypes.object,
     onMapStatusChangeStart: PropTypes.func,
     onMapStatusChange: PropTypes.func,
@@ -43,7 +45,9 @@ export default class MapView extends Component {
     baiduHeatMapEnabled: false,
     mapType: MapTypes.NORMAL,
     center: null,
-    zoom: 10
+    zoom: 10,
+    scroll:true,
+    gestures:true
   };
 
   constructor() {
