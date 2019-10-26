@@ -29,7 +29,6 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
     [view setCenterCoordinate:json ? [RCTConvert CLLocationCoordinate2D:json] : defaultView.centerCoordinate];
 }
 
-
 + (void)initSDK:(NSString*)key {
     BMKMapManager* _mapManager = [[BMKMapManager alloc]init];
     [[BMKLocationAuth sharedInstance] checkPermisionWithKey:key authDelegate:nil];
@@ -45,8 +44,7 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
     return mapView;
 }
 
-- (void)mapview:(BMKMapView *)mapView
- onDoubleClick:(CLLocationCoordinate2D)coordinate {
+- (void)mapview:(BMKMapView *)mapView onDoubleClick:(CLLocationCoordinate2D)coordinate {
     NSLog(@"onDoubleClick");
     NSDictionary* event = @{
                             @"type": @"onMapDoubleClick",
@@ -58,8 +56,7 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
     [self sendEvent:mapView params:event];
 }
 
-- (void)mapView:(BMKMapView *)mapView
-onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
+- (void)mapView:(BMKMapView *)mapView onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
     NSLog(@"onClickedMapBlank");
     NSDictionary* event = @{
                             @"type": @"onMapClick",
@@ -79,8 +76,7 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
     [self sendEvent:mapView params:event];
 }
 
-- (void)mapView:(BMKMapView *)mapView
-didSelectAnnotationView:(BMKAnnotationView *)view {
+- (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view {
     NSDictionary* event = @{
                             @"type": @"onMarkerClick",
                             @"params": @{
@@ -94,8 +90,7 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
     [self sendEvent:mapView params:event];
 }
 
-- (void) mapView:(BMKMapView *)mapView
- onClickedMapPoi:(BMKMapPoi *)mapPoi {
+- (void)mapView:(BMKMapView *)mapView onClickedMapPoi:(BMKMapPoi *)mapPoi {
     NSLog(@"onClickedMapPoi");
     NSDictionary* event = @{
                             @"type": @"onMapPoiClick",
@@ -186,7 +181,7 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
     [self sendEvent:mapView params:event];
 }
 
-- (void)sendEvent:(BaiduMapView *) mapView params:(NSDictionary *) params {
+- (void)sendEvent:(BaiduMapView *)mapView params:(NSDictionary *)params {
     if (!mapView.onChange) {
         return;
     }

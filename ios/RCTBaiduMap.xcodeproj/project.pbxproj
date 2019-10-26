@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF04BD302364B7050007BADF /* BaiduMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF04BD2F2364B7050007BADF /* BaiduMapManager.m */; };
 		EF154DCC1D562193003146DF /* BaiduMapViewManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF6660E71D55E68000DB8D08 /* BaiduMapViewManager.h */; };
 		EF3C225A1CC2C30D0099E9B6 /* BaiduMapView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF3C22591CC2C30D0099E9B6 /* BaiduMapView.h */; };
 		EF3C225C1CC2C30D0099E9B6 /* BaiduMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3C225B1CC2C30D0099E9B6 /* BaiduMapView.m */; };
@@ -41,6 +42,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		EF04BD2E2364B7050007BADF /* BaiduMapManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaiduMapManager.h; sourceTree = "<group>"; };
+		EF04BD2F2364B7050007BADF /* BaiduMapManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaiduMapManager.m; sourceTree = "<group>"; };
 		EF3C22561CC2C30D0099E9B6 /* libRCTBaiduMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTBaiduMap.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF3C22591CC2C30D0099E9B6 /* BaiduMapView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaiduMapView.h; sourceTree = "<group>"; };
 		EF3C225B1CC2C30D0099E9B6 /* BaiduMapView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaiduMapView.m; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 				EF6660E81D55E69B00DB8D08 /* BaiduMapViewManager.m */,
 				EF4ABB0B1DC378BD008E75C9 /* GeolocationModule.h */,
 				EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */,
+				EF04BD2E2364B7050007BADF /* BaiduMapManager.h */,
+				EF04BD2F2364B7050007BADF /* BaiduMapManager.m */,
 			);
 			path = RCTBaiduMap;
 			sourceTree = "<group>";
@@ -286,6 +291,7 @@
 				EF3C225C1CC2C30D0099E9B6 /* BaiduMapView.m in Sources */,
 				EFB77A65234B0B3B00A17DDF /* ClusterAnnotation.m in Sources */,
 				EF6660E91D55E69B00DB8D08 /* BaiduMapViewManager.m in Sources */,
+				EF04BD302364B7050007BADF /* BaiduMapManager.m in Sources */,
 				EFB77A4B234AF69B00A17DDF /* OverlayView.m in Sources */,
 				EFB77A6B234B792F00A17DDF /* OverlayClusterManager.m in Sources */,
 				EFB77A6A234B792F00A17DDF /* OverlayCluster.m in Sources */,

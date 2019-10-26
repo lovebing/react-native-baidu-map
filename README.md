@@ -73,6 +73,20 @@ npm install react-native-baidu-map --save
 如果没有 Podfile，则需要手动导入百度地图和定位 SDK 的依赖，参考 http://lbsyun.baidu.com/index.php?title=iossdk/guide/create-project/oc
 和 http://lbsyun.baidu.com/index.php?title=ios-locsdk/guide/create-project/manual-create
 
+### 初始化
+#### Android
+AndroidManifest.xml 的 application 下添加名为 com.baidu.lbsapi.API_KEY 的 meta，如
+```
+<meta-data
+        android:name="com.baidu.lbsapi.API_KEY"
+        android:value="uDRdqQMGQeoPGn5CwMmIYicdUIVv1YST" />
+```
+#### iOS
+使用 BaiduMapManager.initSDK 方法设置 api key，如
+```
+import { BaiduMapManager } from 'react-native-baidu-map'
+BaiduMapManager.initSDK('sIMQlfmOXhQmPLF1QMh4aBp8zZO9Lb2A');
+```
 
 ### Usage 使用方法
 

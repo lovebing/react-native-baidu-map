@@ -5,6 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {
+  NativeModules
+} from 'react-native';
+
 import _MapView from './js/MapView';
 import _MapTypes from './js/MapTypes';
 import _Geolocation from './js/Geolocation';
@@ -18,3 +22,5 @@ export const Geolocation = _Geolocation;
 export const GetDistance = _GetDistance;
 export const Overlay = _Overlay;
 export const MapApp = _MapApp;
+
+export const BaiduMapManager = NativeModules.BaiduMapManager;

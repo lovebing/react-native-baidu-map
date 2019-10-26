@@ -11,5 +11,3 @@ package-lock.json
 .git
 .gitignore
 .yarn-metadata.json
-RCTBaiduMap.xcodeproj
-RCTBaiduMap
