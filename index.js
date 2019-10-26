@@ -23,4 +23,12 @@ export const GetDistance = _GetDistance;
 export const Overlay = _Overlay;
 export const MapApp = _MapApp;
 
-export const BaiduMapManager = NativeModules.BaiduMapManager;
+let _BaiduMapManager = NativeModules.BaiduMapManager;
+if (!_BaiduMapManager) {
+  _BaiduMapManager = {
+    initSDK: (key) => {
+      
+    }
+  };
+}
+export const BaiduMapManager = _BaiduMapManager;
