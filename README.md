@@ -84,8 +84,8 @@ npm install react-native-baidu-map --save
 | zoomControlsVisible     | bool  | true     | Android only
 | trafficEnabled          | bool  | false    |
 | baiduHeatMapEnabled     | bool  | false    |
-| zoomGesturesEnabled     | bool  | true     |允许拖动
-| scrollGesturesEnabled   | bool  | true     |允许手势缩放
+| zoomGesturesEnabled     | bool  | true     | 允许手势缩放
+| scrollGesturesEnabled   | bool  | true     | 允许拖动
 | mapType                 | number| 1        |
 | zoom                    | number| 10       |
 | center                  | object| null     | {latitude: 0, longitude: 0}
