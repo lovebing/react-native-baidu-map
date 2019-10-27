@@ -34,9 +34,29 @@ static BMKGeoCodeSearch *geoCodeSearch;
     _locationManager.delegate = self;
 }
 
+- (NSMutableDictionary *)getLocationEventData:(BMKLocation * _Nullable)location orError:(NSError * _Nullable)error {
+    if (error) {
+        NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
+        return nil;
+    }
+    NSMutableDictionary *body = [self getEmptyBody];
+    
+    body[@"latitude"] = [NSNumber numberWithDouble:location.location.coordinate.latitude];
+    body[@"longitude"] = [NSNumber numberWithDouble:location.location.coordinate.longitude];
+    if (location.rgcData.locationDescribe != nil && location.rgcData.locationDescribe.length > 0) {
+        body[@"address"] = location.rgcData.locationDescribe;
+    }
+    body[@"province"] = location.rgcData.province;
+    body[@"city"] = location.rgcData.city;
+    body[@"district"] = location.rgcData.district;
+    body[@"streetName"] = location.rgcData.street;
+    body[@"streetNumber"] = location.rgcData.streetNumber;
+    return body;
+}
+
 RCT_EXPORT_MODULE(BaiduGeolocationModule);
 
-RCT_EXPORT_METHOD(getCurrentPosition) {
+RCT_EXPORT_METHOD(getCurrentPosition:(NSString *)coordType) {
     if (_locating) {
         return;
     }
@@ -44,26 +64,11 @@ RCT_EXPORT_METHOD(getCurrentPosition) {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self intLocationManager];
         [_locationManager requestLocationWithReGeocode:YES withNetworkState:YES completionBlock:^(BMKLocation *location, BMKLocationNetworkState state, NSError *error) {
-            self.locationManager.delegate = nil;
             self.locating = false;
-            if (error) {
-                NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
-                return;
+            NSMutableDictionary *data = [self getLocationEventData:location orError:error];
+            if (data != nil) {
+                [self sendEvent:@"onGetCurrentLocationPosition" body:data];
             }
-            NSMutableDictionary *body = [self getEmptyBody];
-
-            body[@"latitude"] = [NSNumber numberWithDouble:location.location.coordinate.latitude];
-            body[@"longitude"] = [NSNumber numberWithDouble:location.location.coordinate.longitude];
-            if (location.rgcData.locationDescribe != nil && location.rgcData.locationDescribe.length > 0) {
-                body[@"address"] = location.rgcData.locationDescribe;
-            }
-            body[@"province"] = location.rgcData.province;
-            body[@"city"] = location.rgcData.city;
-            body[@"district"] = location.rgcData.district;
-            body[@"streetName"] = location.rgcData.street;
-            body[@"streetNumber"] = location.rgcData.streetNumber;
-
-            [self sendEvent:@"onGetCurrentLocationPosition" body:body];
         }];
     });
 }
@@ -141,6 +146,14 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
         geoCodeSearch = [[BMKGeoCodeSearch alloc]init];
     }
     return geoCodeSearch;
+}
+
+- (void)BMKLocationManager:(BMKLocationManager * _Nonnull)manager didUpdateLocation:(BMKLocation * _Nullable)location orError:(NSError * _Nullable)error {
+    NSMutableDictionary *data = [self getLocationEventData:location orError:error];
+    if (data != nil) {
+        NSLog(@"onLocationUpdate");
+        [self sendEvent:@"onLocationUpdate" body:data];
+    }
 }
 
 - (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeSearchResult *)result errorCode:(BMKSearchErrorCode)error {

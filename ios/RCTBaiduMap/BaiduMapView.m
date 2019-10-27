@@ -20,11 +20,12 @@
 
 - (void)setZoomGesturesEnabled:(BOOL)zoomGesturesEnabled{
     NSLog(@"setZoomGesturesEnabled: %d", zoomGesturesEnabled);
-    self.gesturesEnabled=zoomGesturesEnabled;
+    self.gesturesEnabled = zoomGesturesEnabled;
 }
+
 - (void)setScrollGesturesEnabled:(BOOL)scrollGesturesEnabled{
     NSLog(@"setScrollGesturesEnabled: %d", scrollGesturesEnabled);
-    self.scrollEnabled=scrollGesturesEnabled;
+    self.scrollEnabled = scrollGesturesEnabled;
 }
 
 - (void)setCenterLatLng:(NSDictionary *)LatLngObj {
@@ -34,6 +35,16 @@
     self.centerCoordinate = point;
 }
 
+- (void)setLocationData:(NSDictionary *)locationData {
+    NSLog(@"setLocationData");
+    if (_userLocation == nil) {
+        _userLocation = [[BMKUserLocation alloc] init];
+    }
+    CLLocationCoordinate2D coord = [OverlayUtils getCoorFromOption:locationData];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
+    _userLocation.location = location;
+    [self updateLocationData:_userLocation];
+}
 
 - (void)insertReactSubview:(id <RCTComponent>)subview atIndex:(NSInteger)atIndex {
     NSLog(@"childrenCount:%d", _childrenCount);

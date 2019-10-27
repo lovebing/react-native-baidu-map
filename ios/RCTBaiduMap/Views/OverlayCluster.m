@@ -56,7 +56,7 @@
             [_mapView addAnnotations:clusters];
         } else {
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                __block NSArray *array = [_clusterManager getClusters:clusterZoom];
+                __block NSArray *array = [self.clusterManager getClusters:clusterZoom];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     for (BMKCluster *item in array) {
                         ClusterAnnotation *annotation = [[ClusterAnnotation alloc] init];

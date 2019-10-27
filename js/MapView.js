@@ -26,6 +26,7 @@ export default class MapView extends Component {
     clusterEnabled: PropTypes.bool,
     mapType: PropTypes.number,
     zoom: PropTypes.number,
+    showsUserLocation: PropTypes.bool,
     scrollGesturesEnabled: PropTypes.bool, //是否允许拖动
     zoomGesturesEnabled: PropTypes.bool,//是否充许手势缩放
     center: PropTypes.object,
@@ -47,7 +48,8 @@ export default class MapView extends Component {
     center: null,
     zoom: 10,
     scrollGesturesEnabled: true,
-    zoomGesturesEnabled: true
+    zoomGesturesEnabled: true,
+    showsUserLocation: false
   };
 
   constructor() {

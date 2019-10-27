@@ -109,6 +109,21 @@ public class MapViewManager extends ViewGroupManager<MapView> {
         mapView.getMap().setMapStatus(mapStatusUpdate);
     }
 
+    @ReactProp(name = "showsUserLocation")
+    public void setShowsUserLocation(MapView mapView, boolean showsUserLocation) {
+        mapView.getMap().setMyLocationEnabled(showsUserLocation);
+    }
+
+    @ReactProp(name = "locationData")
+    public void setLocationData(MapView mapView, ReadableMap locationData) {
+        LatLng latLng = LatLngUtil.fromReadableMap(locationData);
+        MyLocationData myLocationData = new MyLocationData.Builder()
+                .latitude(latLng.latitude)
+                .longitude(latLng.longitude)
+                .build();
+        mapView.getMap().setMyLocationData(myLocationData);
+    }
+
     @ReactProp(name="zoomGesturesEnabled")
     public void setGesturesEnabled(MapView mapView, boolean zoomGesturesEnabled) {
         UiSettings setting = mapView.getMap().getUiSettings();

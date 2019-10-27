@@ -16,7 +16,7 @@
 #import "BaseModule.h"
 #import "BaiduMapViewManager.h"
 
-@interface GeolocationModule : BaseModule <BMKGeoCodeSearchDelegate>
+@interface GeolocationModule : BaseModule <BMKGeoCodeSearchDelegate, BMKLocationManagerDelegate>
 
 @property (nonatomic) BMKLocationManager *locationManager;
 @property (nonatomic) bool locating;

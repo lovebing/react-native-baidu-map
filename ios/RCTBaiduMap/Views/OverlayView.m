@@ -18,4 +18,8 @@
     
 }
 
+- (BOOL)ownOverlay:(id<BMKOverlay>)overlay {
+    return NO;
+}
+
 @end

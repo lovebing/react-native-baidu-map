@@ -148,7 +148,7 @@ BaiduMapManager.initSDK('sIMQlfmOXhQmPLF1QMh4aBp8zZO9Lb2A');
 | ----------------------- |:-----:| :-------:| -------
 | points                  | array | [{latitude: 0, longitude: 0}]     |
 | strokeColor             | string| AAFF0000 | 6位(RRGGBB)或8位(AARRGGBB)
-| lineWidth               | double| 1.0 |
+| lineWidth               | int| 1|
 
 ##### Polygon Props 属性
 | Prop                    | Type  | Default  | Description
