@@ -147,10 +147,8 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     NSMutableDictionary *body = [self getEmptyBody];
 
     if (error == BMK_SEARCH_NO_ERROR) {
-        NSString *latitude = [NSNumber numberWithDouble:result.location.latitude];
-        NSString *longitude = [NSNumber numberWithDouble:result.location.longitude];
-        body[@"latitude"] = latitude;
-        body[@"longitude"] = longitude;
+        body[@"latitude"] = [NSNumber numberWithDouble:result.location.latitude];
+        body[@"longitude"] = [NSNumber numberWithDouble:result.location.longitude];
     }
     else {
         body[@"errcode"] = [NSString stringWithFormat:@"%d", error];
