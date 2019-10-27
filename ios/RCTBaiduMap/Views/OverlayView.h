@@ -17,9 +17,14 @@
 
 @property NSInteger atIndex;
 
+@property(nonatomic) NSString *fillColor;
+@property(nonatomic) NSString *strokeColor;
+@property(nonatomic) double lineWidth;
+
 - (void)addToMap:(BMKMapView *)mapView;
 - (void)update;
 - (void)removeFromMap:(BMKMapView *)mapView;
+- (BOOL)ownOverlay:(id<BMKOverlay>)overlay;
 
 @end
 

@@ -36,9 +36,15 @@ public class OverlayPolylineManager extends SimpleViewManager<OverlayPolyline> {
         overlayPolyline.setPoints(LatLngUtil.fromReadableArray(points));
     }
 
-    @ReactProp(name = "color")
+    @ReactProp(name = "strokeColor")
     public void setColor(OverlayPolyline overlayPolyline, String color) {
         overlayPolyline.setColor(ColorUtil.fromString(color));
     }
+
+    @ReactProp(name = "lineWidth")
+    public void setLineWidth(OverlayPolyline overlayPolyline, int lineWidth) {
+        overlayPolyline.setLineWidth(lineWidth);
+    }
+    
 
 }

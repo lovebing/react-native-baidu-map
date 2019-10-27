@@ -26,7 +26,9 @@
 @interface OverlayUtils:NSObject
 
 + (CLLocationCoordinate2D)getCoorFromOption:(NSDictionary *)option;
-+ (CLLocationCoordinate2D *)getCoords:(NSArray *)points;
++ (void)updateCoords:(NSArray *)points result:(CLLocationCoordinate2D *)result;
++ (UIColor *)getColor:(NSString *)colorHexStr;
+
 @end
 
 #endif /* OverlayUtils_h */

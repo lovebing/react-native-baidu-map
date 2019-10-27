@@ -11,7 +11,11 @@
 @implementation OverlayPolylineManager
 
 RCT_EXPORT_MODULE(BaiduMapOverlayPolyline)
+
 RCT_EXPORT_VIEW_PROPERTY(points, NSArray*)
+RCT_EXPORT_VIEW_PROPERTY(lineWidth, double)
+RCT_EXPORT_VIEW_PROPERTY(strokeColor, NSString*)
+
 
 - (UIView *)view {
     OverlayPolyline *polyline = [OverlayPolyline new];

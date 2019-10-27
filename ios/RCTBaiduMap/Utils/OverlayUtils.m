@@ -16,22 +16,43 @@
 + (CLLocationCoordinate2D)getCoorFromOption:(NSDictionary *)option {
     double lat = [RCTConvert double:option[@"latitude"]];
     double lng = [RCTConvert double:option[@"longitude"]];
-    CLLocationCoordinate2D coor;
-    coor.latitude = lat;
-    coor.longitude = lng;
-    return coor;
+    return CLLocationCoordinate2DMake(lat, lng);
 }
 
-+ (CLLocationCoordinate2D *)getCoords:(NSArray *)points {
++ (void)updateCoords:(NSArray *)points result:(CLLocationCoordinate2D *)result {
     NSUInteger size = [points count];
-    CLLocationCoordinate2D coords[size];
-    memset(coords, 0, size);
     for (NSUInteger i = 0; i < size; i++) {
         CLLocationCoordinate2D coord = [self getCoorFromOption:points[i]];
-        coords[i] = coord;
-        NSLog(@"points:%f, %f", coord.latitude, coord.longitude);
+        result[i] = coord;
     }
-    return coords;
+}
+
++ (UIColor *)getColor:(NSString *)colorHexStr {
+    CGFloat alpha, red, blue, green;
+    switch ([colorHexStr length]) {
+        case 6:
+            alpha = 1.0f;
+            red = [self getColorValue:colorHexStr start:0 length:2];
+            green = [self getColorValue:colorHexStr start:2 length:2];
+            blue = [self getColorValue:colorHexStr start:4 length:2];
+            break;
+        case 8:
+            alpha = [self getColorValue:colorHexStr start:0 length:2];
+            red = [self getColorValue:colorHexStr start:2 length:2];
+            green = [self getColorValue:colorHexStr start:4 length:2];
+            blue = [self getColorValue:colorHexStr start:6 length:2];
+            break;
+        default:
+            return nil;
+    }
+    return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+}
+
++ (CGFloat)getColorValue: (NSString *)hexStr start:(NSUInteger)start length:(NSUInteger)length {
+    NSString *value = [hexStr substringWithRange: NSMakeRange(start, length)];
+    unsigned hexValue;
+    [[NSScanner scannerWithString: value] scanHexInt: &hexValue];
+    return hexValue / 255.0;
 }
 
 @end

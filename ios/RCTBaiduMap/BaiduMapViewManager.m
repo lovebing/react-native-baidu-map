@@ -147,6 +147,11 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
 
 - (BMKOverlayView *)mapView:(BMKMapView *)mapView viewForOverlay:(id<BMKOverlay>)overlay {
     NSLog(@"viewForOverlay");
+    BaiduMapView *baidumMapView = (BaiduMapView *) mapView;
+    OverlayView *overlayView = [baidumMapView findOverlayView:overlay];
+    if (overlayView == nil) {
+        return nil;
+    }
     if ([overlay isKindOfClass:[BMKArcline class]]) {
         BMKArclineView *arclineView = [[BMKArclineView alloc] initWithArcline:overlay];
         arclineView.strokeColor = [UIColor blueColor];
@@ -159,7 +164,7 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
     } else if([overlay isKindOfClass:[BMKPolyline class]]) {
         BMKPolylineView *polylineView = [[BMKPolylineView alloc] initWithPolyline:overlay];
         polylineView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:1];
-        polylineView.lineWidth = 20.0;
+        polylineView.lineWidth = overlayView.lineWidth;
         return polylineView;
     }
     return nil;

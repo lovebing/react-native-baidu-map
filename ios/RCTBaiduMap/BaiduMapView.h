@@ -33,6 +33,8 @@
 - (void)setScrollGesturesEnabled:(BOOL)scrollGesturesEnabled;
 - (void)setZoomGesturesEnabled:(BOOL)zoomGesturesEnabled;
 
+- (OverlayView *)findOverlayView:(id<BMKOverlay>)overlay;
+
 @end
 
 #endif

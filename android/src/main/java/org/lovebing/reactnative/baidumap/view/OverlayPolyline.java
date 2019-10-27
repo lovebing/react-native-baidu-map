@@ -26,6 +26,7 @@ public class OverlayPolyline extends View implements OverlayView {
     private List<LatLng> points;
     private Polyline polyline;
     private int color = 0xAAFF0000;
+    private int lineWidth = 1;
 
     public OverlayPolyline(Context context) {
         super(context);
@@ -66,9 +67,16 @@ public class OverlayPolyline extends View implements OverlayView {
         }
     }
 
+    public void setLineWidth(int lineWidth) {
+        this.lineWidth = lineWidth;
+        if (polyline != null) {
+            polyline.setWidth(lineWidth);
+        }
+    }
+
     @Override
     public void addTopMap(BaiduMap baiduMap) {
-        PolylineOptions options = new PolylineOptions().width(getWidth())
+        PolylineOptions options = new PolylineOptions().width(lineWidth)
                 .color(color).points(points);
         polyline = (Polyline) baiduMap.addOverlay(options);
     }

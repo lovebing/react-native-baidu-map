@@ -70,4 +70,17 @@
     NSLog(@"didUpdateReactSubviews:%d", [self.reactSubviews count]);
 }
 
+- (OverlayView *)findOverlayView:(id<BMKOverlay>)overlay {
+    for (int i = 0; i < [self.reactSubviews count]; i++) {
+        UIView * view = [self.reactSubviews objectAtIndex:i];
+        if ([view isKindOfClass:[OverlayView class]]) {
+            OverlayView *overlayView = (OverlayView *) view;
+            if ([overlayView ownOverlay:overlay]) {
+                return overlayView;
+            }
+        }
+    }
+    return nil;
+}
+
 @end

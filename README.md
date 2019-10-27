@@ -147,7 +147,8 @@ BaiduMapManager.initSDK('sIMQlfmOXhQmPLF1QMh4aBp8zZO9Lb2A');
 | Prop                    | Type  | Default  | Description
 | ----------------------- |:-----:| :-------:| -------
 | points                  | array | [{latitude: 0, longitude: 0}]     |
-| color                   | string| AAFF0000 |
+| strokeColor             | string| AAFF0000 | 6位(RRGGBB)或8位(AARRGGBB)
+| lineWidth               | double| 1.0 |
 
 ##### Polygon Props 属性
 | Prop                    | Type  | Default  | Description
@@ -226,3 +227,8 @@ Cluster 示例
 | Method                    | Result
 | ------------------------- | -------
 | Promise getLocationDistance({latitude: 0.0, longitude: 0.0}, {latitude: 0.0, longitude: 0.0}) | `{"distance": 0.0}`
+
+
+### 鸣谢
+[![jetbrains](https://raw.githubusercontent.com/lovebing/react-native-baidu-map/master/images/jetbrains.png)](https://www.jetbrains.com/?from=react-native-baidu-map)
+
