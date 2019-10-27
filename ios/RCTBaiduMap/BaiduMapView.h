@@ -25,6 +25,7 @@
 
 @property(nonatomic) BOOL clusterEnabled;
 @property(nonatomic) int childrenCount;
+@property (nonatomic) BMKUserLocation *userLocation;
 @property (nonatomic, copy) RCTBubblingEventBlock onChange;
 
 - (void)setZoom:(float)zoom;

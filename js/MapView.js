@@ -30,6 +30,7 @@ export default class MapView extends Component {
     scrollGesturesEnabled: PropTypes.bool, //是否允许拖动
     zoomGesturesEnabled: PropTypes.bool,//是否充许手势缩放
     center: PropTypes.object,
+    locationData: PropTypes.object,
     onMapStatusChangeStart: PropTypes.func,
     onMapStatusChange: PropTypes.func,
     onMapStatusChangeFinish: PropTypes.func,

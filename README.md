@@ -102,6 +102,8 @@ BaiduMapManager.initSDK('sIMQlfmOXhQmPLF1QMh4aBp8zZO9Lb2A');
 | scrollGesturesEnabled   | bool  | true     | 允许拖动
 | mapType                 | number| 1        |
 | zoom                    | number| 10       |
+| showsUserLocation       | bool  | false    | 是否显示定位
+| locationData            | object| null     | 定位信息 {latitude: 0, longitude: 0}
 | center                  | object| null     | {latitude: 0, longitude: 0}
 | onMapStatusChangeStart  | func  | undefined| Android only
 | onMapStatusChange       | func  | undefined|
