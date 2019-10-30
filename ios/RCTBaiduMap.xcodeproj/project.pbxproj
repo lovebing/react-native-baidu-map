@@ -13,6 +13,7 @@
 		EF3C225C1CC2C30D0099E9B6 /* BaiduMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3C225B1CC2C30D0099E9B6 /* BaiduMapView.m */; };
 		EF4ABB0D1DC378CF008E75C9 /* GeolocationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */; };
 		EF6660E91D55E69B00DB8D08 /* BaiduMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6660E81D55E69B00DB8D08 /* BaiduMapViewManager.m */; };
+		EF7F66C42369F9B600D1D9DC /* BaiduMapAppModule.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7F66C32369F9B600D1D9DC /* BaiduMapAppModule.m */; };
 		EF824B6F234A18AD009E6523 /* BMKCluster.m in Sources */ = {isa = PBXBuildFile; fileRef = EF824B6A234A18AD009E6523 /* BMKCluster.m */; };
 		EF824B70234A18AD009E6523 /* BMKClusterQuadtree.m in Sources */ = {isa = PBXBuildFile; fileRef = EF824B6B234A18AD009E6523 /* BMKClusterQuadtree.m */; };
 		EF824B72234A18AD009E6523 /* BMKClusterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF824B6E234A18AD009E6523 /* BMKClusterManager.m */; };
@@ -51,6 +52,8 @@
 		EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeolocationModule.m; sourceTree = "<group>"; };
 		EF6660E71D55E68000DB8D08 /* BaiduMapViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaiduMapViewManager.h; sourceTree = "<group>"; };
 		EF6660E81D55E69B00DB8D08 /* BaiduMapViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduMapViewManager.m; sourceTree = "<group>"; };
+		EF7F66C22369F9B600D1D9DC /* BaiduMapAppModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduMapAppModule.h; sourceTree = "<group>"; };
+		EF7F66C32369F9B600D1D9DC /* BaiduMapAppModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduMapAppModule.m; sourceTree = "<group>"; };
 		EF824B67234A18AD009E6523 /* BMKCluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKCluster.h; sourceTree = "<group>"; };
 		EF824B68234A18AD009E6523 /* BMKClusterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKClusterManager.h; sourceTree = "<group>"; };
 		EF824B69234A18AD009E6523 /* BMKClusterQuadtree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKClusterQuadtree.h; sourceTree = "<group>"; };
@@ -115,6 +118,7 @@
 		EF3C22581CC2C30D0099E9B6 /* RCTBaiduMap */ = {
 			isa = PBXGroup;
 			children = (
+				EF7F66BB2369EB3000D1D9DC /* Modules */,
 				EFB77A63234B0B3B00A17DDF /* ClusterAnnotation.h */,
 				EFB77A64234B0B3B00A17DDF /* ClusterAnnotation.m */,
 				EFB77A54234AF70200A17DDF /* Utils */,
@@ -127,10 +131,19 @@
 				EF6660E81D55E69B00DB8D08 /* BaiduMapViewManager.m */,
 				EF4ABB0B1DC378BD008E75C9 /* GeolocationModule.h */,
 				EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */,
+			);
+			path = RCTBaiduMap;
+			sourceTree = "<group>";
+		};
+		EF7F66BB2369EB3000D1D9DC /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				EF7F66C22369F9B600D1D9DC /* BaiduMapAppModule.h */,
+				EF7F66C32369F9B600D1D9DC /* BaiduMapAppModule.m */,
 				EF04BD2E2364B7050007BADF /* BaiduMapManager.h */,
 				EF04BD2F2364B7050007BADF /* BaiduMapManager.m */,
 			);
-			path = RCTBaiduMap;
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		EF824B66234A17DA009E6523 /* IndustryPurpose */ = {
@@ -282,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFB77A58234AF73900A17DDF /* OverlayUtils.m in Sources */,
+				EF7F66C42369F9B600D1D9DC /* BaiduMapAppModule.m in Sources */,
 				EFB77A53234AF6E300A17DDF /* OverlayMarkerManager.m in Sources */,
 				EFB77A52234AF6E300A17DDF /* OverlayPolylineManager.m in Sources */,
 				EFB77A4A234AF69B00A17DDF /* OverlayPolyline.m in Sources */,

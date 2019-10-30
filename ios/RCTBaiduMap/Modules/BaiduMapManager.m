@@ -12,7 +12,7 @@
 
 RCT_EXPORT_MODULE(BaiduMapManager)
 
-RCT_EXPORT_METHOD(initSDK:(NSString*)key) {
+RCT_EXPORT_METHOD(initSDK:(NSString *)key) {
     if (_mapManager != nil) {
         return;
     }

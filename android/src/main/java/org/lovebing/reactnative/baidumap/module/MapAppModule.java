@@ -14,6 +14,11 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import org.lovebing.reactnative.baidumap.util.LatLngUtil;
+import com.baidu.mapapi.navi.BaiduMapAppNotSupportNaviException;
+import com.baidu.mapapi.navi.BaiduMapNavigation;
+import com.baidu.mapapi.navi.NaviParaOption;
+import com.baidu.mapapi.utils.poi.BaiduMapPoiSearch;
+import com.baidu.mapapi.utils.poi.PoiParaOption;
 
 /**
  * @author lovebing Created on Dec 09, 2018
@@ -32,15 +37,66 @@ public class MapAppModule extends BaseModule {
     }
 
     @ReactMethod
-    public void openBaiduMapTransitRoute(ReadableMap start, ReadableMap end) {
-        RouteParaOption option = new RouteParaOption()
-                .startPoint(LatLngUtil.fromReadableMap(start))
-                .endPoint(LatLngUtil.fromReadableMap(end))
+    public void openTransitRoute(ReadableMap startPoint, ReadableMap endPoint) {
+        RouteParaOption paraOption = new RouteParaOption()
+                .startPoint(LatLngUtil.fromReadableMap(startPoint))
+                .endPoint(LatLngUtil.fromReadableMap(endPoint))
                 .busStrategyType(RouteParaOption.EBusStrategyType.bus_recommend_way);
         try {
-            BaiduMapRoutePlan.openBaiduMapTransitRoute(option, context);
+            BaiduMapRoutePlan.openBaiduMapTransitRoute(paraOption, context);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        BaiduMapRoutePlan.finish(context);
+    }
+
+    @ReactMethod
+    public void openWalkNavi(ReadableMap startPoint, ReadableMap endPoint) {
+        NaviParaOption para = new NaviParaOption()
+                .startPoint(LatLngUtil.fromReadableMap(startPoint))
+                .endPoint(LatLngUtil.fromReadableMap(endPoint))
+                .startName(startPoint.getString("name"))
+                .endName(endPoint.getString("name"));
+        try {
+            BaiduMapNavigation.openBaiduMapWalkNavi(para, context);
+        } catch (BaiduMapAppNotSupportNaviException e) {
+            e.printStackTrace();
+        }
+        BaiduMapNavigation.finish(context);
+    }
+
+    @ReactMethod
+    public void openPoiNearbySearch(ReadableMap options) {
+        PoiParaOption para = new PoiParaOption()
+                .key(options.getString("key"))
+                .center(LatLngUtil.fromReadableMap(options))
+                .radius(options.getInt("radius"));
+        try {
+            BaiduMapPoiSearch.openBaiduMapPoiNearbySearch(para, context);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        BaiduMapPoiSearch.finish(context);
+    }
+
+    @ReactMethod
+    public void openPoiDetialsPage(String uid) {
+        PoiParaOption para = new PoiParaOption().uid(uid);
+        try {
+            BaiduMapPoiSearch.openBaiduMapPoiDetialsPage(para, context);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        BaiduMapPoiSearch.finish(context);
+    }
+
+    @ReactMethod
+    public void openPanoShow(String uid) {
+        try {
+            BaiduMapPoiSearch.openBaiduMapPanoShow(uid, context);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        BaiduMapPoiSearch.finish(context);
     }
 }

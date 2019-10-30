@@ -11,8 +11,6 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
-#import "BaiduMapViewManager.h"
-
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -29,8 +27,6 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  
-  [BaiduMapViewManager initSDK:@"sIMQlfmOXhQmPLF1QMh4aBp8zZO9Lb2A"];
   
   return YES;
 }

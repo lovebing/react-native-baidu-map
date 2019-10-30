@@ -13,6 +13,7 @@
 #import <React/RCTBridgeModule.h>
 #import <BMKLocationkit/BMKLocationComponent.h>
 #import <BaiduMapAPI_Map/BMKMapView.h>
+#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 
 @interface BaiduMapManager : NSObject<RCTBridgeModule>
 

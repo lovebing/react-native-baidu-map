@@ -20,6 +20,17 @@ import React, {
 
 const _module = NativeModules.BaiduGeolocationModule;
 
+const _locatingUpdateListener = {
+  listener: null,
+  handler: null,
+  onLocationUpdate: (resp) => {
+    this.listener && this.listener(resp);
+  },
+  setListener: (listener) => {
+    this.listener = listener;
+  }
+}
+
 export default {
   geocode(city, addr) {
     return new Promise((resolve, reject) => {
@@ -84,5 +95,24 @@ export default {
         resolve(resp);
       });
     });
+  },
+  startLocating(listener, coorType = 'gcj02') {
+    _module.startLocating(coorType);
+    if (_locatingUpdateListener.handler == null) {
+      _locatingUpdateListener.handler = DeviceEventEmitter.addListener('onLocationUpdate', resp => {
+        if (!resp.address) {
+          resp.address = `${resp.province} ${resp.city} ${resp.district} ${resp.streetName}`;
+        }
+        _locatingUpdateListener.onLocationUpdate(resp);
+      });
+    }
+    _locatingUpdateListener.setListener(listener);
+  },
+  stopLocating() {
+    _module.stopLocating();
+    if (_locatingUpdateListener.handler != null) {
+      _locatingUpdateListener.handler.remove();
+      _locatingUpdateListener.handler = null;
+    }
   }
 };

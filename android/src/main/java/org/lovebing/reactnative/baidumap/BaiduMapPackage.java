@@ -20,6 +20,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 
 import com.facebook.react.uimanager.ViewManager;
 
+import org.lovebing.reactnative.baidumap.module.BaiduMapManager;
 import org.lovebing.reactnative.baidumap.module.GeolocationModule;
 import org.lovebing.reactnative.baidumap.module.GetDistanceModule;
 import org.lovebing.reactnative.baidumap.module.MapAppModule;
@@ -34,6 +35,7 @@ public class BaiduMapPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         return Arrays.asList(
+                new BaiduMapManager(reactContext),
                 new GeolocationModule(reactContext),
                 new GetDistanceModule(reactContext),
                 new MapAppModule(reactContext)

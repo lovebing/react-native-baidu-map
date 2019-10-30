@@ -34,7 +34,7 @@ static BMKGeoCodeSearch *geoCodeSearch;
     _locationManager.delegate = self;
 }
 
-- (NSMutableDictionary *)getLocationEventData:(BMKLocation * _Nullable)location orError:(NSError * _Nullable)error {
+- (NSMutableDictionary *)getLocationEventData:(BMKLocation* _Nullable)location orError:(NSError* _Nullable)error {
     if (error) {
         NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
         return nil;
@@ -73,31 +73,45 @@ RCT_EXPORT_METHOD(getCurrentPosition:(NSString *)coordType) {
     });
 }
 
+RCT_EXPORT_METHOD(startLocating:(NSString *)coordType) {
+    if (_locating) {
+        return;
+    }
+    _locating = true;
+    [_locationManager setLocatingWithReGeocode:YES];
+    [_locationManager startUpdatingLocation];
+}
+
+RCT_EXPORT_METHOD(stopLocating) {
+    _locating = false;
+    [_locationManager stopUpdatingLocation];
+}
+
 RCT_EXPORT_METHOD(getBaiduCoorFromGPSCoor:(double)lat lng:(double)lng
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
     NSLog(@"getBaiduCoorFromGPSCoor");
     CLLocationCoordinate2D baiduCoor = [self getBaiduCoor:lat lng:lng];
-
+    
     NSDictionary* coor = @{
                            @"latitude": @(baiduCoor.latitude),
                            @"longitude": @(baiduCoor.longitude)
                            };
-
+    
     resolve(coor);
 }
 
 RCT_EXPORT_METHOD(geocode:(NSString *)city addr:(NSString *)addr) {
-
+    
     [self getGeocodesearch].delegate = self;
-
+    
     BMKGeoCodeSearchOption *geoCodeSearchOption = [[BMKGeoCodeSearchOption alloc]init];
-
+    
     geoCodeSearchOption.city= city;
     geoCodeSearchOption.address = addr;
-
+    
     BOOL flag = [[self getGeocodesearch] geoCode:geoCodeSearchOption];
-
+    
     if(flag) {
         NSLog(@"geo检索发送成功");
     } else{
@@ -106,17 +120,17 @@ RCT_EXPORT_METHOD(geocode:(NSString *)city addr:(NSString *)addr) {
 }
 
 RCT_EXPORT_METHOD(reverseGeoCode:(double)lat lng:(double)lng) {
-
+    
     [self getGeocodesearch].delegate = self;
     CLLocationCoordinate2D baiduCoor = CLLocationCoordinate2DMake(lat, lng);
-
+    
     CLLocationCoordinate2D pt = (CLLocationCoordinate2D){baiduCoor.latitude, baiduCoor.longitude};
-
+    
     BMKReverseGeoCodeSearchOption *reverseGeoCodeSearchOption = [[BMKReverseGeoCodeSearchOption alloc]init];
     reverseGeoCodeSearchOption.location = pt;
-
+    
     BOOL flag = [[self getGeocodesearch] reverseGeoCode:reverseGeoCodeSearchOption];
-
+    
     if(flag) {
         NSLog(@"逆向地理编码发送成功");
     }
@@ -124,17 +138,17 @@ RCT_EXPORT_METHOD(reverseGeoCode:(double)lat lng:(double)lng) {
 }
 
 RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
-
+    
     [self getGeocodesearch].delegate = self;
     CLLocationCoordinate2D baiduCoor = [self getBaiduCoor:lat lng:lng];
-
+    
     CLLocationCoordinate2D pt = (CLLocationCoordinate2D){baiduCoor.latitude, baiduCoor.longitude};
-
+    
     BMKReverseGeoCodeSearchOption *reverseGeoCodeSearchOption = [[BMKReverseGeoCodeSearchOption alloc]init];
     reverseGeoCodeSearchOption.location = pt;
-
+    
     BOOL flag = [[self getGeocodesearch] reverseGeoCode:reverseGeoCodeSearchOption];
-
+    
     if(flag) {
         NSLog(@"逆向地理编码发送成功");
     }
@@ -158,7 +172,7 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
 
 - (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeSearchResult *)result errorCode:(BMKSearchErrorCode)error {
     NSMutableDictionary *body = [self getEmptyBody];
-
+    
     if (error == BMK_SEARCH_NO_ERROR) {
         body[@"latitude"] = [NSNumber numberWithDouble:result.location.latitude];
         body[@"longitude"] = [NSNumber numberWithDouble:result.location.longitude];
@@ -168,12 +182,12 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
         body[@"errmsg"] = [self getSearchErrorInfo:error];
     }
     [self sendEvent:@"onGetGeoCodeResult" body:body];
-
+    
 }
 - (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeSearchResult *)result errorCode:(BMKSearchErrorCode)error {
-
+    
     NSMutableDictionary *body = [self getEmptyBody];
-
+    
     if (error == BMK_SEARCH_NO_ERROR) {
         // 使用离线地图之前，需要先初始化百度地图
         [[BMKMapView alloc] initWithFrame:CGRectZero];
@@ -184,11 +198,11 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
             BMKOLSearchRecord *searchRecord = cityCodeArr.firstObject;
             body[@"cityCode"] = @(searchRecord.cityID).stringValue;
             searchRecord = nil;
-
+            
         }
         cityCodeArr = nil;
         offlineMap = nil;
-
+        
         body[@"latitude"] = [NSNumber numberWithDouble:result.location.latitude];
         body[@"longitude"] = [NSNumber numberWithDouble:result.location.longitude];
         body[@"address"] = result.address;
@@ -203,7 +217,7 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
         body[@"errmsg"] = [self getSearchErrorInfo:error];
     }
     [self sendEvent:@"onGetReverseGeoCodeResult" body:body];
-
+    
     geoCodeSearch.delegate = nil;
 }
 - (NSString *)getSearchErrorInfo:(BMKSearchErrorCode)error {

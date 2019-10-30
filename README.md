@@ -60,7 +60,6 @@ https://stackoverflow.com/questions/44061155/react-native-npm-link-local-depende
 ```shell
 mkdir example/node_modules/react-native-baidu-map
 cp -R package.json js index.js ios android LICENSE README.md example/node_modules/react-native-baidu-map/
-rm -rf example/node_modules/react-native-baidu-map/ios/RCTBaiduMap.xcodeproj
 
 ```
 #### 使用 npm 源
@@ -90,7 +89,7 @@ BaiduMapManager.initSDK('sIMQlfmOXhQmPLF1QMh4aBp8zZO9Lb2A');
 
 ### Usage 使用方法
 
-    import { MapView, MapTypes, Geolocation, Overlay } from 'react-native-baidu-map'
+    import { MapView, MapTypes, Geolocation, Overlay, MapApp } from 'react-native-baidu-map'
 
 #### MapView Props 属性
 | Prop                    | Type  | Default  | Description
@@ -224,12 +223,28 @@ Cluster 示例
 | Promise reverseGeoCodeGPS(double lat, double lng) | |  `{"address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}`
 | Promise geocode(String city, String addr) | | {"latitude": 0.0, "longitude": 0.0}
 | Promise getCurrentPosition(String coorType) | coorType 为可选参数，默认以 `gcj02` 坐标系，目前仅 Android 端支持使用 `BD09ll` | iOS: `{"latitude": 0.0, "longitude": 0.0, "address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}` Android: `{"latitude": 0.0, "longitude": 0.0, "direction": -1, "altitude": 0.0, "radius": 0.0, "address": "", "countryCode": "", "country": "", "province": "", "cityCode": "", "city": "", "district": "", "street": "", "streetNumber": "", "buildingId": "", "buildingName": ""}`
+| startLocating(String coorType, listener) | 开始持续定位 |
+| stopLocating  | 停止持续定位 |
 
 #### GetDistance Methods
 | Method                    | Result
 | ------------------------- | -------
 | Promise getLocationDistance({latitude: 0.0, longitude: 0.0}, {latitude: 0.0, longitude: 0.0}) | `{"distance": 0.0}`
 
+#### MapApp Methos
+| Method                    | Description
+| ------------------------- | -------
+| openTransitRoute({latitude: 0.0, longitude: 0.0, name: ''}, {latitude: 0.0, longitude: 0.0}, name: '') | 调起百度地图公交路线
+| openWalkNavi({latitude: 0.0, longitude: 0.0, name: ''}, {latitude: 0.0, longitude: 0.0}, name: '') | 调起百度地图步行路线
+
+##### iOS 
+必须在 Info.plist 中进行如下配置，否则不能调起百度地图客户端
+```
+<key>LSApplicationQueriesSchemes</key>
+<array>
+    <string>baidumap</string>
+</array>
+```
 
 ### 鸣谢
 [![jetbrains](https://raw.githubusercontent.com/lovebing/react-native-baidu-map/master/images/jetbrains.png)](https://www.jetbrains.com/?from=react-native-baidu-map)

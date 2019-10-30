@@ -41,6 +41,8 @@ public class GeolocationModule extends BaseModule
 
     private LocationClient locationClient;
     private static GeoCoder geoCoder;
+    private volatile boolean locating = false;
+    private volatile boolean locateOnce = false;
 
     public GeolocationModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -103,12 +105,38 @@ public class GeolocationModule extends BaseModule
 
     @ReactMethod
     public void getCurrentPosition(String coorType) {
-        if(locationClient == null) {
+        if (locating) {
+            return;
+        }
+        locateOnce = true;
+        locating = true;
+        if (locationClient == null) {
             initLocationClient(coorType);
         }
         Log.i("getCurrentPosition", "getCurrentPosition");
         locationClient.start();
     }
+
+    @ReactMethod
+    public void startLocating(String coorType) {
+        if (locating) {
+            return;
+        }
+        locateOnce = false;
+        locating = true;
+        initLocationClient(coorType);
+        locationClient.start();
+    }
+
+    @ReactMethod
+    public void stopLocating() {
+        locating = true;
+        if (locationClient != null) {
+            locationClient.stop();
+            locationClient = null;
+        }
+    }
+
     @ReactMethod
     public void geocode(String city, String addr) {
         getGeoCoder().geocode(new GeoCodeOption()
@@ -147,8 +175,15 @@ public class GeolocationModule extends BaseModule
         params.putString("buildingId", bdLocation.getBuildingID());
         params.putString("buildingName", bdLocation.getBuildingName());
         Log.i("onReceiveLocation", "onGetCurrentLocationPosition");
-        sendEvent("onGetCurrentLocationPosition", params);
-        locationClient.stop();
+
+        locating = false;
+        if (locateOnce) {
+            sendEvent("onGetCurrentLocationPosition", params);
+            locationClient.stop();
+            locationClient = null;
+        } else {
+            sendEvent("onLocationUpdate", params);
+        }
     }
 
     @Override

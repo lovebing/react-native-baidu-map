@@ -184,7 +184,7 @@ PODS:
     - React-cxxreact (= 0.61.2)
     - React-jsi (= 0.61.2)
   - React-jsinspector (0.61.2)
-  - react-native-baidu-map (1.0.8):
+  - react-native-baidu-map (1.0.16):
     - BaiduMapKit (= 4.2.0)
     - BMKLocationKit (= 1.3.0.2)
     - React
@@ -242,7 +242,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
-  - react-native-baidu-map (from `../node_modules/react-native-baidu-map/ios/react-native-baidu-map.podspec`)
+  - react-native-baidu-map (from `../node_modules/react-native-baidu-map/`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -292,7 +292,7 @@ EXTERNAL SOURCES:
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-baidu-map:
-    :podspec: "../node_modules/react-native-baidu-map/ios/react-native-baidu-map.podspec"
+    :path: "../node_modules/react-native-baidu-map/"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -334,7 +334,7 @@ SPEC CHECKSUMS:
   React-jsi: f9126dd5818fbd8fbf869be9bbc1c0543973e1a1
   React-jsiexecutor: 752f034d0f007d1141a1c52ba9ef3fd9668fbfa7
   React-jsinspector: 044105eea064aec81adc5e4d777a8f6589e7d094
-  react-native-baidu-map: 44e760aa86c2e4005fe66c2e141e0fcc70846b73
+  react-native-baidu-map: 6064381b1e1220cf7668d57f5a3e7f05e0ebadf1
   React-RCTActionSheet: 49433f6e3659ba5d3ee650e44b9c18743ef9a7fc
   React-RCTAnimation: 12f86a4e3542032329366b03bca2cc254a7c64a9
   React-RCTBlob: ba90a4144ad478a022b79a4e8a1f150548d39425
@@ -347,6 +347,6 @@ SPEC CHECKSUMS:
   ReactCommon: eb96b70a2a5bed775e919151fd77699fed52944c
   Yoga: 6af72bedeaea291a3a3717772d6d41836f23a1b9
 
-PODFILE CHECKSUM: 819ba75e15e4b2ee4779f5dfeb8c12de80e05a1d
+PODFILE CHECKSUM: b5b2d37b9d780ab45dbf053f90b3f445a561f91c
 
 COCOAPODS: 1.5.3

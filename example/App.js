@@ -19,9 +19,10 @@ import {
   StatusBar,
   Button,
   Dimensions,
+  NativeModules
 } from 'react-native';
 
-import { MapView, MapTypes, Geolocation, Overlay } from 'react-native-baidu-map';
+import { BaiduMapManager, MapView, MapTypes, Geolocation, Overlay, MapApp } from 'react-native-baidu-map';
 
 import {
   Header,
@@ -30,6 +31,8 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+BaiduMapManager.initSDK("sIMQlfmOXhQmPLF1QMh4aBp8zZO9Lb2A");
 
 const { height, width } = Dimensions.get('window');
 
@@ -78,6 +81,28 @@ class App extends Component<Props> {
       });
   }
 
+  openTransitRoute() {
+    var startPoint = {
+      longitude: 113.904453, 
+      latitude: 22.544045
+    };
+    var endPoint = {
+      longitude: 113.994453, 
+      latitude: 22.544045
+    };
+    MapApp.openTransitRoute(startPoint, endPoint);
+  }
+
+  startLocating() {
+    Geolocation.startLocating((resp) => {
+      console.warn(resp);
+    });
+  }
+
+  stopLocating() {
+    Geolocation.stopLocating();
+  }
+  
   componentDidMount() {
     
   }
@@ -123,7 +148,10 @@ class App extends Component<Props> {
               </MapView>
               <View style={styles.buttonGroup}>
                 <View style={styles.button}>
-                  <Button onPress={ () => this.getCurrentPosition() } title="Locate" />
+                  <Button onPress={ () => this.getCurrentPosition() } title="Locate Once" />
+                </View>
+                <View style={styles.button}>
+                  <Button onPress={ () => this.openTransitRoute() } title="OpenTransitRoute" />
                 </View>
               </View>
               {this.state.location.address ? (
@@ -151,13 +179,15 @@ const styles = StyleSheet.create({
 
   },
   location: {
-    padding: 16
+    padding: 16,
   },
   buttonGroup: {
-    padding: 16
+    padding: 16,
+    flexDirection: 'row'
   },
   button: {
-    width: 80
+    width: 80,
+    margin: 8
   }
 });
 
