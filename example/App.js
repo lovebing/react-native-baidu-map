@@ -84,13 +84,29 @@ class App extends Component<Props> {
   openTransitRoute() {
     var startPoint = {
       longitude: 113.904453, 
-      latitude: 22.544045
+      latitude: 22.544045,
+      name: '地点1'
     };
     var endPoint = {
       longitude: 113.994453, 
-      latitude: 22.544045
+      latitude: 22.544045,
+      name: '地点2'
     };
     MapApp.openTransitRoute(startPoint, endPoint);
+  }
+
+  openDrivingRoute() {
+    var startPoint = {
+      longitude: 113.904453, 
+      latitude: 22.544045,
+      name: '地点1'
+    };
+    var endPoint = {
+      longitude: 113.994453, 
+      latitude: 22.544045,
+      name: '地点2'
+    };
+    MapApp.openDrivingRoute(startPoint, endPoint);
   }
 
   startLocating() {
@@ -151,7 +167,10 @@ class App extends Component<Props> {
                   <Button onPress={ () => this.getCurrentPosition() } title="Locate Once" />
                 </View>
                 <View style={styles.button}>
-                  <Button onPress={ () => this.openTransitRoute() } title="OpenTransitRoute" />
+                  <Button onPress={ () => this.openTransitRoute() } title="Transit Route" />
+                </View>
+                <View style={styles.button}>
+                  <Button onPress={ () => this.openDrivingRoute() } title="Drive Route" />
                 </View>
               </View>
               {this.state.location.address ? (

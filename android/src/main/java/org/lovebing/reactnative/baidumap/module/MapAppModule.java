@@ -25,7 +25,10 @@ import com.baidu.mapapi.utils.poi.PoiParaOption;
  */
 public class MapAppModule extends BaseModule {
 
+    private static final String KEY_NAME = "name";
+
     private Context context;
+
     public MapAppModule(ReactApplicationContext reactContext) {
         super(reactContext);
         context = reactContext;
@@ -37,11 +40,19 @@ public class MapAppModule extends BaseModule {
     }
 
     @ReactMethod
+    public void openDrivingRoute(ReadableMap startPoint, ReadableMap endPoint) {
+        RouteParaOption paraOption = createRouteParaOption(startPoint, endPoint);
+        try {
+            BaiduMapRoutePlan.openBaiduMapDrivingRoute(paraOption, context);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        BaiduMapRoutePlan.finish(context);
+    }
+
+    @ReactMethod
     public void openTransitRoute(ReadableMap startPoint, ReadableMap endPoint) {
-        RouteParaOption paraOption = new RouteParaOption()
-                .startPoint(LatLngUtil.fromReadableMap(startPoint))
-                .endPoint(LatLngUtil.fromReadableMap(endPoint))
-                .busStrategyType(RouteParaOption.EBusStrategyType.bus_recommend_way);
+        RouteParaOption paraOption = createRouteParaOption(startPoint, endPoint);
         try {
             BaiduMapRoutePlan.openBaiduMapTransitRoute(paraOption, context);
         } catch (Exception e) {
@@ -98,5 +109,19 @@ public class MapAppModule extends BaseModule {
             e.printStackTrace();
         }
         BaiduMapPoiSearch.finish(context);
+    }
+
+    private RouteParaOption createRouteParaOption(ReadableMap startPoint, ReadableMap endPoint) {
+        RouteParaOption paraOption = new RouteParaOption()
+                .startPoint(LatLngUtil.fromReadableMap(startPoint))
+                .endPoint(LatLngUtil.fromReadableMap(endPoint))
+                .busStrategyType(RouteParaOption.EBusStrategyType.bus_recommend_way);
+        if (startPoint.hasKey(KEY_NAME)) {
+            paraOption.startName(startPoint.getString(KEY_NAME));
+        }
+        if (endPoint.hasKey(KEY_NAME)) {
+            paraOption.endName(endPoint.getString(KEY_NAME));
+        }
+        return paraOption;
     }
 }

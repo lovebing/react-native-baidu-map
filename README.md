@@ -17,12 +17,10 @@ QQ群：561086908
 #### Android
 - 完善 Marker
 - 完善坐标转换
-- 显示定位
 - 添加一些常用的方法
 
 #### iOS
 - 完善 Marker
-- 显示定位
 - 完善坐标标转换
 - 完善 Cluster（点聚合）
 - 支持 Overlay（覆盖物）
@@ -223,7 +221,7 @@ Cluster 示例
 | Promise reverseGeoCodeGPS(double lat, double lng) | |  `{"address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}`
 | Promise geocode(String city, String addr) | | {"latitude": 0.0, "longitude": 0.0}
 | Promise getCurrentPosition(String coorType) | coorType 为可选参数，默认以 `gcj02` 坐标系，目前仅 Android 端支持使用 `BD09ll` | iOS: `{"latitude": 0.0, "longitude": 0.0, "address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}` Android: `{"latitude": 0.0, "longitude": 0.0, "direction": -1, "altitude": 0.0, "radius": 0.0, "address": "", "countryCode": "", "country": "", "province": "", "cityCode": "", "city": "", "district": "", "street": "", "streetNumber": "", "buildingId": "", "buildingName": ""}`
-| startLocating(String coorType, listener) | 开始持续定位 |
+| startLocating(function listener, String coorType) | 开始持续定位 |
 | stopLocating  | 停止持续定位 |
 
 #### GetDistance Methods
@@ -231,9 +229,10 @@ Cluster 示例
 | ------------------------- | -------
 | Promise getLocationDistance({latitude: 0.0, longitude: 0.0}, {latitude: 0.0, longitude: 0.0}) | `{"distance": 0.0}`
 
-#### MapApp Methos
+#### MapApp Methods 调起百度地图客户端
 | Method                    | Description
 | ------------------------- | -------
+| openDrivingRoute({latitude: 0.0, longitude: 0.0, name: ''}, {latitude: 0.0, longitude: 0.0}, name: '') | 调起百度地图驾车规划
 | openTransitRoute({latitude: 0.0, longitude: 0.0, name: ''}, {latitude: 0.0, longitude: 0.0}, name: '') | 调起百度地图公交路线
 | openWalkNavi({latitude: 0.0, longitude: 0.0, name: ''}, {latitude: 0.0, longitude: 0.0}, name: '') | 调起百度地图步行路线
 

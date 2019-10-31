@@ -7,6 +7,7 @@
 
 package org.lovebing.reactnative.baidumap.module;
 
+import android.Manifest;
 import android.util.Log;
 
 import com.baidu.location.BDLocation;
@@ -30,6 +31,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
+import org.lovebing.reactnative.baidumap.support.AppUtils;
 
 import java.util.List;
 
@@ -54,6 +56,7 @@ public class GeolocationModule extends BaseModule
     }
 
     private void initLocationClient(String coorType) {
+        AppUtils.checkPermission(context.getCurrentActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationMode.Hight_Accuracy);
         option.setCoorType(coorType);
