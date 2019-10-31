@@ -43,7 +43,7 @@ https://stackoverflow.com/questions/44061155/react-native-npm-link-local-depende
 ### Environments 环境要求
 1.JS
 - node: 8.0+
-
+- react-native: 0.61.+
 2.Android
 - Android SDK: api 28+
 - gradle: 4.10.1
@@ -57,7 +57,7 @@ https://stackoverflow.com/questions/44061155/react-native-npm-link-local-depende
 #### 使用本地的包 （以 example 为例）
 ```shell
 mkdir example/node_modules/react-native-baidu-map
-cp -R package.json js index.js ios android LICENSE README.md example/node_modules/react-native-baidu-map/
+cp -R package.json js index.js ios android LICENSE README.md react-native-baidu-map.podspec example/node_modules/react-native-baidu-map/
 
 ```
 #### 使用 npm 源
@@ -66,13 +66,37 @@ npm install react-native-baidu-map --save
 ### 原生模块导入
 `react-native link react-native-baidu-map`
 
+#### Android
+
+如果使用 react-native 0.61 以下的版本会报错，需要修改一下 react-native-baidu-map 的 build.gradle，
+把 `compileOnly 'com.facebook.react:react-native:0.61.2'` 改为 `compileOnly 'com.facebook.react:react-native:0.60.1'`
+
+如下：
+
+![修改 build.gradle](http://repo.codeboot.net/resources/images/react-native-baidu-map/react-native-0.60-config.png)
+
+
+#### iOS
 如果 iOS 项目包含 Podfile，会自动加上 react-native-baidu-map 的依赖，只需要执行 `pod install`，不需要做其它处理。
 如果没有 Podfile，则需要手动导入百度地图和定位 SDK 的依赖，参考 http://lbsyun.baidu.com/index.php?title=iossdk/guide/create-project/oc
 和 http://lbsyun.baidu.com/index.php?title=ios-locsdk/guide/create-project/manual-create
 
 ### 初始化
 #### Android
-AndroidManifest.xml 的 application 下添加名为 com.baidu.lbsapi.API_KEY 的 meta，如
+AndroidManifest.xml 设置
+
+必要的权限
+
+```
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+```
+
+application 下添加名为 com.baidu.lbsapi.API_KEY 的 meta，如
+
 ```
 <meta-data
         android:name="com.baidu.lbsapi.API_KEY"
