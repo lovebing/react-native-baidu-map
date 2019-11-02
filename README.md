@@ -102,6 +102,9 @@ application 下添加名为 com.baidu.lbsapi.API_KEY 的 meta，如
         android:name="com.baidu.lbsapi.API_KEY"
         android:value="uDRdqQMGQeoPGn5CwMmIYicdUIVv1YST" />
 ```
+
+如果没有开启 androidx，需要手动修改 AppUtils 相应的包
+
 #### iOS
 使用 BaiduMapManager.initSDK 方法设置 api key，如
 ```
