@@ -22,10 +22,15 @@ static BMKGeoCodeSearch *geoCodeSearch;
     return self;
 }
 
-- (void)intLocationManager {
+- (void)intLocationManager:(NSString *)coordType {
     if (_locationManager == nil) {
         _locationManager = [[BMKLocationManager alloc] init];
-        _locationManager.coordinateType = BMKLocationCoordinateTypeBMK09LL;
+        if ([coordType isEqualToString:@"bd09ll"]) {
+            _locationManager.coordinateType = BMKLocationCoordinateTypeBMK09LL;
+        }
+        if ([coordType isEqualToString:@"gcj02"]) {
+            _locationManager.coordinateType = BMKLocationCoordinateTypeGCJ02;
+        }
         _locationManager.distanceFilter = kCLDistanceFilterNone;
         _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         _locationManager.activityType = CLActivityTypeAutomotiveNavigation;
@@ -62,7 +67,7 @@ RCT_EXPORT_METHOD(getCurrentPosition:(NSString *)coordType) {
     }
     _locating = true;
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self intLocationManager];
+        [self intLocationManager:coordType];
         [_locationManager requestLocationWithReGeocode:YES withNetworkState:YES completionBlock:^(BMKLocation *location, BMKLocationNetworkState state, NSError *error) {
             self.locating = false;
             NSMutableDictionary *data = [self getLocationEventData:location orError:error];
