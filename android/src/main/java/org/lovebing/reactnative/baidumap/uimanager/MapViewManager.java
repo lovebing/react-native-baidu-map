@@ -18,7 +18,8 @@ import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 
 import org.lovebing.reactnative.baidumap.listener.MapListener;
-import org.lovebing.reactnative.baidumap.util.LatLngUtil;
+import org.lovebing.reactnative.baidumap.model.LocationData;
+import org.lovebing.reactnative.baidumap.support.ConvertUtils;
 import org.lovebing.reactnative.baidumap.view.OverlayCluster;
 import org.lovebing.reactnative.baidumap.view.OverlayView;
 
@@ -115,13 +116,21 @@ public class MapViewManager extends ViewGroupManager<MapView> {
     }
 
     @ReactProp(name = "locationData")
-    public void setLocationData(MapView mapView, ReadableMap locationData) {
-        LatLng latLng = LatLngUtil.fromReadableMap(locationData);
-        MyLocationData myLocationData = new MyLocationData.Builder()
-                .latitude(latLng.latitude)
-                .longitude(latLng.longitude)
-                .build();
-        mapView.getMap().setMyLocationData(myLocationData);
+    public void setLocationData(MapView mapView, ReadableMap readableMap) {
+        LocationData locationData = ConvertUtils.convert(readableMap, LocationData.class);
+        if (locationData == null || !locationData.isValid()) {
+            return;
+        }
+        MyLocationData.Builder builder = new MyLocationData.Builder()
+                .latitude(locationData.getLatitude())
+                .longitude(locationData.getLongitude());
+        if (locationData.getDirection() != null) {
+            builder.direction(locationData.getDirection().floatValue());
+        }
+        if (locationData.getSpeed() != null) {
+            builder.speed(locationData.getSpeed().floatValue());
+        }
+        mapView.getMap().setMyLocationData(builder.build());
     }
 
     @ReactProp(name="zoomGesturesEnabled")
@@ -138,14 +147,16 @@ public class MapViewManager extends ViewGroupManager<MapView> {
 
     @ReactProp(name="center")
     public void setCenter(MapView mapView, ReadableMap position) {
-        if(position != null) {
-            LatLng point = LatLngUtil.fromReadableMap(position);
-            MapStatus mapStatus = new MapStatus.Builder()
-                    .target(point)
-                    .build();
-            MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
-            mapView.getMap().setMapStatus(mapStatusUpdate);
+        LocationData locationData = ConvertUtils.convert(position, LocationData.class);
+        LatLng point = ConvertUtils.convert(locationData);
+        if (point == null) {
+            return;
         }
+        MapStatus mapStatus = new MapStatus.Builder()
+                .target(point)
+                .build();
+        MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
+        mapView.getMap().setMapStatus(mapStatusUpdate);
     }
 
     @ReactProp(name = "childrenCount")

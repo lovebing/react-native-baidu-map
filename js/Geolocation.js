@@ -79,7 +79,13 @@ export default {
       });
     });
   },
-  getCurrentPosition(coorType = 'gcj02') {
+  getCurrentPosition(coorType) {
+    if (!coorType) {
+      coorType = 'bd09ll';
+    } else {
+      coorType = coorType.toLowerCase();
+    }
+    
     return new Promise((resolve, reject) => {
       try {
         _module.getCurrentPosition(coorType);
@@ -96,7 +102,12 @@ export default {
       });
     });
   },
-  startLocating(listener, coorType = 'gcj02') {
+  startLocating(listener, coorType) {
+    if (!coorType) {
+      coorType = 'bd09ll';
+    } else {
+      coorType = coorType.toLowerCase();
+    }
     _module.startLocating(coorType);
     if (_locatingUpdateListener.handler == null) {
       _locatingUpdateListener.handler = DeviceEventEmitter.addListener('onLocationUpdate', resp => {

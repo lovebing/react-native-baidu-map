@@ -40,6 +40,7 @@ class App extends Component<Props> {
   
   state = {
     location: {},
+    center: { longitude: 113.950453, latitude: 22.546045 },
     markers: [
       {
         location: {
@@ -77,17 +78,17 @@ class App extends Component<Props> {
   getCurrentPosition() {
     Geolocation.getCurrentPosition()
       .then((data) => {
-        this.setState({ location: data });
+        this.setState({ location: data, center: data });
       });
   }
 
   openTransitRoute() {
-    var startPoint = {
+    const startPoint = {
       longitude: 113.904453, 
       latitude: 22.544045,
       name: '地点1'
     };
-    var endPoint = {
+    const endPoint = {
       longitude: 113.994453, 
       latitude: 22.544045,
       name: '地点2'
@@ -96,12 +97,12 @@ class App extends Component<Props> {
   }
 
   openDrivingRoute() {
-    var startPoint = {
+    const startPoint = {
       longitude: 113.904453, 
       latitude: 22.544045,
       name: '地点1'
     };
-    var endPoint = {
+    const endPoint = {
       longitude: 113.994453, 
       latitude: 22.544045,
       name: '地点2'
@@ -124,6 +125,10 @@ class App extends Component<Props> {
   }
 
   render() {
+    const {
+      location,
+      center
+    } = this.state;
     return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -133,13 +138,15 @@ class App extends Component<Props> {
             style={styles.scrollView}>
             <View style={styles.body}>
               <MapView 
+                showsUserLocation={true}
+                locationData={location}
                 width={width} 
                 height={400} 
-                zoom={13}
+                zoom={18}
                 trafficEnabled={true}
                 zoomControlsVisible={true}
                 mapType={MapTypes.NORMAL}
-                center={{ longitude: 113.950453, latitude: 22.546045 }}
+                center={center}
               >
                 <Overlay.Marker rotate={45} icon={{ uri: 'https://mapopen-website-wiki.cdn.bcebos.com/homePage/images/logox1.png' }} location={{ longitude: 113.975453, latitude: 22.510045 }} />
                 <Overlay.Cluster>

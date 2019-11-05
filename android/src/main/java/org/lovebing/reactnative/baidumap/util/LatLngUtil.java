@@ -10,6 +10,7 @@ package org.lovebing.reactnative.baidumap.util;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import org.lovebing.reactnative.baidumap.constant.LocationDataKey;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +21,10 @@ import java.util.List;
 public class LatLngUtil {
 
     public static LatLng fromReadableMap(ReadableMap readableMap) {
-        double lat, lng;
-        lat = readableMap.getDouble("latitude");
-        lng = readableMap.getDouble("longitude");
-        return new LatLng(lat, lng);
+        if (!readableMap.hasKey(LocationDataKey.LATITUDE) || !readableMap.hasKey(LocationDataKey.LONGITUDE)) {
+            return null;
+        }
+        return new LatLng(readableMap.getDouble(LocationDataKey.LATITUDE), readableMap.getDouble(LocationDataKey.LONGITUDE));
     }
 
     public static List<LatLng> fromReadableArray(ReadableArray readableArray) {

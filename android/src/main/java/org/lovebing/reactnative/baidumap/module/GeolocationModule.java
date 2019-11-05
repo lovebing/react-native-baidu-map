@@ -133,7 +133,7 @@ public class GeolocationModule extends BaseModule
 
     @ReactMethod
     public void stopLocating() {
-        locating = true;
+        locating = false;
         if (locationClient != null) {
             locationClient.stop();
             locationClient = null;
@@ -163,6 +163,7 @@ public class GeolocationModule extends BaseModule
         WritableMap params = Arguments.createMap();
         params.putDouble("latitude", bdLocation.getLatitude());
         params.putDouble("longitude", bdLocation.getLongitude());
+        params.putDouble("speed", bdLocation.getSpeed());
         params.putDouble("direction", bdLocation.getDirection());
         params.putDouble("altitude", bdLocation.getAltitude());
         params.putDouble("radius", bdLocation.getRadius());
@@ -179,8 +180,8 @@ public class GeolocationModule extends BaseModule
         params.putString("buildingName", bdLocation.getBuildingName());
         Log.i("onReceiveLocation", "onGetCurrentLocationPosition");
 
-        locating = false;
         if (locateOnce) {
+            locating = false;
             sendEvent("onGetCurrentLocationPosition", params);
             locationClient.stop();
             locationClient = null;
