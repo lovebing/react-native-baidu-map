@@ -100,12 +100,12 @@ public class GeolocationModule extends BaseModule
     public void getGCJ02CoorFromWGS84Coor(double lat, double lng,Promise promise) {
         WritableMap params = Arguments.createMap();
         CoordType coord = SDKInitializer.getCoordType();
-        boolean isSetCoord= false;
+        boolean isSetCoord = false;
 
 
         if (coord != BD09LL){
             SDKInitializer.setCoordType(BD09LL);
-            isSet_coord=true;
+            isSetCoord = true;
         }
         LatLng src=new LatLng(lat,lng);
         CoordinateConverter converter  = new CoordinateConverter()
@@ -115,7 +115,7 @@ public class GeolocationModule extends BaseModule
         LatLng tempdest = converter.convert();
 
 
-        if (isSet_coord){
+        if (isSetCoord){
             SDKInitializer.setCoordType(coord);
         }
 
@@ -123,7 +123,7 @@ public class GeolocationModule extends BaseModule
 
         if (coord != GCJ02){
             SDKInitializer.setCoordType(GCJ02);
-            isSetCoord= true;
+            isSetCoord = true;
         }
 
         CoordinateConverter descconverter  = new CoordinateConverter()
@@ -133,7 +133,7 @@ public class GeolocationModule extends BaseModule
         LatLng dest = descconverter.convert();
         params.putDouble("latitude", dest.latitude);
         params.putDouble("longitude", dest.longitude);
-        if (isSet_coord){
+        if (isSetCoord){
             SDKInitializer.setCoordType(coord);
 
         }
@@ -146,12 +146,12 @@ public class GeolocationModule extends BaseModule
     public void getBD09LLCoorFromWGS84Coor(double lat, double lng,Promise promise) {
         WritableMap params = Arguments.createMap();
         CoordType coord = SDKInitializer.getCoordType();
-        boolean isSetCoord= false;
+        boolean isSetCoord = false;
 
         if (coord!= BD09LL){
             SDKInitializer.setCoordType(BD09LL);
 
-            isSetCoord= true;
+            isSetCoord = true;
         }
         LatLng src = new LatLng(lat,lng);
         CoordinateConverter converter  = new CoordinateConverter()
@@ -161,7 +161,7 @@ public class GeolocationModule extends BaseModule
         LatLng dest = converter.convert();
         params.putDouble("latitude", dest.latitude);
         params.putDouble("longitude", dest.longitude);
-        if (isSet_coord){
+        if (isSetCoord){
             SDKInitializer.setCoordType(coord);
 
         }
@@ -176,12 +176,12 @@ public class GeolocationModule extends BaseModule
 
         WritableMap params = Arguments.createMap();
         CoordType coord = SDKInitializer.getCoordType();
-        boolean isSetCoord= false;
+        boolean isSetCoord = false;
 
         if (coord != GCJ02){
             SDKInitializer.setCoordType(GCJ02);
 
-            isSetCoord=true;
+            isSetCoord =true;
         }
         LatLng src = new LatLng(lat,lng);
         CoordinateConverter converter  = new CoordinateConverter()
@@ -191,7 +191,7 @@ public class GeolocationModule extends BaseModule
         LatLng dest = converter.convert();
         params.putDouble("latitude", dest.latitude);
         params.putDouble("longitude", dest.longitude);
-        if (isSet_coord){
+        if (isSetCoord){
             SDKInitializer.setCoordType(coord);
 
         }
@@ -203,7 +203,7 @@ public class GeolocationModule extends BaseModule
     public void getBD09LLCoorFromGCJ02Coor(double lat, double lng,Promise promise) {
         WritableMap params = Arguments.createMap();
         CoordType coord = SDKInitializer.getCoordType();
-        boolean isSetCoord= false;
+        boolean isSetCoord = false;
 
         if (coord != BD09LL){
             SDKInitializer.setCoordType(BD09LL);
@@ -218,7 +218,7 @@ public class GeolocationModule extends BaseModule
         LatLng dest = converter.convert();
         params.putDouble("latitude", dest.latitude);
         params.putDouble("longitude", dest.longitude);
-        if (isSet_coord){
+        if (isSetCoord){
             SDKInitializer.setCoordType(coord);
 
         }
