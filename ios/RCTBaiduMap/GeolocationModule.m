@@ -106,6 +106,68 @@ RCT_EXPORT_METHOD(getBaiduCoorFromGPSCoor:(double)lat lng:(double)lng
     resolve(coor);
 }
 
+
+
+RCT_EXPORT_METHOD(getGCJ02CoorFromWGS84Coor:(double)lat lng:(double)lng
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    CLLocationCoordinate2D src = CLLocationCoordinate2DMake(lat, lng);
+    CLLocationCoordinate2D desc = BMKCoordTrans(src, BMK_COORDTYPE_GPS,BMK_COORDTYPE_COMMON);
+    NSDictionary* coor = @{
+                           @"latitude": @(desc.latitude),
+                           @"longitude": @(desc.longitude)
+                           };
+    NSLog(@"getGCJ02CoorFromWGS84Coor lat:%f lng:%f  to lat:%f lng:%f",lat,lng,desc.latitude,desc.longitude);
+
+    resolve(coor);
+}
+
+
+RCT_EXPORT_METHOD(getBD09LLCoorFromWGS84Coor:(double)lat lng:(double)lng
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    CLLocationCoordinate2D src = CLLocationCoordinate2DMake(lat, lng);
+    CLLocationCoordinate2D desc = BMKCoordTrans(src, BMK_COORDTYPE_GPS,BMK_COORDTYPE_BD09LL);
+    NSDictionary* coor = @{
+                           @"latitude": @(desc.latitude),
+                           @"longitude": @(desc.longitude)
+                           };
+
+    NSLog(@"getBD09LLCoorFromWGS84Coor lat:%f lng:%f  to lat:%f lng:%f",lat,lng,desc.latitude,desc.longitude);
+    resolve(coor);
+}
+
+
+
+RCT_EXPORT_METHOD(getGCJ02CoorFromBD09LLCoor:(double)lat lng:(double)lng
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    CLLocationCoordinate2D src = CLLocationCoordinate2DMake(lat, lng);
+    CLLocationCoordinate2D desc = BMKCoordTrans(src, BMK_COORDTYPE_BD09LL,BMK_COORDTYPE_COMMON);
+    NSDictionary* coor = @{
+                           @"latitude": @(desc.latitude),
+                           @"longitude": @(desc.longitude)
+                           };
+
+    NSLog(@"getGCJ02CoorFromBD09LLCoor lat:%f lng:%f  to lat:%f lng:%f",lat,lng,desc.latitude,desc.longitude);
+    resolve(coor);
+}
+
+
+RCT_EXPORT_METHOD(getBD09LLCoorFromGCJ02Coor:(double)lat lng:(double)lng
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+
+    CLLocationCoordinate2D src = CLLocationCoordinate2DMake(lat, lng);
+    CLLocationCoordinate2D desc = BMKCoordTrans(src,BMK_COORDTYPE_COMMON,BMK_COORDTYPE_BD09LL);
+    NSDictionary* coor = @{
+                           @"latitude": @(desc.latitude),
+                           @"longitude": @(desc.longitude)
+                           };
+    NSLog(@"getBD09LLCoorFromGCJ02Coor lat:%f lng:%f  to lat:%f lng:%f",lat,lng,desc.latitude,desc.longitude);
+    resolve(coor);
+}
+
 RCT_EXPORT_METHOD(geocode:(NSString *)city addr:(NSString *)addr) {
     
     [self getGeocodesearch].delegate = self;

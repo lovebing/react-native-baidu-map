@@ -14,7 +14,9 @@ import _MapTypes from './js/MapTypes';
 import _Geolocation from './js/Geolocation';
 import _GetDistance from './js/GetDistance';
 import _Overlay from './js/Overlay/index';
+import _CoorTypes from './js/CoorTypes';
 
+export const CoorTypes = _CoorTypes;
 export const MapView = _MapView;
 export const MapTypes = _MapTypes;
 export const Geolocation = _Geolocation;
