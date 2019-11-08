@@ -250,7 +250,7 @@ Cluster 示例
 | Promise getCurrentPosition(String coorType) | coorType 可为 `bd09ll` 或 `gcj02`，默认 `bd09ll`|`{"latitude": 0.0, "longitude": 0.0, "address": "", "province": "", "cityCode": "", "city": "", "district": "", "streetName": "", "streetNumber": ""}` Android: `{"latitude": 0.0, "longitude": 0.0, "direction": -1, "altitude": 0.0, "radius": 0.0, "address": "", "countryCode": "", "country": "", "province": "", "cityCode": "", "city": "", "district": "", "street": "", "streetNumber": "", "buildingId": "", "buildingName": ""}`
 | startLocating(function listener, String coorType) | 开始持续定位 |
 | stopLocating  | 停止持续定位 |
-| convertCoor({longitude,latitude}, CoorType from, CoorType to) | 支持坐标系转换： WGS84->BD09LL, WGS84-GCJ02, BD09LL->GCJ02, GCJ02->BD09LL|{ longitude: 113.965453, latitude: 22.535045 }
+| convertCoor({longitude,latitude}, CoorType from, CoorType to) | 支持坐标系转换： WGS84->BD09LL, WGS84->GCJ02, BD09LL->GCJ02, GCJ02->BD09LL|{ longitude: 113.965453, latitude: 22.535045 }
 convertCoor 样例
 ```jsx
 Geolocation.convertCoor({latitude:param.lat,longitude:param.lng},CoorTypes.BD09ll,CoorTypes.GCJ02).then((data)=>{
