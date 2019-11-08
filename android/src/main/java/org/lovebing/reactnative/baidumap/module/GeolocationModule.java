@@ -99,11 +99,11 @@ public class GeolocationModule extends BaseModule
     @ReactMethod
     public void getGCJ02CoorFromWGS84Coor(double lat, double lng,Promise promise) {
         WritableMap params = Arguments.createMap();
-        CoordType coord=SDKInitializer.getCoordType();
-        boolean isSet_coord=false;
+        CoordType coord = SDKInitializer.getCoordType();
+        boolean isSetCoord= false;
 
 
-        if (coord!= BD09LL){
+        if (coord != BD09LL){
             SDKInitializer.setCoordType(BD09LL);
             isSet_coord=true;
         }
@@ -121,9 +121,9 @@ public class GeolocationModule extends BaseModule
 
 
 
-        if (coord!= GCJ02){
+        if (coord != GCJ02){
             SDKInitializer.setCoordType(GCJ02);
-            isSet_coord=true;
+            isSetCoord= true;
         }
 
         CoordinateConverter descconverter  = new CoordinateConverter()
@@ -145,15 +145,15 @@ public class GeolocationModule extends BaseModule
     @ReactMethod
     public void getBD09LLCoorFromWGS84Coor(double lat, double lng,Promise promise) {
         WritableMap params = Arguments.createMap();
-        CoordType coord=SDKInitializer.getCoordType();
-        boolean isSet_coord=false;
+        CoordType coord = SDKInitializer.getCoordType();
+        boolean isSetCoord= false;
 
         if (coord!= BD09LL){
             SDKInitializer.setCoordType(BD09LL);
 
-            isSet_coord=true;
+            isSetCoord= true;
         }
-        LatLng src=new LatLng(lat,lng);
+        LatLng src = new LatLng(lat,lng);
         CoordinateConverter converter  = new CoordinateConverter()
                 .from(GPS)
                 .coord(src);
@@ -175,15 +175,15 @@ public class GeolocationModule extends BaseModule
     public void getGCJ02CoorFromBD09LLCoor(double lat, double lng,Promise promise) {
 
         WritableMap params = Arguments.createMap();
-        CoordType coord=SDKInitializer.getCoordType();
-        boolean isSet_coord=false;
+        CoordType coord = SDKInitializer.getCoordType();
+        boolean isSetCoord= false;
 
-        if (coord!= GCJ02){
+        if (coord != GCJ02){
             SDKInitializer.setCoordType(GCJ02);
 
-            isSet_coord=true;
+            isSetCoord=true;
         }
-        LatLng src=new LatLng(lat,lng);
+        LatLng src = new LatLng(lat,lng);
         CoordinateConverter converter  = new CoordinateConverter()
                 .from(CoordinateConverter.CoordType.BD09LL)
                 .coord(src);
@@ -202,16 +202,16 @@ public class GeolocationModule extends BaseModule
     @ReactMethod
     public void getBD09LLCoorFromGCJ02Coor(double lat, double lng,Promise promise) {
         WritableMap params = Arguments.createMap();
-        CoordType coord=SDKInitializer.getCoordType();
-        boolean isSet_coord=false;
+        CoordType coord = SDKInitializer.getCoordType();
+        boolean isSetCoord= false;
 
-        if (coord!= BD09LL){
+        if (coord != BD09LL){
             SDKInitializer.setCoordType(BD09LL);
 
-            isSet_coord=true;
+            isSetCoord= true;
         }
-        LatLng src=new LatLng(lat,lng);
-        CoordinateConverter converter  = new CoordinateConverter()
+        LatLng src = new LatLng(lat,lng);
+        CoordinateConverter converter = new CoordinateConverter()
                 .from(COMMON)
                 .coord(src);
         //转换坐标
