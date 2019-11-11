@@ -11,6 +11,7 @@ import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
@@ -29,9 +30,9 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
     private List<BaiduMap.OnMapStatusChangeListener> mapStatusChangeListeners = new ArrayList<>();
 
     private ReactContext reactContext;
-    private MapView mapView;
+    private TextureMapView mapView;
 
-    public MapListener(MapView mapView, ReactContext reactContext) {
+    public MapListener(TextureMapView mapView, ReactContext reactContext) {
         this.mapView = mapView;
         this.reactContext = reactContext;
     }
@@ -126,7 +127,7 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
      * @param eventName
      * @param params
      */
-    private void sendEvent(MapView mapView, String eventName,  WritableMap params) {
+    private void sendEvent(TextureMapView mapView, String eventName,  WritableMap params) {
         WritableMap event = Arguments.createMap();
         event.putMap("params", params);
         event.putString("type", eventName);
