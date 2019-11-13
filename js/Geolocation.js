@@ -16,7 +16,7 @@ import React, {
   Component,
   PropTypes
 } from 'react';
-
+import CoorTypes from './CoorTypes'
 
 const _module = NativeModules.BaiduGeolocationModule;
 
