@@ -15,6 +15,8 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
+import com.baidu.mapapi.CoordType;
+import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.core.SearchResult;
@@ -33,7 +35,14 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import org.lovebing.reactnative.baidumap.support.AppUtils;
 
+
 import java.util.List;
+
+import static com.baidu.mapapi.CoordType.BD09LL;
+import static com.baidu.mapapi.CoordType.GCJ02;
+import static com.baidu.mapapi.utils.CoordinateConverter.CoordType.COMMON;
+import static com.baidu.mapapi.utils.CoordinateConverter.CoordType.GPS;
+
 
 /**
  * Created by lovebing on 2016/10/28.
