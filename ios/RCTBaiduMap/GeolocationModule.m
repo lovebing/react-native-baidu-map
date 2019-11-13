@@ -7,7 +7,7 @@
 //
 
 #import "GeolocationModule.h"
-
+#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 
 @implementation GeolocationModule
 
