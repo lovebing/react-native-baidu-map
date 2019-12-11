@@ -25,6 +25,8 @@ static BMKGeoCodeSearch *geoCodeSearch;
 - (void)intLocationManager:(NSString *)coordType {
     if (_locationManager == nil) {
         _locationManager = [[BMKLocationManager alloc] init];
+    }
+
         if ([coordType isEqualToString:@"bd09ll"]) {
             _locationManager.coordinateType = BMKLocationCoordinateTypeBMK09LL;
         }
@@ -35,7 +37,7 @@ static BMKGeoCodeSearch *geoCodeSearch;
         _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         _locationManager.activityType = CLActivityTypeAutomotiveNavigation;
         _locationManager.pausesLocationUpdatesAutomatically = YES;
-    }
+
     _locationManager.delegate = self;
 }
 
