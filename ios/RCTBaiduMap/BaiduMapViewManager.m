@@ -175,6 +175,7 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
 
 - (void)mapStatusDidChanged: (BMKMapView *)mapView {
     CLLocationCoordinate2D targetGeoPt = [mapView getMapStatus].targetGeoPt;
+    BMKCoordinateRegion region = mapView.region;
     NSDictionary* event = @{
                             @"type": @"onMapStatusChange",
                             @"params": @{
@@ -182,12 +183,15 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
                                             @"latitude": @(targetGeoPt.latitude),
                                             @"longitude": @(targetGeoPt.longitude)
                                             },
-                                    @"zoom": @"",
+                                    @"latitudeDelta": @(region.span.latitudeDelta),
+                                    @"longitudeDelta": @(region.span.longitudeDelta),
+                                    @"zoom": @(mapView.zoomLevel),
                                     @"overlook": @""
                                     }
                             };
     [self sendEvent:mapView params:event];
 }
+
 
 - (void)sendEvent:(BaiduMapView *)mapView params:(NSDictionary *)params {
     if (!mapView.onChange) {
