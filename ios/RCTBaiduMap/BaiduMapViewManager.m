@@ -192,7 +192,6 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
     [self sendEvent:mapView params:event];
 }
 
-
 - (void)sendEvent:(BaiduMapView *)mapView params:(NSDictionary *)params {
     if (!mapView.onChange) {
         return;
