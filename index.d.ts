@@ -1,8 +1,8 @@
-import { Component } from 'react';
-import { ImageSourcePropType, ViewProps } from 'react-native';
+import { Component } from "react";
+import { ImageSourcePropType, ViewProps } from "react-native";
 
 /**
- * Baidu Map SDK modules and views for React Native(Android & iOS), support react native 0.61+. 
+ * Baidu Map SDK modules and views for React Native(Android & iOS), support react native 0.61+.
  */
 declare namespace ReactNativeBaiduMap {
   /**
@@ -13,11 +13,31 @@ declare namespace ReactNativeBaiduMap {
      * 纬度
      */
     latitude: number;
-    
+
     /**
      * 纬度
      */
     longitude: number;
+  }
+
+  type CommonCallBack<T> = (l: T) => void;
+
+  /**
+   * onMapStatusChange 回调事件参数
+   */
+  export interface onMapStatusChangeEvent {
+    overlook: number;
+    target: Location & {
+      zoom: number;
+    };
+  }
+
+  /**
+   * onMarkerClick 回调事件参数
+   */
+  export interface onMarkerClickEvent {
+    position: Location;
+    title?: string;
   }
 
   export interface MapViewProps extends ViewProps {
@@ -87,7 +107,7 @@ declare namespace ReactNativeBaiduMap {
     /**
      * @default undefined
      */
-    onMapStatusChange?: Function;
+    onMapStatusChange?: CommonCallBack<onMapStatusChangeEvent>;
 
     /**
      * @default undefined
@@ -103,7 +123,7 @@ declare namespace ReactNativeBaiduMap {
     /**
      * @default undefined
      */
-    onMapClick?: Function;
+    onMapClick?: CommonCallBack<Location>;
 
     /**
      * @default undefined
@@ -113,7 +133,7 @@ declare namespace ReactNativeBaiduMap {
     /**
      * @default undefined
      */
-    onMarkerClick?: Function;
+    onMarkerClick?: CommonCallBack<onMarkerClickEvent>;
 
     /**
      * @default undefined
@@ -275,7 +295,7 @@ declare namespace ReactNativeBaiduMap {
   }
 
   export namespace Geolocation {
-    export type CoorType = 'bd09ll' | 'gcj02';
+    export type CoorType = "bd09ll" | "gcj02";
 
     /**
      * 经纬度查询地址详情
@@ -284,7 +304,7 @@ declare namespace ReactNativeBaiduMap {
      */
     export function reverseGeoCode(
       lat: number,
-      lng: number,
+      lng: number
     ): Promise<{
       address: string;
       province: string;
@@ -302,7 +322,7 @@ declare namespace ReactNativeBaiduMap {
      */
     export function reverseGeoCodeGPS(
       lat: number,
-      lng: number,
+      lng: number
     ): Promise<{
       address: string;
       province: string;
@@ -325,7 +345,7 @@ declare namespace ReactNativeBaiduMap {
      * @param coorType 定位类型
      */
     export function getCurrentPosition(
-      coorType?: CoorType,
+      coorType?: CoorType
     ): Promise<{
       latitude: number;
       longitude: number;
@@ -367,7 +387,7 @@ declare namespace ReactNativeBaiduMap {
      */
     export function getLocationDistance(
       l1: Location,
-      l2: Location,
+      l2: Location
     ): Promise<{
       distance: number;
     }>;
