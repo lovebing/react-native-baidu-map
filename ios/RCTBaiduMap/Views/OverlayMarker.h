@@ -13,12 +13,14 @@
 #import "OverlayUtils.h"
 #import <React/RCTBridge.h>
 #import <React/RCTConvert+CoreLocation.h>
+#import <React/RCTImageSource.h>
 
 @interface OverlayMarker : OverlayView
 
 @property (nonatomic, weak) RCTBridge *bridge;
 @property (nonatomic, strong) NSDictionary *location;
 @property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) RCTImageSource *icon;
 @property (nonatomic, strong) BMKPointAnnotation *annotation;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "BaiduMapViewManager.h"
+#import "BMKPointAnnotationPro.h"
 
 @implementation BaiduMapViewManager;
 
@@ -139,11 +140,11 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
         annotationView.draggable = YES;
         annotationView.annotation = annotation;
         return annotationView;
-    } else if ([annotation isKindOfClass:[BMKPointAnnotation class]]) {
-        BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:markerIdentifier];
-        newAnnotationView.pinColor = BMKPinAnnotationColorPurple;
-        newAnnotationView.animatesDrop = YES;
-        return newAnnotationView;
+    } else if ([annotation isKindOfClass:[BMKPointAnnotationPro class]]) {
+        BMKPointAnnotationPro * annotationPro = annotation;
+        return annotationPro.getAnnotationView(annotation);
+    } else {
+        @throw [NSException exceptionWithName:@"必须用BMKPointAnnotationPro" reason:@"" userInfo:nil];
     }
     return nil;
 }
