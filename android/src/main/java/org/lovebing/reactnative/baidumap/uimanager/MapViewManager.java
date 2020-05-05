@@ -115,6 +115,11 @@ public class MapViewManager extends ViewGroupManager<TextureMapView> {
         mapView.getMap().setMyLocationEnabled(showsUserLocation);
     }
 
+    @ReactProp(name = "showMapPoi")
+    public void showMapPoi(MapView mapView, boolean showMapPoi) {
+        mapView.getMap().showMapPoi(showMapPoi);
+    }
+
     @ReactProp(name = "locationData")
     public void setLocationData(TextureMapView mapView, ReadableMap readableMap) {
         LocationData locationData = ConvertUtils.convert(readableMap, LocationData.class);

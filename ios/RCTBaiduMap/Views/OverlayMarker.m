@@ -7,6 +7,9 @@
 //
 
 #import "OverlayMarker.h"
+#import "BMKPointAnnotationPro.h"
+#import <BaiduMapAPI_Map/BMKAnnotationView.h>
+#import "RCBMImageAnnotView.h"
 
 @implementation OverlayMarker
 
@@ -26,15 +29,15 @@
     [mapView removeAnnotation:[self getAnnotation]];
 }
 
-- (BMKPointAnnotation *)getAnnotation {
+- (BMKPointAnnotationPro *)getAnnotation {
     if (_annotation == nil) {
-        _annotation = [[BMKPointAnnotation alloc] init];
+        _annotation = [[BMKPointAnnotationPro alloc] init];
         [self updateAnnotation:_annotation];
     }
     return _annotation;
 }
 
-- (void)updateAnnotation:(BMKPointAnnotation *)annotation {
+- (void)updateAnnotation:(BMKPointAnnotationPro *)annotation {
     CLLocationCoordinate2D coor = [OverlayUtils getCoorFromOption:_location];
     if(_title.length == 0) {
         annotation.title = nil;
@@ -42,6 +45,14 @@
         annotation.title = _title;
     }
     annotation.coordinate = coor;
+
+    annotation.getAnnotationView = ^BMKAnnotationView * _Nonnull(BMKPointAnnotation * _Nonnull annotation) {
+        RCBMImageAnnotView *annotV = [[RCBMImageAnnotView alloc] initWithAnnotation:annotation reuseIdentifier:@"dontCare"];
+        annotV.bridge = self.bridge;
+        NSLog(@"self.icon:%@",self.icon);
+        annotV.source = self.icon;
+        return annotV;
+    };
 }
 
 @end

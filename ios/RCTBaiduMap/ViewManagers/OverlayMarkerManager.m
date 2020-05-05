@@ -13,6 +13,7 @@
 RCT_EXPORT_MODULE(BaiduMapOverlayMarker)
 RCT_EXPORT_VIEW_PROPERTY(location, NSDictionary*)
 RCT_EXPORT_VIEW_PROPERTY(title, NSString*)
+RCT_EXPORT_VIEW_PROPERTY(icon, RCTImageSource*)
 
 - (UIView *)view {
     OverlayMarker *marker = [OverlayMarker new];

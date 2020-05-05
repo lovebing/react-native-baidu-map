@@ -7,6 +7,7 @@
 //
 
 #import "BaiduMapViewManager.h"
+#import "BMKPointAnnotationPro.h"
 
 @implementation BaiduMapViewManager;
 
@@ -18,6 +19,7 @@ RCT_EXPORT_MODULE(BaiduMapView)
 RCT_EXPORT_VIEW_PROPERTY(mapType, int)
 RCT_EXPORT_VIEW_PROPERTY(zoom, float)
 RCT_EXPORT_VIEW_PROPERTY(showsUserLocation, BOOL);
+RCT_EXPORT_VIEW_PROPERTY(showMapPoi, BOOL);
 RCT_EXPORT_VIEW_PROPERTY(scrollGesturesEnabled, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(zoomGesturesEnabled, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(trafficEnabled, BOOL)
@@ -138,11 +140,11 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
         annotationView.draggable = YES;
         annotationView.annotation = annotation;
         return annotationView;
-    } else if ([annotation isKindOfClass:[BMKPointAnnotation class]]) {
-        BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:markerIdentifier];
-        newAnnotationView.pinColor = BMKPinAnnotationColorPurple;
-        newAnnotationView.animatesDrop = YES;
-        return newAnnotationView;
+    } else if ([annotation isKindOfClass:[BMKPointAnnotationPro class]]) {
+        BMKPointAnnotationPro * annotationPro = annotation;
+        return annotationPro.getAnnotationView(annotation);
+    } else {
+        @throw [NSException exceptionWithName:@"必须用BMKPointAnnotationPro" reason:@"" userInfo:nil];
     }
     return nil;
 }
@@ -174,6 +176,7 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
 
 - (void)mapStatusDidChanged: (BMKMapView *)mapView {
     CLLocationCoordinate2D targetGeoPt = [mapView getMapStatus].targetGeoPt;
+    BMKCoordinateRegion region = mapView.region;
     NSDictionary* event = @{
                             @"type": @"onMapStatusChange",
                             @"params": @{
@@ -181,7 +184,9 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
                                             @"latitude": @(targetGeoPt.latitude),
                                             @"longitude": @(targetGeoPt.longitude)
                                             },
-                                    @"zoom": @"",
+                                    @"latitudeDelta": @(region.span.latitudeDelta),
+                                    @"longitudeDelta": @(region.span.longitudeDelta),
+                                    @"zoom": @(mapView.zoomLevel),
                                     @"overlook": @""
                                     }
                             };
