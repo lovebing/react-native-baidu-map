@@ -56,7 +56,9 @@ public class GeolocationModule extends BaseModule
     }
 
     private void initLocationClient(String coorType) {
-        AppUtils.checkPermission(context.getCurrentActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
+        if(context.getCurrentActivity()!=null) {
+            AppUtils.checkPermission(context.getCurrentActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
+        }
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationMode.Hight_Accuracy);
         option.setCoorType(coorType);
