@@ -81,6 +81,12 @@ npm install react-native-baidu-map --save
 如果没有 Podfile，则需要手动导入百度地图和定位 SDK 的依赖，参考 http://lbsyun.baidu.com/index.php?title=iossdk/guide/create-project/oc
 和 http://lbsyun.baidu.com/index.php?title=ios-locsdk/guide/create-project/manual-create
 
+##### The 'Pods-xx' target has libraries with conflicting names: libcrypto.a and libssl.a.
+```shell
+pod cache list | grep BaiduMapKit
+```
+删除 BaiduMapKit/thirdlibs/ 下的文件
+
 ### 初始化
 #### Android
 AndroidManifest.xml 设置

@@ -42,12 +42,13 @@ static BMKGeoCodeSearch *geoCodeSearch;
 }
 
 - (NSMutableDictionary *)getLocationEventData:(BMKLocation* _Nullable)location orError:(NSError* _Nullable)error {
+    NSMutableDictionary *body = [self getEmptyBody];
     if (error) {
         NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
-        return nil;
+        body[@"errcode"] = [NSString stringWithFormat:@"%ld", (long)error.code];
+        body[@"errmsg"] = error.localizedDescription;
+        return body;
     }
-    NSMutableDictionary *body = [self getEmptyBody];
-    
     body[@"latitude"] = [NSNumber numberWithDouble:location.location.coordinate.latitude];
     body[@"longitude"] = [NSNumber numberWithDouble:location.location.coordinate.longitude];
     if (location.rgcData.locationDescribe != nil && location.rgcData.locationDescribe.length > 0) {
