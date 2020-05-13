@@ -1,5 +1,5 @@
 {
-  "name": "react-native-baidu-map",
+  "name": "react-native-baidu-map-old",
   "version": "1.0.30",
   "description": "Baidu Map SDK modules and views for React Native(Android & iOS), support react native 0.61+. 百度地图 React Native 模块，支持 react native 0.61+，已更新到最新的百度地图 SDK 版本。",
   "main": "index.js",
