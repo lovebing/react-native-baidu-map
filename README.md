@@ -2,7 +2,14 @@
 
 Baidu Map SDK modules and views for React Native(Android & iOS), support react native 0.61.2+
 
-百度地图 React Native 模块，支持 react native 0.61.2+。
+百度地图 React Native 模块。
+
+分支说明：
+- master：支持 react-native 0.61 及以上版本，Android 使用 androidx
+- 1.0.x：支持 react-native 0.60 及 0.50，Android 未使用 androidx
+
+使用示例：https://github.com/lovebing/react-native-baidu-map-examples
+
 使用百度地图SDK最新版本。
 Android 版导入的 SDK 包含以下模块：
 - 基础定位
