@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		EF04BD302364B7050007BADF /* BaiduMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF04BD2F2364B7050007BADF /* BaiduMapManager.m */; };
 		EF154DCC1D562193003146DF /* BaiduMapViewManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF6660E71D55E68000DB8D08 /* BaiduMapViewManager.h */; };
+		EF18EAA0246F07A6005A2F4D /* BMKPointAnnotationPro.m in Sources */ = {isa = PBXBuildFile; fileRef = EF18EA9E246F07A6005A2F4D /* BMKPointAnnotationPro.m */; };
 		EF3C225A1CC2C30D0099E9B6 /* BaiduMapView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF3C22591CC2C30D0099E9B6 /* BaiduMapView.h */; };
 		EF3C225C1CC2C30D0099E9B6 /* BaiduMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3C225B1CC2C30D0099E9B6 /* BaiduMapView.m */; };
 		EF4ABB0D1DC378CF008E75C9 /* GeolocationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */; };
@@ -45,6 +46,8 @@
 /* Begin PBXFileReference section */
 		EF04BD2E2364B7050007BADF /* BaiduMapManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaiduMapManager.h; sourceTree = "<group>"; };
 		EF04BD2F2364B7050007BADF /* BaiduMapManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaiduMapManager.m; sourceTree = "<group>"; };
+		EF18EA9E246F07A6005A2F4D /* BMKPointAnnotationPro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMKPointAnnotationPro.m; sourceTree = "<group>"; };
+		EF18EA9F246F07A6005A2F4D /* BMKPointAnnotationPro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKPointAnnotationPro.h; sourceTree = "<group>"; };
 		EF3C22561CC2C30D0099E9B6 /* libRCTBaiduMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTBaiduMap.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF3C22591CC2C30D0099E9B6 /* BaiduMapView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaiduMapView.h; sourceTree = "<group>"; };
 		EF3C225B1CC2C30D0099E9B6 /* BaiduMapView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaiduMapView.m; sourceTree = "<group>"; };
@@ -118,6 +121,8 @@
 		EF3C22581CC2C30D0099E9B6 /* RCTBaiduMap */ = {
 			isa = PBXGroup;
 			children = (
+				EF18EA9F246F07A6005A2F4D /* BMKPointAnnotationPro.h */,
+				EF18EA9E246F07A6005A2F4D /* BMKPointAnnotationPro.m */,
 				EF7F66BB2369EB3000D1D9DC /* Modules */,
 				EFB77A63234B0B3B00A17DDF /* ClusterAnnotation.h */,
 				EFB77A64234B0B3B00A17DDF /* ClusterAnnotation.m */,
@@ -308,6 +313,7 @@
 				EF04BD302364B7050007BADF /* BaiduMapManager.m in Sources */,
 				EFB77A4B234AF69B00A17DDF /* OverlayView.m in Sources */,
 				EFB77A6B234B792F00A17DDF /* OverlayClusterManager.m in Sources */,
+				EF18EAA0246F07A6005A2F4D /* BMKPointAnnotationPro.m in Sources */,
 				EFB77A6A234B792F00A17DDF /* OverlayCluster.m in Sources */,
 				EF824B6F234A18AD009E6523 /* BMKCluster.m in Sources */,
 				EF824B70234A18AD009E6523 /* BMKClusterQuadtree.m in Sources */,

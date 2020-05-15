@@ -12,6 +12,7 @@
 #import <BMKLocationkit/BMKLocationComponent.h>
 #import "BaiduMapView.h"
 #import "OverlayUtils.h"
+#import "BMKPointAnnotationPro.h"
 
 @interface BaiduMapViewManager : RCTViewManager<BMKMapViewDelegate>
 

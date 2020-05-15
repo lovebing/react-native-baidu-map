@@ -141,10 +141,15 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
         annotationView.annotation = annotation;
         return annotationView;
     } else if ([annotation isKindOfClass:[BMKPointAnnotationPro class]]) {
-        BMKPointAnnotationPro * annotationPro = annotation;
-        return annotationPro.getAnnotationView(annotation);
-    } else {
-        @throw [NSException exceptionWithName:@"必须用BMKPointAnnotationPro" reason:@"" userInfo:nil];
+        BMKPointAnnotationPro *annotationPro = (BMKPointAnnotationPro *) annotation;
+        NSLog(@"BMKPointAnnotationPro");
+        return annotationPro.annotationView;
+    } else if ([annotation isKindOfClass:[BMKPointAnnotation class]]) {
+        BMKPinAnnotationView *annotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:markerIdentifier];
+        annotationView.pinColor = BMKPinAnnotationColorPurple;
+        annotationView.animatesDrop = YES;
+        NSLog(@"BMKPointAnnotation");
+        return annotationView;
     }
     return nil;
 }
