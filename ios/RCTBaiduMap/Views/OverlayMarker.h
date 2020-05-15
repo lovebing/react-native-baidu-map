@@ -14,6 +14,9 @@
 #import <React/RCTBridge.h>
 #import <React/RCTConvert+CoreLocation.h>
 #import <React/RCTImageSource.h>
+#import <React/RCTImageLoader.h>
+#import <BaiduMapAPI_Map/BMKAnnotationView.h>
+#import "BMKPointAnnotationPro.h"
 
 @interface OverlayMarker : OverlayView
 
@@ -21,7 +24,7 @@
 @property (nonatomic, strong) NSDictionary *location;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) RCTImageSource *icon;
-@property (nonatomic, strong) BMKPointAnnotation *annotation;
+@property (nonatomic, strong) BMKPointAnnotationPro *annotation;
 
 @end
 

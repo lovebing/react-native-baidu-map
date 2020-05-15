@@ -7,11 +7,11 @@
 //
 
 #import "OverlayMarker.h"
-#import "BMKPointAnnotationPro.h"
-#import <BaiduMapAPI_Map/BMKAnnotationView.h>
-#import "RCBMImageAnnotView.h"
 
-@implementation OverlayMarker
+@implementation OverlayMarker {
+    RCTImageLoaderCancellationBlock _reloadImageCancellationBlock;
+    UIImageView *_imageView;
+}
 
 - (NSString *)getType {
     return @"marker";
@@ -37,22 +37,52 @@
     return _annotation;
 }
 
+
 - (void)updateAnnotation:(BMKPointAnnotationPro *)annotation {
-    CLLocationCoordinate2D coor = [OverlayUtils getCoorFromOption:_location];
     if(_title.length == 0) {
         annotation.title = nil;
     } else {
         annotation.title = _title;
     }
-    annotation.coordinate = coor;
+    _annotation.coordinate = [OverlayUtils getCoorFromOption:_location];
+    if (_icon != nil) {
+        if (_reloadImageCancellationBlock) {
+            _reloadImageCancellationBlock();
+            _reloadImageCancellationBlock = nil;
+        }
+        _reloadImageCancellationBlock = [[_bridge moduleForName:@"ImageLoader"] loadImageWithURLRequest:_icon.request
+                                                                      size:self.bounds.size
+                                                                         scale:RCTScreenScale()
+                                                                       clipped:YES
+                                                                    resizeMode:RCTResizeModeCenter
+                                                                 progressBlock:nil
+                                                              partialLoadBlock:nil
+                                                               completionBlock:^(NSError *error, UIImage *image) {
+                                                                   if (error) {
+                                                                       NSLog(@"download image error: %@", error);
+                                                                   }
+                                                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                                                     [self updateAnnotationView:annotation image:image];
+                                                                       NSLog(@"download image success: %@", image);
+                                                                   });
+                                                               }];
+    }
+}
 
-    annotation.getAnnotationView = ^BMKAnnotationView * _Nonnull(BMKPointAnnotation * _Nonnull annotation) {
-        RCBMImageAnnotView *annotV = [[RCBMImageAnnotView alloc] initWithAnnotation:annotation reuseIdentifier:@"dontCare"];
-        annotV.bridge = self.bridge;
-        NSLog(@"self.icon:%@",self.icon);
-        annotV.source = self.icon;
-        return annotV;
-    };
+- (void)updateAnnotationView:(BMKPointAnnotationPro *) annotation image:(UIImage *)image {
+  annotation.annotationView.image = image;
+  NSLog(@"annotationView width: %f, height: %f", _icon.size.width, _icon.size.height);
+  if (_icon.size.height > 0 && _icon.size.width > 0) {
+    annotation.annotationView.image = NULL;
+    CGRect frame = CGRectMake(-_icon.size.width / 2, -_icon.size.height / 2, _icon.size.width, _icon.size.height);
+    if (_imageView == nil) {
+      _imageView = [[UIImageView alloc] initWithImage:image];
+      [annotation.annotationView addSubview:_imageView];
+    }
+    _imageView.frame = frame;
+  } else {
+    annotation.annotationView.image = image;
+  }
 }
 
 @end
