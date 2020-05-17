@@ -131,12 +131,6 @@
     [super removeReactSubview:subview];
 }
 
-- (void)didSetProps:(NSArray<NSString *> *)props {
-    NSLog(@"marker didSetProps:%@", props);
-    [super didSetProps:props];
-    [self update];
-}
-
 - (void)didUpdateReactSubviews {
     NSLog(@"didUpdateReactSubviews:%lu", (unsigned long)[self.reactSubviews count]);
     [super didUpdateReactSubviews];

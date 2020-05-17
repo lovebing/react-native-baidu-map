@@ -26,6 +26,12 @@
   
 }
 
+- (void)didSetProps:(NSArray<NSString *> *)props {
+    NSLog(@"overlay didSetProps:%@", props);
+    [super didSetProps:props];
+    [self update];
+}
+
 - (void)setStroke:(NSDictionary *)stroke {
     self.lineWidth = [RCTConvert double:stroke[@"width"]];
     self.strokeColor = [RCTConvert NSString:stroke[@"color"]];
