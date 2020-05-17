@@ -26,7 +26,8 @@ export default class Marker extends Component {
     rotate: PropTypes.number,
     flat: PropTypes.bool,
     icon: PropTypes.any,
-    pinColor: PropTypes.string
+    pinColor: PropTypes.string,
+    onClick: PropTypes.func
   };
 
   static defaultProps = {
@@ -41,9 +42,15 @@ export default class Marker extends Component {
     super();
   }
 
+  handleClick(e) {
+    if (this.props.onClick) {
+      this.props.onClick(e.nativeEvent);
+    }
+  }
+
   render() {
     const icon = resolveAssetSource(this.props.icon);
-    return <BaiduMapOverlayMarker {...this.props} icon={icon} />;
+    return <BaiduMapOverlayMarker {...this.props} icon={icon} onClick={this.handleClick.bind(this)} />;
   }
 }
 const BaiduMapOverlayMarker = requireNativeComponent('BaiduMapOverlayMarker', Marker);

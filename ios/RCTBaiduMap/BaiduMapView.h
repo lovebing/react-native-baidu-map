@@ -35,6 +35,7 @@
 - (void)setZoomGesturesEnabled:(BOOL)zoomGesturesEnabled;
 
 - (OverlayView *)findOverlayView:(id<BMKOverlay>)overlay;
+- (OverlayMarker *)findOverlayMaker:(id<BMKAnnotation>)annotation;
 
 @end
 
