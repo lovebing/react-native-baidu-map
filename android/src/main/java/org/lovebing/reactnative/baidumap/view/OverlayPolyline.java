@@ -14,6 +14,7 @@ import android.view.View;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
+import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.model.LatLng;
 
 import java.util.List;
@@ -25,8 +26,8 @@ public class OverlayPolyline extends View implements OverlayView {
 
     private List<LatLng> points;
     private Polyline polyline;
-    private int color = 0xAAFF0000;
-    private int lineWidth = 1;
+
+    private Stroke stroke = new Stroke(1, 0xAAFF0000);
 
     public OverlayPolyline(Context context) {
         super(context);
@@ -56,28 +57,18 @@ public class OverlayPolyline extends View implements OverlayView {
         }
     }
 
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
+    public void setStroke(Stroke stroke) {
+        this.stroke = stroke;
         if (polyline != null) {
-            polyline.setColor(color);
-        }
-    }
-
-    public void setLineWidth(int lineWidth) {
-        this.lineWidth = lineWidth;
-        if (polyline != null) {
-            polyline.setWidth(lineWidth);
+            polyline.setColor(stroke.color);
+            polyline.setWidth(stroke.strokeWidth);
         }
     }
 
     @Override
     public void addTopMap(BaiduMap baiduMap) {
-        PolylineOptions options = new PolylineOptions().width(lineWidth)
-                .color(color).points(points);
+        PolylineOptions options = new PolylineOptions().width(stroke.strokeWidth)
+                .color(stroke.color).points(points);
         polyline = (Polyline) baiduMap.addOverlay(options);
     }
 

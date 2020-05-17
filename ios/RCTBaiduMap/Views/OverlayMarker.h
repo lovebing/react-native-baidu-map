@@ -16,7 +16,10 @@
 #import <React/RCTImageSource.h>
 #import <React/RCTImageLoader.h>
 #import <BaiduMapAPI_Map/BMKAnnotationView.h>
+#import <React/RCTComponent.h>
 #import "BMKPointAnnotationPro.h"
+#import <React/UIView+React.h>
+#import "InfoWindow.h"
 
 @interface OverlayMarker : OverlayView
 
@@ -25,6 +28,9 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) RCTImageSource *icon;
 @property (nonatomic, strong) BMKPointAnnotationPro *annotation;
+@property (nonatomic, strong) NSString *pinColor;
+
+@property (nonatomic, strong) BMKActionPaopaoView *paopaoView;
 
 @end
 

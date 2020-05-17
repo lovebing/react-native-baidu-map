@@ -10,11 +10,17 @@
 
 #import <BaiduMapAPI_Map/BMKPinAnnotationView.h>
 #import <BaiduMapAPI_Map/BMKPointAnnotation.h>
-#import <UIKit/UIKit.h>
+#import <React/UIView+React.h>
+#import <BaiduMapAPI_Map/BMKAnnotationView.h>
+#import <BaiduMapAPI_Map/BMKActionPaopaoView.h>
+#import "InfoWindow.h"
 
 @interface BMKPointAnnotationPro : BMKPointAnnotation
 
 @property (nonatomic, strong) BMKPinAnnotationView *annotationView;
+@property (nonatomic, strong) UIView *customPopView;
+
+- (void)updatePaopaoView;
 
 @end
 

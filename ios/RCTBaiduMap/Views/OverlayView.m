@@ -22,4 +22,14 @@
     return NO;
 }
 
+- (void)update {
+  
+}
+
+- (void)setStroke:(NSDictionary *)stroke {
+    self.lineWidth = [RCTConvert double:stroke[@"width"]];
+    self.strokeColor = [RCTConvert NSString:stroke[@"color"]];
+    NSLog(@"setStroke: color=%@, width=%f", self.strokeColor, self.lineWidth);
+}
+
 @end

@@ -25,7 +25,8 @@ export default class Marker extends Component {
     alpha: PropTypes.number,
     rotate: PropTypes.number,
     flat: PropTypes.bool,
-    icon: PropTypes.any
+    icon: PropTypes.any,
+    pinColor: PropTypes.string
   };
 
   static defaultProps = {
@@ -40,19 +41,9 @@ export default class Marker extends Component {
     super();
   }
 
-  //对icon的处理方式不同，ios上需要完整的object（包括uri size scale），android上只要uri
   render() {
-    if (Platform.OS === 'ios') {
-      const icon = resolveAssetSource(this.props.icon);
-      return <BaiduMapOverlayMarker {...this.props} icon={icon} />;
-    } else {
-      let icon;
-      if (this.props.icon) {
-        icon = resolveAssetSource(this.props.icon) || {};
-        icon = icon.uri || this.props.icon;
-      }
-      return <BaiduMapOverlayMarker {...this.props} icon={icon} />;
-    }
+    const icon = resolveAssetSource(this.props.icon);
+    return <BaiduMapOverlayMarker {...this.props} icon={icon} />;
   }
 }
 const BaiduMapOverlayMarker = requireNativeComponent('BaiduMapOverlayMarker', Marker);

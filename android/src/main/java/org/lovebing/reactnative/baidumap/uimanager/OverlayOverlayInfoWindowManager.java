@@ -1,20 +1,16 @@
 package org.lovebing.reactnative.baidumap.uimanager;
 
+import android.util.Log;
 import android.view.View;
-import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
-import org.lovebing.reactnative.baidumap.util.LatLngUtil;
 import org.lovebing.reactnative.baidumap.view.OverlayInfoWindow;
-
 /**
  * @author lovebing Created on Dec 09, 2018
  */
 public class OverlayOverlayInfoWindowManager extends ViewGroupManager<OverlayInfoWindow> {
 
-    private OverlayInfoWindow overlayInfoWindow;
-    private volatile boolean _visible = false;
     @Override
     public String getName() {
         return "BaiduMapOverlayInfoWindow";
@@ -22,40 +18,27 @@ public class OverlayOverlayInfoWindowManager extends ViewGroupManager<OverlayInf
 
     @Override
     protected OverlayInfoWindow createViewInstance(ThemedReactContext reactContext) {
-        synchronized (this) {
-            if (overlayInfoWindow == null) {
-                overlayInfoWindow = new OverlayInfoWindow(reactContext);
-            }
-        }
-        return overlayInfoWindow;
+        return new OverlayInfoWindow(reactContext);
     }
 
     @Override
     public void addView(OverlayInfoWindow parent, View child, int index) {
-        //parent.setChildren(child);
+        Log.i("infoWindow addView", parent.hashCode() + ":" + child.getClass().getName() + ":" + child.hashCode());
+        super.addView(parent, child, index);
     }
 
-    @ReactProp(name = "title")
-    public void setTitle(OverlayInfoWindow overlayInfoWindow, String title) {
-        if (overlayInfoWindow == null) {
-            return;
-        }
-        overlayInfoWindow.setTitle(title);
+    @ReactProp(name = "width")
+    public void setWidth(OverlayInfoWindow overlayInfoWindow, int width) {
+        overlayInfoWindow.setWidth(width);
     }
 
-    @ReactProp(name = "location")
-    public void setLocation(OverlayInfoWindow overlayInfoWindow, ReadableMap location) {
-        if (overlayInfoWindow == null) {
-            return;
-        }
-        overlayInfoWindow.setLocation(LatLngUtil.fromReadableMap(location));
+    @ReactProp(name = "height")
+    public void setHeight(OverlayInfoWindow overlayInfoWindow, int height) {
+        overlayInfoWindow.setHeight(height);
     }
 
-    @ReactProp(name = "visible")
-    public void setVisible(OverlayInfoWindow overlayInfoWindow, boolean visible) {
-        if (overlayInfoWindow == null) {
-            return;
-        }
-        overlayInfoWindow.setVisible(visible);
+    @ReactProp(name = "offsetY")
+    public void setOffsetY(OverlayInfoWindow overlayInfoWindow, int offsetY) {
+        overlayInfoWindow.setOffsetY(offsetY);
     }
 }

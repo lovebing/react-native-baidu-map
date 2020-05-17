@@ -1,24 +1,23 @@
 //
-//  OverlayPolyline.m
-//  react-native-baidu-map
+//  OverlayArc.m
+//  RCTBaiduMap
 //
-//  Created by lovebing on 2019/10/7.
-//  Copyright © 2019年 lovebing.org. All rights reserved.
+//  Created by lovebing on 2020/5/16.
+//  Copyright © 2020 lovebing.net. All rights reserved.
 //
 
-#import "OverlayPolyline.h"
-#import "OverlayUtils.h"
+#import "OverlayArc.h"
 
-@implementation OverlayPolyline
+@implementation OverlayArc
 
 - (NSString *)getType {
-    return @"polyline";
+    return @"arc";
 }
 
 - (void)addToMap:(BMKMapView *)mapView {
-    NSLog(@"%@ addToMap: %@", [self getType], _points);
     [self initOverlay];
     [self updateOverlay:_overlay];
+    NSLog(@"arc addToMap");
     [mapView addOverlay:_overlay];
 }
 
@@ -33,20 +32,20 @@
 
 - (void)initOverlay {
     if (_overlay == nil) {
-        _overlay = [[BMKPolyline alloc] init];
+        _overlay = [[BMKArcline alloc] init];
     }
 }
 
-- (void)updateOverlay:(BMKPolyline <BMKOverlay> *)overlay {
+- (void)updateOverlay:(BMKArcline <BMKOverlay> *)overlay {
     CLLocationCoordinate2D coords[[_points count]];
     memset(coords, 0, [_points count]);
     [OverlayUtils updateCoords:_points result:coords];
-    [overlay setPolylineWithCoordinates:coords count:[_points count]];
+    [overlay setArclineWithCoordinates:coords];
 }
 
 - (BOOL)ownOverlay:(id<BMKOverlay>)overlay {
-    if ([overlay isKindOfClass:[BMKPolyline class]]) {
-        BMKPolyline *source = (BMKPolyline *) overlay;
+    if ([overlay isKindOfClass:[BMKArcline class]]) {
+        BMKArcline *source = (BMKArcline *) overlay;
         return source.points == _overlay.points;
     }
     return NO;

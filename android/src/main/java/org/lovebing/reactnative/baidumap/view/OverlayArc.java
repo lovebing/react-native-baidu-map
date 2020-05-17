@@ -14,6 +14,7 @@ import android.view.View;
 import com.baidu.mapapi.map.Arc;
 import com.baidu.mapapi.map.ArcOptions;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.model.LatLng;
 
 /**
@@ -23,8 +24,7 @@ public class OverlayArc extends View implements OverlayView {
 
     private Arc arc;
     private Points points;
-    private int width = 4;
-    private int color = 0xAA00FF00;
+    private Stroke stroke = new Stroke(4, 0xAA00FF00);
 
     public OverlayArc(Context context) {
         super(context);
@@ -43,10 +43,15 @@ public class OverlayArc extends View implements OverlayView {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public void setWidth(int width) {
-        this.width = width;
+    public Stroke getStroke() {
+        return stroke;
+    }
+
+    public void setStroke(Stroke stroke) {
+        this.stroke = stroke;
         if (arc != null) {
-            arc.setWidth(width);
+            arc.setWidth(stroke.strokeWidth);
+            arc.setColor(stroke.color);
         }
     }
 
@@ -61,22 +66,11 @@ public class OverlayArc extends View implements OverlayView {
         }
     }
 
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-        if (arc != null) {
-            arc.setColor(color);
-        }
-    }
-
     @Override
     public void addTopMap(BaiduMap baiduMap) {
         ArcOptions ooArc = new ArcOptions()
-                .color(color)
-                .width(width)
+                .color(stroke.color)
+                .width(stroke.strokeWidth)
                 .points(points.getP1(), points.getP2(), points.getP3());
         arc = (Arc) baiduMap.addOverlay(ooArc);
     }
