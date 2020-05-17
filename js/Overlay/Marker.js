@@ -21,6 +21,7 @@ export default class Marker extends Component {
   static propTypes = {
     ...View.propTypes,
     title: PropTypes.string,
+    titleOffsetY: PropTypes.number,
     location: PropTypes.object,
     alpha: PropTypes.number,
     rotate: PropTypes.number,
@@ -31,6 +32,7 @@ export default class Marker extends Component {
   };
 
   static defaultProps = {
+    titleOffsetY: -80,
     location: {
       latitude: 0,
       longitude: 0

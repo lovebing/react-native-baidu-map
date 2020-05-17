@@ -21,12 +21,12 @@ static NSString *markerIdentifier = @"markerIdentifier";
     _annotationView.animatesDrop = YES;
     _customPopView = [[UIView alloc] init];
     _paopaoView = [[BMKActionPaopaoView alloc] initWithCustomView:_customPopView];
-    _annotationView.paopaoView = _paopaoView;
     return self;
 }
 
 - (void)updatePaopaoView {
     _paopaoView.frame = _customPopView.frame;
+    _annotationView.paopaoView = _paopaoView;
 }
 
 @end

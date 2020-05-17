@@ -40,6 +40,11 @@ public class OverlayMarkerManager extends ViewGroupManager<OverlayMarker> {
         overlayMarker.setTitle(title);
     }
 
+    @ReactProp(name = "titleOffsetY")
+    public void setTitleOffsetY(OverlayMarker overlayMarker, int titleOffsetY) {
+        overlayMarker.setTitleOffsetY(titleOffsetY);
+    }
+
     @ReactProp(name = "location")
     public void setLocation(OverlayMarker overlayMarker, ReadableMap position) {
         overlayMarker.setPosition(LatLngUtil.fromReadableMap(position));

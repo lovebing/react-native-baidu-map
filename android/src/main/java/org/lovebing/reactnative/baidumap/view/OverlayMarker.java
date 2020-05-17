@@ -17,6 +17,7 @@ import android.util.AttributeSet;
 
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.baidu.mapapi.clusterutil.clustering.ClusterItem;
 import com.baidu.mapapi.map.*;
@@ -46,6 +47,7 @@ import java.util.Objects;
 public class OverlayMarker extends ViewGroup implements OverlayView, ClusterItem {
 
     private String title;
+    private int titleOffsetY = -100;
     private LatLng position;
     private Float rotate;
     private Boolean flat;
@@ -57,6 +59,7 @@ public class OverlayMarker extends ViewGroup implements OverlayView, ClusterItem
     private IconInfo iconInfo;
     private OverlayInfoWindow overlayInfoWindow;
     private volatile boolean loadingImage = false;
+    private InfoWindow titleInfoWindow;
 
     private final ControllerListener<ImageInfo> imageControllerListener =
             new BaseControllerListener<ImageInfo>() {
@@ -127,8 +130,27 @@ public class OverlayMarker extends ViewGroup implements OverlayView, ClusterItem
 
     }
 
-    public OverlayInfoWindow getOverlayInfoWindow() {
-        return overlayInfoWindow;
+    public InfoWindow getInfoWindow(LatLng position) {
+        if (overlayInfoWindow != null) {
+            return overlayInfoWindow.getInfoWindow(position);
+        }
+        if (title != null && title.length() > 0) {
+            if (titleInfoWindow == null) {
+                Button button = new Button(getContext());
+                button.setVisibility(GONE);
+                button.setText(title);
+                titleInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), position, titleOffsetY, new InfoWindow.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick() {
+
+                    }
+                });
+            } else {
+                titleInfoWindow.setPosition(position);
+            }
+            return titleInfoWindow;
+        }
+        return null;
     }
 
     public void setOverlayInfoWindow(OverlayInfoWindow overlayInfoWindow) {
@@ -141,6 +163,10 @@ public class OverlayMarker extends ViewGroup implements OverlayView, ClusterItem
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setTitleOffsetY(int titleOffsetY) {
+        this.titleOffsetY = titleOffsetY;
     }
 
     @Override

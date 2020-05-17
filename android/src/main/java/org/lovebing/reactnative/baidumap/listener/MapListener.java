@@ -111,13 +111,14 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
         OverlayMarker overlayMarker = MapViewManager.findOverlayMaker(marker);
         mapView.getMap().hideInfoWindow();
         if (overlayMarker != null) {
-            if (overlayMarker.getOverlayInfoWindow() != null) {
-                reactContext
-                        .getJSModule(RCTEventEmitter.class)
-                        .receiveEvent(overlayMarker.getId(),
-                                "topClick", writableMap);
-                mapView.getMap().showInfoWindow(overlayMarker.getOverlayInfoWindow().getInfoWindow(marker.getPosition()));
+            InfoWindow infoWindow = overlayMarker.getInfoWindow(marker.getPosition());
+            if (infoWindow != null) {
+                mapView.getMap().showInfoWindow(infoWindow);
             }
+            reactContext
+                    .getJSModule(RCTEventEmitter.class)
+                    .receiveEvent(overlayMarker.getId(),
+                            "topClick", writableMap.copy());
         }
         sendEvent(mapView, "onMarkerClick", writableMap);
         return true;
