@@ -130,7 +130,7 @@ BaiduMapManager.initSDK('sIMQlfmOXhQmPLF1QMh4aBp8zZO9Lb2A');
 | rotate                  | float | 0        | 旋转角度，仅 Android
 | icon                    | any   | null     | icon图片，同 <Image> 的 source 属性
 | alpha                   | float | 1        | 透明度，仅 Android
-| pinColor                | string| red      | red|green|purple，大头针颜色，仅 iOS
+| pinColor                | string| red      | red/green/purple，大头针颜色，仅 iOS
 ##### Cluster 点聚合
 
 ##### Arc Props 属性
