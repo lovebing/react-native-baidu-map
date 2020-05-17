@@ -15,6 +15,7 @@
     RCTImageLoaderCancellationBlock _reloadImageCancellationBlock;
     UIImageView *_imageView;
     BMKMapView *_mapView;
+    UIImage *_iconImage;
 }
 
 - (NSString *)getType {
@@ -50,7 +51,7 @@
         annotation.title = _title;
     }
     _annotation.coordinate = [OverlayUtils getCoorFromOption:_location];
-    if (_icon != nil) {
+    if (_iconImage == nil && _icon != nil) {
         if (_reloadImageCancellationBlock) {
             _reloadImageCancellationBlock();
             _reloadImageCancellationBlock = nil;
@@ -65,9 +66,10 @@
                                                                completionBlock:^(NSError *error, UIImage *image) {
                                                                    if (error) {
                                                                        NSLog(@"download image error: %@", error);
+                                                                      return;
                                                                    }
                                                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                                                     [self updateAnnotationView:annotation image:image];
+                                                                      [self updateAnnotationView:annotation image:image];
                                                                        NSLog(@"download image success: %@", image);
                                                                    });
                                                                }];
@@ -78,6 +80,7 @@
 
 - (void)updateAnnotationView:(BMKPointAnnotationPro *) annotation image:(UIImage *)image {
     annotation.annotationView.image = image;
+    _iconImage = image;
     NSLog(@"annotationView width: %f, height: %f", _icon.size.width, _icon.size.height);
     if (_icon.size.height > 0 && _icon.size.width > 0) {
         annotation.annotationView.image = NULL;
@@ -115,25 +118,22 @@
             [_annotation updatePaopaoView];
       });
     }
+    [super insertReactSubview:subview atIndex:atIndex];
 }
 
 - (void)removeReactSubview:(UIView *)subview {
     NSLog(@"removeReactSubview");
     if ([subview isKindOfClass:[InfoWindow class]]) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            _annotation.customPopView.backgroundColor = [UIColor redColor];
-          [_annotation.customPopView addSubview:subview];
+            _annotation.annotationView = nil;
         });
     }
     [super removeReactSubview:subview];
 }
 
-- (void)didSetProps:(NSArray<NSString *> *) props {
-    NSLog(@"didSetProps");
-}
-
 - (void)didUpdateReactSubviews {
     NSLog(@"didUpdateReactSubviews:%lu", (unsigned long)[self.reactSubviews count]);
+    [super didUpdateReactSubviews];
 }
 
 @end

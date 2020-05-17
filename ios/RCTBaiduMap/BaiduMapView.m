@@ -75,7 +75,7 @@
 }
 
 - (void)didSetProps:(NSArray<NSString *> *) props {
-    NSLog(@"didSetProps: %d", _childrenCount);
+    NSLog(@"mapView didSetProps: %@", props);
     [super didSetProps:props];
 }
 
@@ -87,6 +87,7 @@
             [overlayView update];
         }
     }
+    [super didUpdateReactSubviews];
     NSLog(@"didUpdateReactSubviews:%d", [self.reactSubviews count]);
 }
 

@@ -13,6 +13,7 @@
 #import <BaiduMapAPI_Map/BMKMapView.h>
 #import <BaiduMapAPI_Map/BMKPointAnnotation.h>
 #import <React/RCTConvert+CoreLocation.h>
+#import <React/UIView+React.h>
 
 @interface OverlayView : UIView
 

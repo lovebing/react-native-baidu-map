@@ -26,7 +26,7 @@ public class ConvertUtils {
     private static final Map<Class, Field[]> FILED_MAP = new HashMap<>();
 
     public static LatLng convert(LocationData locationData) {
-        if (!locationData.isValid()) {
+        if (locationData == null || !locationData.isValid()) {
             return null;
         }
         return new LatLng(locationData.getLatitude(), locationData.getLongitude());
