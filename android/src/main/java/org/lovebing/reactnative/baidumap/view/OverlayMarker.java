@@ -10,11 +10,14 @@ package org.lovebing.reactnative.baidumap.view;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.util.AttributeSet;
 
-import android.view.View;
+import android.util.Log;
+import android.view.ViewGroup;
+
 import com.baidu.mapapi.clusterutil.clustering.ClusterItem;
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
@@ -34,11 +37,13 @@ import com.facebook.imagepipeline.image.CloseableStaticBitmap;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+
 import org.lovebing.reactnative.baidumap.R;
+import org.lovebing.reactnative.baidumap.model.IconInfo;
 
 import java.util.Objects;
 
-public class OverlayMarker extends View implements OverlayView, ClusterItem {
+public class OverlayMarker extends ViewGroup implements OverlayView, ClusterItem {
 
     private String title;
     private LatLng position;
@@ -49,6 +54,8 @@ public class OverlayMarker extends View implements OverlayView, ClusterItem {
     private Marker marker;
     private DataSource<CloseableReference<CloseableImage>> dataSource;
     private DraweeHolder<?> imageHolder;
+    private IconInfo iconInfo;
+    private OverlayInfoWindow overlayInfoWindow;
     private volatile boolean loadingImage = false;
 
     private final ControllerListener<ImageInfo> imageControllerListener =
@@ -115,6 +122,19 @@ public class OverlayMarker extends View implements OverlayView, ClusterItem {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+
+    }
+
+    public OverlayInfoWindow getOverlayInfoWindow() {
+        return overlayInfoWindow;
+    }
+
+    public void setOverlayInfoWindow(OverlayInfoWindow overlayInfoWindow) {
+        this.overlayInfoWindow = overlayInfoWindow;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -176,7 +196,13 @@ public class OverlayMarker extends View implements OverlayView, ClusterItem {
         }
     }
 
-    public void setIcon(String uri) {
+    public void setIcon(IconInfo iconInfo) {
+        if (iconInfo.getUri() == null || iconInfo.getUri().length() == 0) {
+            return;
+        }
+        Log.i("download", iconInfo.getUri());
+        this.iconInfo = iconInfo;
+        String uri = iconInfo.getUri();
         if (uri == null) {
             iconBitmapDescriptor = null;
         } else if (uri.startsWith("http://") || uri.startsWith("https://") ||
@@ -200,11 +226,26 @@ public class OverlayMarker extends View implements OverlayView, ClusterItem {
 
     @Override
     public BitmapDescriptor getBitmapDescriptor() {
+        BitmapDescriptor result;
         if (getIconBitmapDescriptor() != null) {
-            return getIconBitmapDescriptor();
+            result = getIconBitmapDescriptor();
         } else {
-            return BitmapDescriptorFactory.fromResource(R.mipmap.icon_gcoding);
+            result = BitmapDescriptorFactory.fromResource(R.mipmap.icon_gcoding);
         }
+        if (iconInfo != null
+                && iconInfo.getWidth() > 0
+                && iconInfo.getHeight() > 0) {
+            int height = result.getBitmap().getHeight();
+            int width = result.getBitmap().getWidth();
+            float scaleWidth = ((float) iconInfo.getWidth()) / width;
+            float scaleHeight = ((float) iconInfo.getHeight()) / height;
+            Matrix matrix = new Matrix();
+            matrix.postScale(scaleWidth, scaleHeight);
+
+            Bitmap newBitmap = Bitmap.createBitmap(result.getBitmap(), 0, 0, width, height, matrix, true);
+            result = BitmapDescriptorFactory.fromBitmap(newBitmap);
+        }
+        return result;
     }
 
     @Override

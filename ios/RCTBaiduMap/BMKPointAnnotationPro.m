@@ -8,16 +8,25 @@
 
 #import "BMKPointAnnotationPro.h"
 
-@implementation BMKPointAnnotationPro
+@implementation BMKPointAnnotationPro {
+    BMKActionPaopaoView *_pView;
+    BMKActionPaopaoView *_paopaoView;
+}
 
 static NSString *markerIdentifier = @"markerIdentifier";
 
 - (instancetype)init {
     self = [super init];
     _annotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:self reuseIdentifier:markerIdentifier];
-    _annotationView.pinColor = BMKPinAnnotationColorPurple;
     _annotationView.animatesDrop = YES;
+    _customPopView = [[UIView alloc] init];
+    _paopaoView = [[BMKActionPaopaoView alloc] initWithCustomView:_customPopView];
+    _annotationView.paopaoView = _paopaoView;
     return self;
+}
+
+- (void)updatePaopaoView {
+    _paopaoView.frame = _customPopView.frame;
 }
 
 @end

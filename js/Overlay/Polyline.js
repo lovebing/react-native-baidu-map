@@ -20,8 +20,7 @@ export default class Polyline extends Component {
   static propTypes = {
     ...View.propTypes,
     points: PropTypes.array,
-    strokeColor: PropTypes.string,
-    lineWidth: PropTypes.number
+    stroke: PropTypes.object
   };
 
   static defaultProps = {
@@ -29,8 +28,10 @@ export default class Polyline extends Component {
       latitude: 0,
       longitude: 0
     }],
-    strokeColor: 'AAFF0000',
-    lineWidth: 1
+    stroke: {
+      width: 1,
+      color: 'AAFF0000'
+    }
   };
 
   constructor() {

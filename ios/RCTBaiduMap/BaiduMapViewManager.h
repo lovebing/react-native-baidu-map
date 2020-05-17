@@ -13,6 +13,7 @@
 #import "BaiduMapView.h"
 #import "OverlayUtils.h"
 #import "BMKPointAnnotationPro.h"
+#import "OverlayArc.h"
 
 @interface BaiduMapViewManager : RCTViewManager<BMKMapViewDelegate>
 

@@ -18,6 +18,9 @@ public class ColorUtil {
         if (color.startsWith("#")) {
             color = color.substring(1);
         }
+        if (color.length() == 6) {
+            color = "FF" + color;
+        }
         return new BigInteger(color, 16).intValue();
     }
 }

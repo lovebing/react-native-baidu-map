@@ -12,19 +12,22 @@
 #import <Foundation/Foundation.h>
 #import <BaiduMapAPI_Map/BMKMapView.h>
 #import <BaiduMapAPI_Map/BMKPointAnnotation.h>
+#import <React/RCTConvert+CoreLocation.h>
 
 @interface OverlayView : UIView
 
 @property NSInteger atIndex;
 
-@property(nonatomic) NSString *fillColor;
-@property(nonatomic) NSString *strokeColor;
-@property(nonatomic) double lineWidth;
+@property (nonatomic) NSString *fillColor;
+@property (nonatomic) NSString *strokeColor;
+@property (nonatomic) double lineWidth;
 
 - (void)addToMap:(BMKMapView *)mapView;
 - (void)update;
 - (void)removeFromMap:(BMKMapView *)mapView;
 - (BOOL)ownOverlay:(id<BMKOverlay>)overlay;
+
+- (void)setStroke:(NSDictionary *)stroke;
 
 @end
 

@@ -81,10 +81,14 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
 }
 
 - (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view {
+    NSString *title = [[view annotation] title];
+    if (title == nil) {
+        title = @"";
+    }
     NSDictionary* event = @{
                             @"type": @"onMarkerClick",
                             @"params": @{
-                                    @"title": [[view annotation] title],
+                                    @"title": title,
                                     @"position": @{
                                             @"latitude": @([[view annotation] coordinate].latitude),
                                             @"longitude": @([[view annotation] coordinate].longitude)
@@ -161,20 +165,33 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
     if (overlayView == nil) {
         return nil;
     }
+    NSLog(@"fillColor: %@", overlayView.fillColor);
     if ([overlay isKindOfClass:[BMKArcline class]]) {
+        NSLog(@"BMKArcline");
+        OverlayArc *arc = (OverlayArc *) overlayView;
         BMKArclineView *arclineView = [[BMKArclineView alloc] initWithArcline:overlay];
-        arclineView.strokeColor = [UIColor blueColor];
-        arclineView.lineDash = YES;
-        arclineView.lineWidth = 6.0;
+        arclineView.strokeColor = [OverlayUtils getColor:overlayView.strokeColor];
+        arclineView.lineDash = arc.dash;
+        arclineView.lineWidth = overlayView.lineWidth;
         return arclineView;
     } else if([overlay isKindOfClass:[BMKCircle class]]) {
         BMKCircleView *circleView = [[BMKCircleView alloc] initWithCircle:overlay];
+        circleView.strokeColor = [OverlayUtils getColor:overlayView.strokeColor];
+        circleView.lineWidth = overlayView.lineWidth;
+        circleView.fillColor = [OverlayUtils getColor:overlayView.fillColor];
         return circleView;
     } else if([overlay isKindOfClass:[BMKPolyline class]]) {
         BMKPolylineView *polylineView = [[BMKPolylineView alloc] initWithPolyline:overlay];
         polylineView.strokeColor = [OverlayUtils getColor:overlayView.strokeColor];
         polylineView.lineWidth = overlayView.lineWidth;
+        NSLog(@"BMKPolylineView: strokeColor: %@", polylineView.strokeColor);
         return polylineView;
+    } else if([overlay isKindOfClass:[BMKPolygon class]]) {
+        BMKPolygonView *polygonView = [[BMKPolygonView alloc] initWithPolygon:overlay];
+        polygonView.strokeColor = [OverlayUtils getColor:overlayView.strokeColor];
+        polygonView.lineWidth = overlayView.lineWidth;
+        polygonView.fillColor = [OverlayUtils getColor:overlayView.fillColor];
+        return polygonView;
     }
     return nil;
 }

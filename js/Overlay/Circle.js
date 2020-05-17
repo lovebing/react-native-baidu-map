@@ -41,9 +41,6 @@ export default class Circle extends Component {
   }
 
   render() {
-    if (Platform.OS === 'ios') {
-      return <View {...this.props} />;
-    }
     return <BaiduMapOverlayCircle {...this.props} />;
   }
 }

@@ -46,7 +46,7 @@
     [self updateLocationData:_userLocation];
 }
 
-- (void)insertReactSubview:(id <RCTComponent>)subview atIndex:(NSInteger)atIndex {
+- (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex {
     NSLog(@"childrenCount:%d", _childrenCount);
     if ([subview isKindOfClass:[OverlayView class]]) {
         OverlayView *overlayView = (OverlayView *) subview;
@@ -55,7 +55,7 @@
     }
 }
 
-- (void)removeReactSubview:(id <RCTComponent>)subview {
+- (void)removeReactSubview:(UIView *)subview {
     NSLog(@"removeReactSubview");
     if ([subview isKindOfClass:[OverlayView class]]) {
         OverlayView *overlayView = (OverlayView *) subview;

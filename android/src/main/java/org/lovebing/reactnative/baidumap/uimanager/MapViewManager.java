@@ -28,8 +28,6 @@ import java.util.List;
 
 public class MapViewManager extends ViewGroupManager<TextureMapView> {
 
-    private static Object EMPTY_OBJ = new Object();
-
     private List<Object> children = new ArrayList<>(10);
     private MapListener mapListener;
     private int childrenCount = 0;
@@ -42,32 +40,24 @@ public class MapViewManager extends ViewGroupManager<TextureMapView> {
     @Override
     public void addView(TextureMapView parent, View child, int index) {
         Log.i("MapViewManager", "addView:" + index);
-        if (index == 0 && !children.isEmpty()) {
-            removeOldChildViews(parent.getMap());
-        }
         if (child instanceof OverlayView) {
             if (child instanceof OverlayCluster) {
                 ((OverlayCluster) child).setMapListener(mapListener);
             }
             ((OverlayView) child).addTopMap(parent.getMap());
             children.add(child);
-        } else {
-            children.add(EMPTY_OBJ);
         }
+        super.addView(parent, child, index);
     }
 
     @Override
     public void removeViewAt(TextureMapView parent, int index) {
-        Log.i("MapViewManager", "removeViewAt:" + index);
-        if (index < children.size()) {
-            Object child = children.get(index);
-            children.remove(index);
-            if (child instanceof OverlayView) {
-                ((OverlayView) child).removeFromMap(parent.getMap());
-            } else {
-                super.removeViewAt(parent, index);
-            }
+        View child = parent.getChildAt(index);
+        Log.i("MapViewManager", "removeViewAt:" + index + "," + child.getClass().getName());
+        if (child instanceof OverlayView) {
+            ((OverlayView) child).removeFromMap(parent.getMap());
         }
+        super.removeViewAt(parent, index);
     }
 
     @Override
