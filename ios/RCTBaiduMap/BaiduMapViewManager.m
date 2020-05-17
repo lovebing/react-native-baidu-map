@@ -95,6 +95,16 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
                                             }
                                     }
                             };
+    if ([mapView isKindOfClass:[BaiduMapView class]]) {
+        BaiduMapView *baiduMapView = (BaiduMapView *) mapView;
+        OverlayMarker *overlayMaker = [baiduMapView findOverlayMaker:[view annotation]];
+        if (overlayMaker != nil) {
+            overlayMaker.onClick(event);
+            NSLog(@"OverlayMarker found");
+        } else {
+            NSLog(@"OverlayMarker not found");
+        }
+    }
     [self sendEvent:mapView params:event];
 }
 

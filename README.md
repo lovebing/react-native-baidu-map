@@ -131,6 +131,7 @@ BaiduMapManager.initSDK('sIMQlfmOXhQmPLF1QMh4aBp8zZO9Lb2A');
 | icon                    | any   | null     | icon图片，同 <Image> 的 source 属性
 | alpha                   | float | 1        | 透明度，仅 Android
 | pinColor                | string| red      | red/green/purple，大头针颜色，仅 iOS
+| onClick                 | func  |          | 点击事件回调
 ##### Cluster 点聚合
 
 ##### Arc Props 属性

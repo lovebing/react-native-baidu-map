@@ -16,6 +16,7 @@
 #import <React/RCTImageSource.h>
 #import <React/RCTImageLoader.h>
 #import <BaiduMapAPI_Map/BMKAnnotationView.h>
+#import <BaiduMapAPI_Map/BMKAnnotation.h>
 #import <React/RCTComponent.h>
 #import "BMKPointAnnotationPro.h"
 #import <React/UIView+React.h>
@@ -31,6 +32,8 @@
 @property (nonatomic, strong) NSString *pinColor;
 
 @property (nonatomic, strong) BMKActionPaopaoView *paopaoView;
+
+@property (nonatomic, copy) RCTBubblingEventBlock onClick;
 
 @end
 

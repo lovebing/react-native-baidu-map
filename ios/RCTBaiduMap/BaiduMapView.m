@@ -12,6 +12,7 @@
     BMKMapView* _mapView;
     BMKPointAnnotation* _annotation;
     NSMutableArray* _annotations;
+    NSMutableSet* _markers;
 }
 
 - (void)setZoom:(float)zoom {
@@ -48,11 +49,17 @@
 
 - (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex {
     NSLog(@"childrenCount:%d", _childrenCount);
+    if (_markers == nil) {
+        _markers = [[NSMutableSet alloc] init];
+    }
     if ([subview isKindOfClass:[OverlayView class]]) {
         OverlayView *overlayView = (OverlayView *) subview;
         [overlayView addToMap:self];
-        [super insertReactSubview:subview atIndex:atIndex];
+        if ([subview isKindOfClass:[OverlayMarker class]]) {
+            [_markers addObject:subview];
+        }
     }
+    [super insertReactSubview:subview atIndex:atIndex];
 }
 
 - (void)removeReactSubview:(UIView *)subview {
@@ -60,7 +67,9 @@
     if ([subview isKindOfClass:[OverlayView class]]) {
         OverlayView *overlayView = (OverlayView *) subview;
         [overlayView removeFromMap:self];
-        NSLog(@"overlayView atIndex: %d", overlayView.atIndex);
+        if ([subview isKindOfClass:[OverlayMarker class]]) {
+            [_markers removeObject:subview];
+        }
     }
     [super removeReactSubview:subview];
 }
@@ -90,6 +99,18 @@
                 return overlayView;
             }
         }
+    }
+    return nil;
+}
+
+- (OverlayMarker *)findOverlayMaker:(id<BMKAnnotation>)annotation {
+    NSEnumerator *enumerator = [_markers objectEnumerator];
+    OverlayMarker *marker  = [enumerator nextObject];
+    while (marker != nil) {
+        if ([marker.annotation isEqual:annotation]) {
+            return marker;
+        }
+        marker = [enumerator nextObject];
     }
     return nil;
 }

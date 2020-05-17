@@ -6,13 +6,13 @@
  */
 
 package org.lovebing.reactnative.baidumap.listener;
+
 import android.util.Log;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
-import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
@@ -21,7 +21,9 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
+import org.lovebing.reactnative.baidumap.uimanager.MapViewManager;
 import org.lovebing.reactnative.baidumap.uimanager.OverlayMarkerManager;
+import org.lovebing.reactnative.baidumap.view.OverlayMarker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +108,17 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
         position.putDouble("longitude", marker.getPosition().longitude);
         writableMap.putMap("position", position);
         writableMap.putString("title", marker.getTitle());
-        OverlayMarkerManager.handleMakerClick(mapView, marker.getPosition());
+        OverlayMarker overlayMarker = MapViewManager.findOverlayMaker(marker);
+        mapView.getMap().hideInfoWindow();
+        if (overlayMarker != null) {
+            if (overlayMarker.getOverlayInfoWindow() != null) {
+                reactContext
+                        .getJSModule(RCTEventEmitter.class)
+                        .receiveEvent(overlayMarker.getId(),
+                                "topClick", writableMap);
+                mapView.getMap().showInfoWindow(overlayMarker.getOverlayInfoWindow().getInfoWindow(marker.getPosition()));
+            }
+        }
         sendEvent(mapView, "onMarkerClick", writableMap);
         return true;
     }
@@ -137,7 +149,7 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
      * @param eventName
      * @param params
      */
-    private void sendEvent(TextureMapView mapView, String eventName,  WritableMap params) {
+    private void sendEvent(TextureMapView mapView, String eventName, WritableMap params) {
         WritableMap event = Arguments.createMap();
         event.putMap("params", params);
         event.putString("type", eventName);

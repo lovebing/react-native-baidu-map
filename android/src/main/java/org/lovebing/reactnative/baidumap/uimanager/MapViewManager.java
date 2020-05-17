@@ -21,15 +21,16 @@ import org.lovebing.reactnative.baidumap.listener.MapListener;
 import org.lovebing.reactnative.baidumap.model.LocationData;
 import org.lovebing.reactnative.baidumap.support.ConvertUtils;
 import org.lovebing.reactnative.baidumap.view.OverlayCluster;
+import org.lovebing.reactnative.baidumap.view.OverlayMarker;
 import org.lovebing.reactnative.baidumap.view.OverlayView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MapViewManager extends ViewGroupManager<TextureMapView> {
 
-    private List<Object> children = new ArrayList<>(10);
     private MapListener mapListener;
+    private static Set<OverlayMarker> overlayMarkers = ConcurrentHashMap.newKeySet();
     private int childrenCount = 0;
 
     @Override
@@ -41,11 +42,13 @@ public class MapViewManager extends ViewGroupManager<TextureMapView> {
     public void addView(TextureMapView parent, View child, int index) {
         Log.i("MapViewManager", "addView:" + index);
         if (child instanceof OverlayView) {
+            if (child instanceof OverlayMarker) {
+                overlayMarkers.add((OverlayMarker) child);
+            }
             if (child instanceof OverlayCluster) {
                 ((OverlayCluster) child).setMapListener(mapListener);
             }
             ((OverlayView) child).addTopMap(parent.getMap());
-            children.add(child);
         }
         super.addView(parent, child, index);
     }
@@ -55,6 +58,9 @@ public class MapViewManager extends ViewGroupManager<TextureMapView> {
         View child = parent.getChildAt(index);
         Log.i("MapViewManager", "removeViewAt:" + index + "," + child.getClass().getName());
         if (child instanceof OverlayView) {
+            if (child instanceof OverlayMarker) {
+                overlayMarkers.add((OverlayMarker) child);
+            }
             ((OverlayView) child).removeFromMap(parent.getMap());
         }
         super.removeViewAt(parent, index);
@@ -160,12 +166,17 @@ public class MapViewManager extends ViewGroupManager<TextureMapView> {
         this.childrenCount = childrenCount;
     }
 
-    private void removeOldChildViews(BaiduMap baiduMap) {
-        for (Object child : children) {
-            if (child instanceof OverlayView) {
-                ((OverlayView) child).removeFromMap(baiduMap);
+
+    public static OverlayMarker findOverlayMaker(Marker marker) {
+        for (OverlayMarker overlayMarker : overlayMarkers) {
+            if (marker.equals(overlayMarker.getMarker())) {
+                return overlayMarker;
+            }
+            if (marker.getPosition() != null && marker.getPosition().latitude == overlayMarker.getPosition().latitude
+                    && marker.getPosition().longitude == overlayMarker.getPosition().longitude) {
+                return overlayMarker;
             }
         }
-        children.clear();
+        return null;
     }
 }
