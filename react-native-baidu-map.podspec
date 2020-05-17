@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "react-native-baidu-map"
-  s.version      = "1.0.33"
+  s.version      = "1.0.34"
   s.summary      = "Baidu Map for React Native"
 
   s.description  = <<-DESC
@@ -41,7 +41,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :http => "http://repo.codeboot.net/pod/http/react-native-baidu-map/1.0.33/source.zip" }
+  s.source       = { :http => "http://repo.codeboot.net/pod/http/react-native-baidu-map/1.0.34/source.zip" }
 
   s.source_files  = "ios/RCTBaiduMap/**/*.{h,m}"
   s.exclude_files = ""

@@ -123,7 +123,8 @@ BaiduMapManager.initSDK('sIMQlfmOXhQmPLF1QMh4aBp8zZO9Lb2A');
 ##### Marker Props 属性
 | Prop                    | Type  | Default  | Description
 | ----------------------- |:-----:| :-------:| -------
-| title                   | string| null     |
+| title                   | string| null     | 如果没有 InfoWindow，将会根据 title 生成 InfoWindow
+| titleOffsetY            | int   | -80        | title 作为 InfoWindow 展示的 y 轴偏移量，仅 Android
 | location                | object| {latitude: 0, longitude: 0}    |
 | perspective             | bool  | null     | 仅 Android
 | flat                    | bool  | null     | 仅 Android
@@ -175,6 +176,8 @@ BaiduMapManager.initSDK('sIMQlfmOXhQmPLF1QMh4aBp8zZO9Lb2A');
 | location                | object|{latitude: 0, longitude: 0}
 
 ##### InfoWindow Props 属性
+必须作为 Marker 的子组件
+
 | Prop                    | Type  | Default  | Description
 | ----------------------- |:-----:| :-------:| -------
 | offsetY                 | int   | 0        | 相对于 point 在 y 轴的偏移量，仅 Android
