@@ -6,9 +6,6 @@
 //  https://www.jianshu.com/p/bd8335c40aa3
 
 #import "GetDistanceModule.h"
-#import <UIKit/UIKit.h>
-#import <BaiduMapAPI_Utils/BMKGeometry.h>
-#import "RCTEventDispatcher.h"
 
 @implementation GetDistanceModule
 

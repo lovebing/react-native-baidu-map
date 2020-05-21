@@ -6,16 +6,24 @@
  */
 
 package org.lovebing.reactnative.baidumap.listener;
+
+import android.util.Log;
+
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
-import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
+
+import org.lovebing.reactnative.baidumap.uimanager.MapViewManager;
+import org.lovebing.reactnative.baidumap.uimanager.OverlayMarkerManager;
+import org.lovebing.reactnative.baidumap.view.OverlayMarker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +37,9 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
     private List<BaiduMap.OnMapStatusChangeListener> mapStatusChangeListeners = new ArrayList<>();
 
     private ReactContext reactContext;
-    private MapView mapView;
+    private TextureMapView mapView;
 
-    public MapListener(MapView mapView, ReactContext reactContext) {
+    public MapListener(TextureMapView mapView, ReactContext reactContext) {
         this.mapView = mapView;
         this.reactContext = reactContext;
     }
@@ -41,6 +49,7 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
         WritableMap writableMap = Arguments.createMap();
         writableMap.putDouble("latitude", latLng.latitude);
         writableMap.putDouble("longitude", latLng.longitude);
+        mapView.getMap().hideInfoWindow();
         sendEvent(mapView, "onMapClick", writableMap);
     }
 
@@ -51,6 +60,7 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
         writableMap.putString("uid", mapPoi.getUid());
         writableMap.putDouble("latitude", mapPoi.getPosition().latitude);
         writableMap.putDouble("longitude", mapPoi.getPosition().longitude);
+        mapView.getMap().hideInfoWindow();
         sendEvent(mapView, "onMapPoiClick", writableMap);
     }
 
@@ -98,6 +108,18 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
         position.putDouble("longitude", marker.getPosition().longitude);
         writableMap.putMap("position", position);
         writableMap.putString("title", marker.getTitle());
+        OverlayMarker overlayMarker = MapViewManager.findOverlayMaker(marker);
+        mapView.getMap().hideInfoWindow();
+        if (overlayMarker != null) {
+            InfoWindow infoWindow = overlayMarker.getInfoWindow(marker.getPosition());
+            if (infoWindow != null) {
+                mapView.getMap().showInfoWindow(infoWindow);
+            }
+            reactContext
+                    .getJSModule(RCTEventEmitter.class)
+                    .receiveEvent(overlayMarker.getId(),
+                            "topClick", writableMap.copy());
+        }
         sendEvent(mapView, "onMarkerClick", writableMap);
         return true;
     }
@@ -128,7 +150,7 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
      * @param eventName
      * @param params
      */
-    private void sendEvent(MapView mapView, String eventName,  WritableMap params) {
+    private void sendEvent(TextureMapView mapView, String eventName, WritableMap params) {
         WritableMap event = Arguments.createMap();
         event.putMap("params", params);
         event.putString("type", eventName);

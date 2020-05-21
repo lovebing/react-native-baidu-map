@@ -95,6 +95,10 @@ export default {
         return;
       }
       DeviceEventEmitter.once('onGetCurrentLocationPosition', resp => {
+        if (resp.errcode) {
+          reject(resp)
+          return;
+        }
         if (!resp.address) {
           resp.address = `${resp.province} ${resp.city} ${resp.district} ${resp.streetName}`;
         }

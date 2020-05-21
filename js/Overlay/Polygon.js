@@ -40,9 +40,6 @@ export default class Polygon extends Component {
   }
 
   render() {
-    if (Platform.OS === 'ios') {
-      return <View {...this.props} />;
-    }
     return <BaiduMapOverlayPolygon {...this.props} />;
   }
 }

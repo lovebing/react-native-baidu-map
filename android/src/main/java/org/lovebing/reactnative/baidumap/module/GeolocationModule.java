@@ -56,7 +56,9 @@ public class GeolocationModule extends BaseModule
     }
 
     private void initLocationClient(String coorType) {
-        AppUtils.checkPermission(context.getCurrentActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
+        if(context.getCurrentActivity()!=null) {
+            AppUtils.checkPermission(context.getCurrentActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
+        }
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationMode.Hight_Accuracy);
         option.setCoorType(coorType);
@@ -195,6 +197,7 @@ public class GeolocationModule extends BaseModule
         WritableMap params = Arguments.createMap();
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
             params.putInt("errcode", -1);
+            params.putString("errmsg", result.error.name());
         }
         else {
             params.putDouble("latitude",  result.getLocation().latitude);

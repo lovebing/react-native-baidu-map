@@ -9,6 +9,17 @@
 /* Begin PBXBuildFile section */
 		EF04BD302364B7050007BADF /* BaiduMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF04BD2F2364B7050007BADF /* BaiduMapManager.m */; };
 		EF154DCC1D562193003146DF /* BaiduMapViewManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF6660E71D55E68000DB8D08 /* BaiduMapViewManager.h */; };
+		EF18EAA0246F07A6005A2F4D /* BMKPointAnnotationPro.m in Sources */ = {isa = PBXBuildFile; fileRef = EF18EA9E246F07A6005A2F4D /* BMKPointAnnotationPro.m */; };
+		EF18EAEB246FB87A005A2F4D /* OverlayCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = EF18EAEA246FB87A005A2F4D /* OverlayCircle.m */; };
+		EF18EB16246FBF40005A2F4D /* OverlayCircleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF18EB15246FBF40005A2F4D /* OverlayCircleManager.m */; };
+		EF18EB1C246FC829005A2F4D /* OverlayArc.m in Sources */ = {isa = PBXBuildFile; fileRef = EF18EB1B246FC829005A2F4D /* OverlayArc.m */; };
+		EF18EB1F246FC84C005A2F4D /* OverlayArcManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF18EB1E246FC84C005A2F4D /* OverlayArcManager.m */; };
+		EF18EB28246FE35E005A2F4D /* OverlayPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = EF18EB27246FE35E005A2F4D /* OverlayPolygon.m */; };
+		EF18EB2B246FE383005A2F4D /* OverlayPolygonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF18EB2A246FE383005A2F4D /* OverlayPolygonManager.m */; };
+		EF18EB34246FE863005A2F4D /* InfoWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = EF18EB33246FE863005A2F4D /* InfoWindow.m */; };
+		EF18EB37246FE885005A2F4D /* InfoWindowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF18EB36246FE885005A2F4D /* InfoWindowManager.m */; };
+		EF18EB3C246FE899005A2F4D /* GetDistanceModule.m in Sources */ = {isa = PBXBuildFile; fileRef = EF18EB38246FE898005A2F4D /* GetDistanceModule.m */; };
+		EF18EB3D246FE899005A2F4D /* BaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = EF18EB3A246FE899005A2F4D /* BaseModule.m */; };
 		EF3C225A1CC2C30D0099E9B6 /* BaiduMapView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF3C22591CC2C30D0099E9B6 /* BaiduMapView.h */; };
 		EF3C225C1CC2C30D0099E9B6 /* BaiduMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3C225B1CC2C30D0099E9B6 /* BaiduMapView.m */; };
 		EF4ABB0D1DC378CF008E75C9 /* GeolocationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4ABB0C1DC378CF008E75C9 /* GeolocationModule.m */; };
@@ -45,6 +56,28 @@
 /* Begin PBXFileReference section */
 		EF04BD2E2364B7050007BADF /* BaiduMapManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaiduMapManager.h; sourceTree = "<group>"; };
 		EF04BD2F2364B7050007BADF /* BaiduMapManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaiduMapManager.m; sourceTree = "<group>"; };
+		EF18EA9E246F07A6005A2F4D /* BMKPointAnnotationPro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMKPointAnnotationPro.m; sourceTree = "<group>"; };
+		EF18EA9F246F07A6005A2F4D /* BMKPointAnnotationPro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKPointAnnotationPro.h; sourceTree = "<group>"; };
+		EF18EAE9246FB840005A2F4D /* OverlayCircle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OverlayCircle.h; sourceTree = "<group>"; };
+		EF18EAEA246FB87A005A2F4D /* OverlayCircle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OverlayCircle.m; sourceTree = "<group>"; };
+		EF18EB14246FBF31005A2F4D /* OverlayCircleManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OverlayCircleManager.h; sourceTree = "<group>"; };
+		EF18EB15246FBF40005A2F4D /* OverlayCircleManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OverlayCircleManager.m; sourceTree = "<group>"; };
+		EF18EB1A246FC814005A2F4D /* OverlayArc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OverlayArc.h; sourceTree = "<group>"; };
+		EF18EB1B246FC829005A2F4D /* OverlayArc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OverlayArc.m; sourceTree = "<group>"; };
+		EF18EB1D246FC83E005A2F4D /* OverlayArcManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OverlayArcManager.h; sourceTree = "<group>"; };
+		EF18EB1E246FC84C005A2F4D /* OverlayArcManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OverlayArcManager.m; sourceTree = "<group>"; };
+		EF18EB26246FE34B005A2F4D /* OverlayPolygon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OverlayPolygon.h; sourceTree = "<group>"; };
+		EF18EB27246FE35E005A2F4D /* OverlayPolygon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OverlayPolygon.m; sourceTree = "<group>"; };
+		EF18EB29246FE374005A2F4D /* OverlayPolygonManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OverlayPolygonManager.h; sourceTree = "<group>"; };
+		EF18EB2A246FE383005A2F4D /* OverlayPolygonManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OverlayPolygonManager.m; sourceTree = "<group>"; };
+		EF18EB32246FE856005A2F4D /* InfoWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoWindow.h; sourceTree = "<group>"; };
+		EF18EB33246FE863005A2F4D /* InfoWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoWindow.m; sourceTree = "<group>"; };
+		EF18EB35246FE873005A2F4D /* InfoWindowManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoWindowManager.h; sourceTree = "<group>"; };
+		EF18EB36246FE885005A2F4D /* InfoWindowManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoWindowManager.m; sourceTree = "<group>"; };
+		EF18EB38246FE898005A2F4D /* GetDistanceModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetDistanceModule.m; sourceTree = "<group>"; };
+		EF18EB39246FE898005A2F4D /* GetDistanceModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetDistanceModule.h; sourceTree = "<group>"; };
+		EF18EB3A246FE899005A2F4D /* BaseModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModule.m; sourceTree = "<group>"; };
+		EF18EB3B246FE899005A2F4D /* BaseModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModule.h; sourceTree = "<group>"; };
 		EF3C22561CC2C30D0099E9B6 /* libRCTBaiduMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTBaiduMap.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF3C22591CC2C30D0099E9B6 /* BaiduMapView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaiduMapView.h; sourceTree = "<group>"; };
 		EF3C225B1CC2C30D0099E9B6 /* BaiduMapView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaiduMapView.m; sourceTree = "<group>"; };
@@ -118,6 +151,12 @@
 		EF3C22581CC2C30D0099E9B6 /* RCTBaiduMap */ = {
 			isa = PBXGroup;
 			children = (
+				EF18EB3B246FE899005A2F4D /* BaseModule.h */,
+				EF18EB3A246FE899005A2F4D /* BaseModule.m */,
+				EF18EB39246FE898005A2F4D /* GetDistanceModule.h */,
+				EF18EB38246FE898005A2F4D /* GetDistanceModule.m */,
+				EF18EA9F246F07A6005A2F4D /* BMKPointAnnotationPro.h */,
+				EF18EA9E246F07A6005A2F4D /* BMKPointAnnotationPro.m */,
 				EF7F66BB2369EB3000D1D9DC /* Modules */,
 				EFB77A63234B0B3B00A17DDF /* ClusterAnnotation.h */,
 				EFB77A64234B0B3B00A17DDF /* ClusterAnnotation.m */,
@@ -172,6 +211,14 @@
 				EFB77A45234AF69B00A17DDF /* OverlayPolyline.m */,
 				EFB77A46234AF69B00A17DDF /* OverlayView.h */,
 				EFB77A47234AF69B00A17DDF /* OverlayView.m */,
+				EF18EAE9246FB840005A2F4D /* OverlayCircle.h */,
+				EF18EAEA246FB87A005A2F4D /* OverlayCircle.m */,
+				EF18EB1A246FC814005A2F4D /* OverlayArc.h */,
+				EF18EB1B246FC829005A2F4D /* OverlayArc.m */,
+				EF18EB26246FE34B005A2F4D /* OverlayPolygon.h */,
+				EF18EB27246FE35E005A2F4D /* OverlayPolygon.m */,
+				EF18EB32246FE856005A2F4D /* InfoWindow.h */,
+				EF18EB33246FE863005A2F4D /* InfoWindow.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -183,6 +230,14 @@
 				EFB77A51234AF6E300A17DDF /* OverlayMarkerManager.m */,
 				EFB77A50234AF6E300A17DDF /* OverlayPolylineManager.h */,
 				EFB77A4F234AF6E300A17DDF /* OverlayPolylineManager.m */,
+				EF18EB14246FBF31005A2F4D /* OverlayCircleManager.h */,
+				EF18EB15246FBF40005A2F4D /* OverlayCircleManager.m */,
+				EF18EB1D246FC83E005A2F4D /* OverlayArcManager.h */,
+				EF18EB1E246FC84C005A2F4D /* OverlayArcManager.m */,
+				EF18EB29246FE374005A2F4D /* OverlayPolygonManager.h */,
+				EF18EB2A246FE383005A2F4D /* OverlayPolygonManager.m */,
+				EF18EB35246FE873005A2F4D /* InfoWindowManager.h */,
+				EF18EB36246FE885005A2F4D /* InfoWindowManager.m */,
 			);
 			path = ViewManagers;
 			sourceTree = "<group>";
@@ -294,20 +349,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF18EB3D246FE899005A2F4D /* BaseModule.m in Sources */,
 				EFB77A58234AF73900A17DDF /* OverlayUtils.m in Sources */,
 				EF7F66C42369F9B600D1D9DC /* BaiduMapAppModule.m in Sources */,
+				EF18EB1C246FC829005A2F4D /* OverlayArc.m in Sources */,
+				EF18EB1F246FC84C005A2F4D /* OverlayArcManager.m in Sources */,
+				EF18EB3C246FE899005A2F4D /* GetDistanceModule.m in Sources */,
 				EFB77A53234AF6E300A17DDF /* OverlayMarkerManager.m in Sources */,
+				EF18EAEB246FB87A005A2F4D /* OverlayCircle.m in Sources */,
 				EFB77A52234AF6E300A17DDF /* OverlayPolylineManager.m in Sources */,
+				EF18EB2B246FE383005A2F4D /* OverlayPolygonManager.m in Sources */,
 				EFB77A4A234AF69B00A17DDF /* OverlayPolyline.m in Sources */,
 				EF4ABB0D1DC378CF008E75C9 /* GeolocationModule.m in Sources */,
 				EFB77A4C234AF69B00A17DDF /* OverlayMarker.m in Sources */,
+				EF18EB37246FE885005A2F4D /* InfoWindowManager.m in Sources */,
+				EF18EB16246FBF40005A2F4D /* OverlayCircleManager.m in Sources */,
+				EF18EB28246FE35E005A2F4D /* OverlayPolygon.m in Sources */,
 				EF824B72234A18AD009E6523 /* BMKClusterManager.m in Sources */,
 				EF3C225C1CC2C30D0099E9B6 /* BaiduMapView.m in Sources */,
 				EFB77A65234B0B3B00A17DDF /* ClusterAnnotation.m in Sources */,
 				EF6660E91D55E69B00DB8D08 /* BaiduMapViewManager.m in Sources */,
 				EF04BD302364B7050007BADF /* BaiduMapManager.m in Sources */,
 				EFB77A4B234AF69B00A17DDF /* OverlayView.m in Sources */,
+				EF18EB34246FE863005A2F4D /* InfoWindow.m in Sources */,
 				EFB77A6B234B792F00A17DDF /* OverlayClusterManager.m in Sources */,
+				EF18EAA0246F07A6005A2F4D /* BMKPointAnnotationPro.m in Sources */,
 				EFB77A6A234B792F00A17DDF /* OverlayCluster.m in Sources */,
 				EF824B6F234A18AD009E6523 /* BMKCluster.m in Sources */,
 				EF824B70234A18AD009E6523 /* BMKClusterQuadtree.m in Sources */,

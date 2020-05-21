@@ -12,8 +12,8 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
-import org.lovebing.reactnative.baidumap.util.ColorUtil;
 import org.lovebing.reactnative.baidumap.util.LatLngUtil;
+import org.lovebing.reactnative.baidumap.util.StrokeUtil;
 import org.lovebing.reactnative.baidumap.view.OverlayArc;
 
 /**
@@ -31,9 +31,9 @@ public class OverlayArcManager extends SimpleViewManager<OverlayArc> {
         return new OverlayArc(reactContext);
     }
 
-    @ReactProp(name = "color")
-    public void setColor(OverlayArc overlayArc, String color) {
-        overlayArc.setColor(ColorUtil.fromString(color));
+    @ReactProp(name = "stroke")
+    public void setStroke(OverlayArc overlayArc, ReadableMap stroke) {
+        overlayArc.setStroke(StrokeUtil.fromReadableMap(stroke));
     }
 
     @ReactProp(name = "points")
@@ -44,9 +44,4 @@ public class OverlayArcManager extends SimpleViewManager<OverlayArc> {
         overlayArc.setPoints(_points);
     }
 
-
-    @ReactProp(name = "width")
-    public void setWidth(OverlayArc overlayArc, int width) {
-        overlayArc.setWidth(width);
-    }
 }

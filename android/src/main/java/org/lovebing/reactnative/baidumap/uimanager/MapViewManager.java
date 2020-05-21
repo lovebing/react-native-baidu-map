@@ -21,17 +21,16 @@ import org.lovebing.reactnative.baidumap.listener.MapListener;
 import org.lovebing.reactnative.baidumap.model.LocationData;
 import org.lovebing.reactnative.baidumap.support.ConvertUtils;
 import org.lovebing.reactnative.baidumap.view.OverlayCluster;
+import org.lovebing.reactnative.baidumap.view.OverlayMarker;
 import org.lovebing.reactnative.baidumap.view.OverlayView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class MapViewManager extends ViewGroupManager<MapView> {
+public class MapViewManager extends ViewGroupManager<TextureMapView> {
 
-    private static Object EMPTY_OBJ = new Object();
-
-    private List<Object> children = new ArrayList<>(10);
     private MapListener mapListener;
+    private static Set<OverlayMarker> overlayMarkers = ConcurrentHashMap.newKeySet();
     private int childrenCount = 0;
 
     @Override
@@ -40,39 +39,36 @@ public class MapViewManager extends ViewGroupManager<MapView> {
     }
 
     @Override
-    public void addView(MapView parent, View child, int index) {
+    public void addView(TextureMapView parent, View child, int index) {
         Log.i("MapViewManager", "addView:" + index);
-        if (index == 0 && !children.isEmpty()) {
-            removeOldChildViews(parent.getMap());
-        }
         if (child instanceof OverlayView) {
+            if (child instanceof OverlayMarker) {
+                overlayMarkers.add((OverlayMarker) child);
+            }
             if (child instanceof OverlayCluster) {
                 ((OverlayCluster) child).setMapListener(mapListener);
             }
             ((OverlayView) child).addTopMap(parent.getMap());
-            children.add(child);
-        } else {
-            children.add(EMPTY_OBJ);
         }
+        super.addView(parent, child, index);
     }
 
     @Override
-    public void removeViewAt(MapView parent, int index) {
-        Log.i("MapViewManager", "removeViewAt:" + index);
-        if (index < children.size()) {
-            Object child = children.get(index);
-            children.remove(index);
-            if (child instanceof OverlayView) {
-                ((OverlayView) child).removeFromMap(parent.getMap());
-            } else {
-                super.removeViewAt(parent, index);
+    public void removeViewAt(TextureMapView parent, int index) {
+        View child = parent.getChildAt(index);
+        Log.i("MapViewManager", "removeViewAt:" + index + "," + child.getClass().getName());
+        if (child instanceof OverlayView) {
+            if (child instanceof OverlayMarker) {
+                overlayMarkers.add((OverlayMarker) child);
             }
+            ((OverlayView) child).removeFromMap(parent.getMap());
         }
+        super.removeViewAt(parent, index);
     }
 
     @Override
-    protected MapView createViewInstance(ThemedReactContext themedReactContext) {
-        MapView mapView =  new MapView(themedReactContext);
+    protected TextureMapView createViewInstance(ThemedReactContext themedReactContext) {
+        TextureMapView mapView =  new TextureMapView(themedReactContext);
         BaiduMap map = mapView.getMap();
         mapListener = new MapListener(mapView, themedReactContext);
         map.setOnMapStatusChangeListener(mapListener);
@@ -84,34 +80,34 @@ public class MapViewManager extends ViewGroupManager<MapView> {
     }
 
     @ReactProp(name = "zoomControlsVisible")
-    public void setZoomControlsVisible(MapView mapView, boolean zoomControlsVisible) {
+    public void setZoomControlsVisible(TextureMapView mapView, boolean zoomControlsVisible) {
         mapView.showZoomControls(zoomControlsVisible);
     }
 
     @ReactProp(name="trafficEnabled")
-    public void setTrafficEnabled(MapView mapView, boolean trafficEnabled) {
+    public void setTrafficEnabled(TextureMapView mapView, boolean trafficEnabled) {
         mapView.getMap().setTrafficEnabled(trafficEnabled);
     }
 
     @ReactProp(name="baiduHeatMapEnabled")
-    public void setBaiduHeatMapEnabled(MapView mapView, boolean baiduHeatMapEnabled) {
+    public void setBaiduHeatMapEnabled(TextureMapView mapView, boolean baiduHeatMapEnabled) {
         mapView.getMap().setBaiduHeatMapEnabled(baiduHeatMapEnabled);
     }
 
     @ReactProp(name = "mapType")
-    public void setMapType(MapView mapView, int mapType) {
+    public void setMapType(TextureMapView mapView, int mapType) {
         mapView.getMap().setMapType(mapType);
     }
 
     @ReactProp(name="zoom")
-    public void setZoom(MapView mapView, float zoom) {
+    public void setZoom(TextureMapView mapView, float zoom) {
         MapStatus mapStatus = new MapStatus.Builder().zoom(zoom).build();
         MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
         mapView.getMap().setMapStatus(mapStatusUpdate);
     }
 
     @ReactProp(name = "showsUserLocation")
-    public void setShowsUserLocation(MapView mapView, boolean showsUserLocation) {
+    public void setShowsUserLocation(TextureMapView mapView, boolean showsUserLocation) {
         mapView.getMap().setMyLocationEnabled(showsUserLocation);
     }
 
@@ -121,7 +117,7 @@ public class MapViewManager extends ViewGroupManager<MapView> {
     }
 
     @ReactProp(name = "locationData")
-    public void setLocationData(MapView mapView, ReadableMap readableMap) {
+    public void setLocationData(TextureMapView mapView, ReadableMap readableMap) {
         LocationData locationData = ConvertUtils.convert(readableMap, LocationData.class);
         if (locationData == null || !locationData.isValid()) {
             return;
@@ -139,19 +135,19 @@ public class MapViewManager extends ViewGroupManager<MapView> {
     }
 
     @ReactProp(name="zoomGesturesEnabled")
-    public void setGesturesEnabled(MapView mapView, boolean zoomGesturesEnabled) {
+    public void setGesturesEnabled(TextureMapView mapView, boolean zoomGesturesEnabled) {
         UiSettings setting = mapView.getMap().getUiSettings();
         setting.setZoomGesturesEnabled(zoomGesturesEnabled);
     }
 
     @ReactProp(name="scrollGesturesEnabled")
-    public void setScrollEnabled(MapView mapView, boolean scrollGesturesEnabled) {
+    public void setScrollEnabled(TextureMapView mapView, boolean scrollGesturesEnabled) {
         UiSettings setting = mapView.getMap().getUiSettings();
         setting.setScrollGesturesEnabled(scrollGesturesEnabled);
     }
 
     @ReactProp(name="center")
-    public void setCenter(MapView mapView, ReadableMap position) {
+    public void setCenter(TextureMapView mapView, ReadableMap position) {
         LocationData locationData = ConvertUtils.convert(position, LocationData.class);
         LatLng point = ConvertUtils.convert(locationData);
         if (point == null) {
@@ -165,17 +161,22 @@ public class MapViewManager extends ViewGroupManager<MapView> {
     }
 
     @ReactProp(name = "childrenCount")
-    public void setChildrenCount(MapView mapView, Integer childrenCount) {
+    public void setChildrenCount(TextureMapView mapView, Integer childrenCount) {
         Log.i("MapViewManager", "childrenCount:" + childrenCount);
         this.childrenCount = childrenCount;
     }
 
-    private void removeOldChildViews(BaiduMap baiduMap) {
-        for (Object child : children) {
-            if (child instanceof OverlayView) {
-                ((OverlayView) child).removeFromMap(baiduMap);
+
+    public static OverlayMarker findOverlayMaker(Marker marker) {
+        for (OverlayMarker overlayMarker : overlayMarkers) {
+            if (marker.equals(overlayMarker.getMarker())) {
+                return overlayMarker;
+            }
+            if (marker.getPosition() != null && marker.getPosition().latitude == overlayMarker.getPosition().latitude
+                    && marker.getPosition().longitude == overlayMarker.getPosition().longitude) {
+                return overlayMarker;
             }
         }
-        children.clear();
+        return null;
     }
 }

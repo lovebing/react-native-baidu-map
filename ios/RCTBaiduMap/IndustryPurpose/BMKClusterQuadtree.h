@@ -7,6 +7,7 @@
 //
 #import <Foundation/Foundation.h>
 #import "BMKCluster.h"
+#import <UIKit/UIKit.h>
 
 @interface BMKQuadItem : NSObject
 @property (nonatomic, readonly) CGPoint pt;

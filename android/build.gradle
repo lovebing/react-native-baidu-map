@@ -3,12 +3,6 @@ def safeExtGet(prop, fallback) {
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
-apply plugin: 'maven-publish'
-
-group = "org.lovebing.reactnative"
-archivesBaseName = "baidumap"
-version = "1.1.1"
 
 buildscript {
     repositories {
@@ -16,7 +10,7 @@ buildscript {
         google()
         jcenter()
         maven() {
-            url 'http://repo.codeboot.net/maven/'
+            url 'http://repo.lovebing.net/repository/maven-public/'
         }
     }
     dependencies {
@@ -29,7 +23,7 @@ repositories {
     google()
     jcenter()
     maven {
-        url 'http://repo.codeboot.net/maven/'
+        url 'http://repo.lovebing.net/repository/maven-public/'
     }
 }
 
@@ -56,54 +50,8 @@ android {
     }
 }
 
-publishing {
-    publications {
-        Release(MavenPublication) {
-            groupId = "${group}"
-            artifactId = "${archivesBaseName}"
-            version = "${version}"
-            pom.packaging = 'arr'
-            afterEvaluate { 
-                artifact bundleReleaseAar
-            }
-            pom.withXml {
-                final dependenciesNode = asNode().appendNode('dependencies')
-                ext.addDependency = { Dependency dep, String scope ->
-                    if (dep.group == null || dep.version == null || dep.name == null || dep.name == "unspecified")
-                        return
-                    final dependencyNode = dependenciesNode.appendNode('dependency')
-                    dependencyNode.appendNode('groupId', dep.group)
-                    dependencyNode.appendNode('artifactId', dep.name)
-                    dependencyNode.appendNode('version', dep.version)
-                    dependencyNode.appendNode('scope', scope)
-
-                    if (!dep.transitive) {
-                        final exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
-                        exclusionNode.appendNode('groupId', '*')
-                        exclusionNode.appendNode('artifactId', '*')
-                    } else if (!dep.properties.excludeRules.empty) {
-                        final exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
-                        dep.properties.excludeRules.each { ExcludeRule rule ->
-                            exclusionNode.appendNode('groupId', rule.group ?: '*')
-                            exclusionNode.appendNode('artifactId', rule.module ?: '*')
-                        }
-                    }
-                }
-                configurations.compile.getAllDependencies().each { dep -> addDependency(dep, "compile") }
-                configurations.compileOnly.getAllDependencies().each { dep -> addDependency(dep, "compileOnly") }
-                configurations.api.getAllDependencies().each { dep -> addDependency(dep, "compile") }
-                configurations.implementation.getAllDependencies().each { dep -> addDependency(dep, "runtime") }
-            }
-        }
-    }
-
-    repositories {
-    }
-}
-
 dependencies {
-    compileOnly 'com.facebook.react:react-native:0.61.2'
-    compileOnly 'com.android.support:appcompat-v7:28.0.0'
+    compileOnly 'com.facebook.react:react-native:0.62.2'
     implementation files('libs/BaiduLBS_Android.jar')
     compileOnly files('src/main/assets')
 }

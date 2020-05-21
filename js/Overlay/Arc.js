@@ -19,12 +19,17 @@ import PropTypes from 'prop-types';
 export default class Arc extends Component {
   static propTypes = {
     ...View.propTypes,
-    color: PropTypes.string,
-    width: PropTypes.number,
-    points: PropTypes.array
+    stroke: PropTypes.object,
+    points: PropTypes.array,
+    dash: PropTypes.bool
   };
 
   static defaultProps = {
+    dash: false,
+    stroke: {
+      width: 5,
+      color: 'AA000000'
+    },
     points: [{latitude: 0, longitude: 0}, {latitude: 0, longitude: 0}, {latitude: 0, longitude: 0}]
   };
   
@@ -33,9 +38,6 @@ export default class Arc extends Component {
   }
 
   render() {
-    if (Platform.OS === 'ios') {
-      return <View {...this.props} />;
-    }
     return <BaiduMapOverlayArc {...this.props} />;
   }
 }

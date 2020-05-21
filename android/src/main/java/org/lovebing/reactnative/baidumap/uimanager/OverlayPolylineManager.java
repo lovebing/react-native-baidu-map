@@ -8,11 +8,14 @@
 package org.lovebing.reactnative.baidumap.uimanager;
 
 import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import org.lovebing.reactnative.baidumap.util.ColorUtil;
 import org.lovebing.reactnative.baidumap.util.LatLngUtil;
+import org.lovebing.reactnative.baidumap.util.StrokeUtil;
+import org.lovebing.reactnative.baidumap.view.OverlayPolygon;
 import org.lovebing.reactnative.baidumap.view.OverlayPolyline;
 
 
@@ -36,15 +39,9 @@ public class OverlayPolylineManager extends SimpleViewManager<OverlayPolyline> {
         overlayPolyline.setPoints(LatLngUtil.fromReadableArray(points));
     }
 
-    @ReactProp(name = "strokeColor")
-    public void setColor(OverlayPolyline overlayPolyline, String color) {
-        overlayPolyline.setColor(ColorUtil.fromString(color));
+    @ReactProp(name = "stroke")
+    public void setStroke(OverlayPolyline overlayPolyline, ReadableMap stroke) {
+        overlayPolyline.setStroke(StrokeUtil.fromReadableMap(stroke));
     }
-
-    @ReactProp(name = "lineWidth")
-    public void setLineWidth(OverlayPolyline overlayPolyline, int lineWidth) {
-        overlayPolyline.setLineWidth(lineWidth);
-    }
-    
 
 }
