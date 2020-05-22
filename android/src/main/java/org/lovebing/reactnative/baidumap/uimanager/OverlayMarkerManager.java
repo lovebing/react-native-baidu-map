@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2016-present, lovebing.org.
+/*
+ * Copyright (c) 2016-present, lovebing.net.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,9 +19,6 @@ import org.lovebing.reactnative.baidumap.model.IconInfo;
 import org.lovebing.reactnative.baidumap.util.LatLngUtil;
 import org.lovebing.reactnative.baidumap.view.OverlayInfoWindow;
 import org.lovebing.reactnative.baidumap.view.OverlayMarker;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class OverlayMarkerManager extends ViewGroupManager<OverlayMarker> {
 

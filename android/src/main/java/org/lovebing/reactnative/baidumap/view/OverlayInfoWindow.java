@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2016-present, lovebing.org.
+/*
+ * Copyright (c) 2016-present, lovebing.net.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,8 +14,6 @@ import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.react.views.view.ReactViewGroup;
-
-import java.util.Objects;
 
 /**
  * @author lovebing Created on Dec 09, 2018

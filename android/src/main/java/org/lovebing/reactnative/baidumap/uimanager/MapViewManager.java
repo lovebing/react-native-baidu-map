@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2016-present, lovebing.org.
+/*
+ * Copyright (c) 2016-present, lovebing.net.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,8 +7,11 @@
 
 package org.lovebing.reactnative.baidumap.uimanager;
 
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.RequiresApi;
 
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
@@ -27,6 +30,7 @@ import org.lovebing.reactnative.baidumap.view.OverlayView;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class MapViewManager extends ViewGroupManager<TextureMapView> {
 
     private MapListener mapListener;
