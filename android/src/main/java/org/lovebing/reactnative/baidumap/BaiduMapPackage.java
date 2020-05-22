@@ -7,8 +7,10 @@
 
 package org.lovebing.reactnative.baidumap;
 
+import android.os.Build;
 import android.os.Looper;
 import androidx.annotation.MainThread;
+import androidx.annotation.RequiresApi;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,6 +44,7 @@ public class BaiduMapPackage implements ReactPackage {
         );
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public List<ViewManager> createViewManagers(
             ReactApplicationContext reactContext) {
@@ -55,7 +58,8 @@ public class BaiduMapPackage implements ReactPackage {
                 new OverlayCircleManager(),
                 new OverlayPolygonManager(),
                 new OverlayPolylineManager(),
-                new OverlayTextManager()
+                new OverlayTextManager(),
+                new OverlayHeatMapManager()
         );
     }
 
