@@ -8,9 +8,7 @@
 import {
   requireNativeComponent,
   View,
-  NativeModules,
-  Platform,
-  DeviceEventEmitter
+  Platform
 } from 'react-native';
 
 import React, { Component } from 'react';

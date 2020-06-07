@@ -7,10 +7,7 @@
 
 import {
   requireNativeComponent,
-  View,
-  NativeModules,
-  Platform,
-  DeviceEventEmitter
+  View
 } from 'react-native';
 
 import React, { Component } from 'react';

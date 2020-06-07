@@ -13,14 +13,9 @@ import {
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class InfoWindow extends Component {
+export default class MarkerIcon extends Component {
   static propTypes = {
-    ...View.propTypes,
-    offsetY: PropTypes.number
-  };
-
-  static defaultProps = {
-    offsetY: 0
+    ...View.propTypes
   };
 
   constructor() {
@@ -28,7 +23,7 @@ export default class InfoWindow extends Component {
   }
 
   render() {
-    return <BaiduMapOverlayInfoWindow {...this.props} />;
+    return <BaiduMapOverlayMarkerIcon {...this.props} />;
   }
 }
-const BaiduMapOverlayInfoWindow = requireNativeComponent('BaiduMapOverlayInfoWindow', InfoWindow);
+const BaiduMapOverlayMarkerIcon = requireNativeComponent('BaiduMapOverlayMarkerIcon', MarkerIcon);

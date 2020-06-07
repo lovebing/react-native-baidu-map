@@ -1,14 +1,11 @@
-/**
- * Copyright (c) 2016-present, lovebing.org.
+/*
+ * Copyright (c) 2016-present, lovebing.net.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
 package org.lovebing.reactnative.baidumap.model;
-
-import com.facebook.react.bridge.ReadableMap;
-import org.lovebing.reactnative.baidumap.constant.LocationDataKey;
 
 /**
  * @author lovebing

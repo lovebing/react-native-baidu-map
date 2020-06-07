@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2016-present, lovebing.org.
+/*
+ * Copyright (c) 2016-present, lovebing.net.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -22,7 +22,6 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
 import org.lovebing.reactnative.baidumap.uimanager.MapViewManager;
-import org.lovebing.reactnative.baidumap.uimanager.OverlayMarkerManager;
 import org.lovebing.reactnative.baidumap.view.OverlayMarker;
 
 import java.util.ArrayList;

@@ -5,12 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
- import {
+import {
   requireNativeComponent,
-  View,
-  NativeModules,
-  Platform,
-  DeviceEventEmitter
+  View
 } from 'react-native';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 

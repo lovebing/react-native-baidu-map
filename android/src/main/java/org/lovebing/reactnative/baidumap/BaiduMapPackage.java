@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2016-present, lovebing.org.
+/*
+ * Copyright (c) 2016-present, lovebing.net.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,8 +7,10 @@
 
 package org.lovebing.reactnative.baidumap;
 
+import android.os.Build;
 import android.os.Looper;
 import android.support.annotation.MainThread;
+import android.support.annotation.RequiresApi
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +27,7 @@ import org.lovebing.reactnative.baidumap.module.GeolocationModule;
 import org.lovebing.reactnative.baidumap.module.GetDistanceModule;
 import org.lovebing.reactnative.baidumap.module.MapAppModule;
 import org.lovebing.reactnative.baidumap.uimanager.*;
+import org.lovebing.reactnative.baidumap.view.OverlayMarkerIcon;
 
 
 /**
@@ -42,6 +45,7 @@ public class BaiduMapPackage implements ReactPackage {
         );
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public List<ViewManager> createViewManagers(
             ReactApplicationContext reactContext) {
@@ -50,12 +54,14 @@ public class BaiduMapPackage implements ReactPackage {
                 new MapViewManager(),
                 new OverlayClusterManager(),
                 new OverlayMarkerManager(),
+                new OverlayMarkerIconManager(),
                 new OverlayOverlayInfoWindowManager(),
                 new OverlayArcManager(),
                 new OverlayCircleManager(),
                 new OverlayPolygonManager(),
                 new OverlayPolylineManager(),
-                new OverlayTextManager()
+                new OverlayTextManager(),
+                new OverlayHeatMapManager()
         );
     }
 
