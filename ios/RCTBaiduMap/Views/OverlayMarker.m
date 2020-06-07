@@ -10,6 +10,7 @@
 #import <BaiduMapAPI_Map/BMKAnnotationView.h>
 #import <BaiduMapAPI_Map/BMKActionPaopaoView.h>
 #import "InfoWindow.h"
+#import "OverlayMarkerIcon.h"
 
 @implementation OverlayMarker {
     RCTImageLoaderCancellationBlock _reloadImageCancellationBlock;
@@ -117,6 +118,15 @@
             [_annotation.customPopView addSubview:subview];
             [_annotation updatePaopaoView];
       });
+    } else if([subview isKindOfClass:[OverlayMarkerIcon class]]) {
+      UIGraphicsBeginImageContextWithOptions(subview.frame.size, YES, [UIScreen mainScreen].scale);
+      [subview.layer renderInContext:UIGraphicsGetCurrentContext()];
+      UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+      UIGraphicsEndImageContext();
+      dispatch_async(dispatch_get_main_queue(), ^{
+        _annotation.annotationView.image = nil;
+        [_annotation.annotationView addSubview:subview];
+      });
     }
     [super insertReactSubview:subview atIndex:atIndex];
 }
@@ -127,6 +137,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             _annotation.annotationView = nil;
         });
+    } else if([subview isKindOfClass:[OverlayMarkerIcon class]]) {
+      [_annotation.annotationView removeReactSubview:subview];
     }
     [super removeReactSubview:subview];
 }

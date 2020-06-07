@@ -7,6 +7,8 @@
 
 package org.lovebing.reactnative.baidumap.listener;
 
+import android.util.Log;
+
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;

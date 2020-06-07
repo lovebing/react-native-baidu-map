@@ -27,6 +27,7 @@ import org.lovebing.reactnative.baidumap.module.GeolocationModule;
 import org.lovebing.reactnative.baidumap.module.GetDistanceModule;
 import org.lovebing.reactnative.baidumap.module.MapAppModule;
 import org.lovebing.reactnative.baidumap.uimanager.*;
+import org.lovebing.reactnative.baidumap.view.OverlayMarkerIcon;
 
 
 /**
@@ -53,6 +54,7 @@ public class BaiduMapPackage implements ReactPackage {
                 new MapViewManager(),
                 new OverlayClusterManager(),
                 new OverlayMarkerManager(),
+                new OverlayMarkerIconManager(),
                 new OverlayOverlayInfoWindowManager(),
                 new OverlayArcManager(),
                 new OverlayCircleManager(),

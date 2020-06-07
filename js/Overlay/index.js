@@ -13,6 +13,9 @@ import Text from './Text';
 import Marker from './Marker';
 import InfoWindow from './InfoWindow';
 import Cluster from './Cluster';
+import HeatMap from './HeatMap';
+import MarkerIcon from './MarkerIcon';
+
 export default {
   Arc,
   Circle,
@@ -21,5 +24,7 @@ export default {
   Text,
   Marker,
   Cluster,
-  InfoWindow
+  InfoWindow,
+  HeatMap,
+  MarkerIcon
 };

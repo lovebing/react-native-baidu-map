@@ -13,11 +13,11 @@ import {
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class Polyline extends Component {
+export default class HeatMap extends Component {
   static propTypes = {
     ...View.propTypes,
     points: PropTypes.array,
-    stroke: PropTypes.object
+    gradient: PropTypes.object
   };
 
   static defaultProps = {
@@ -25,9 +25,9 @@ export default class Polyline extends Component {
       latitude: 0,
       longitude: 0
     }],
-    stroke: {
-      width: 1,
-      color: 'AAFF0000'
+    gradient: {
+      colors: ['66FF00', 'FF0000'],
+      startPoints: [0.2, 1.0]
     }
   };
 
@@ -36,7 +36,7 @@ export default class Polyline extends Component {
   }
 
   render() {
-    return <BaiduMapOverlayPolyline {...this.props} />;
+    return <BaiduMapOverlayHeatMap {...this.props} />;
   }
 }
-const BaiduMapOverlayPolyline = requireNativeComponent('BaiduMapOverlayPolyline', Polyline);
+const BaiduMapOverlayHeatMap = requireNativeComponent('BaiduMapOverlayHeatMap', HeatMap);

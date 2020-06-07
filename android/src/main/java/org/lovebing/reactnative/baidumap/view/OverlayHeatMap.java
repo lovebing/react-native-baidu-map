@@ -69,7 +69,9 @@ public class OverlayHeatMap extends View implements OverlayView {
 
     @Override
     public void removeFromMap(BaiduMap baiduMap) {
-        heatMap.removeHeatMap();
-        heatMap = null;
+        if (heatMap != null) {
+            heatMap.removeHeatMap();
+            heatMap = null;
+        }
     }
 }

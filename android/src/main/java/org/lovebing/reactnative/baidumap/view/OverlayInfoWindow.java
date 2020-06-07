@@ -8,12 +8,12 @@
 package org.lovebing.reactnative.baidumap.view;
 
 import android.content.Context;
-
 import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.react.views.view.ReactViewGroup;
+
+import org.lovebing.reactnative.baidumap.util.BitmapUtil;
 
 /**
  * @author lovebing Created on Dec 09, 2018
@@ -52,18 +52,11 @@ public class OverlayInfoWindow extends ReactViewGroup {
 
     private void updateInfoWindow(LatLng location) {
         if (infoWindow == null) {
-            BitmapDescriptor bitmap;
-            if (width > 0 && height > 0) {
-                layout(0, 0, width, height);
-            } else if (getMeasuredWidth() == 0 || getMeasuredHeight() == 0) {
-                layout(0, 0, getMeasuredWidth() > 0 ? getMeasuredWidth() : 50, getMeasuredHeight() > 0 ? getMeasuredHeight() : 100);
-            }
-            buildDrawingCache();
-            bitmap = BitmapDescriptorFactory.fromBitmap(getDrawingCache());
-            if (bitmap == null) {
+            BitmapDescriptor bitmapDescriptor = BitmapUtil.createBitmapDescriptor(this, width, height);
+            if (bitmapDescriptor == null) {
                 return;
             }
-            infoWindow = new InfoWindow(bitmap, location, offsetY, new InfoWindow.OnInfoWindowClickListener() {
+            infoWindow = new InfoWindow(bitmapDescriptor, location, offsetY, new InfoWindow.OnInfoWindowClickListener() {
                 @Override
                 public void onInfoWindowClick() {
 

@@ -6,10 +6,7 @@
  */
 
  import {
-  requireNativeComponent,
-  NativeModules,
-  Platform,
-  DeviceEventEmitter
+  NativeModules
 } from 'react-native';
 
 import React, {
