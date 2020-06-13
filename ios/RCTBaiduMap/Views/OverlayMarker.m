@@ -80,20 +80,21 @@
 }
 
 - (void)updateAnnotationView:(BMKPointAnnotationPro *) annotation image:(UIImage *)image {
-    annotation.annotationView.image = image;
     _iconImage = image;
     NSLog(@"annotationView width: %f, height: %f", _icon.size.width, _icon.size.height);
     if (_icon.size.height > 0 && _icon.size.width > 0) {
-        annotation.annotationView.image = NULL;
-        CGRect frame = CGRectMake(-_icon.size.width / 2, -_icon.size.height / 2, _icon.size.width, _icon.size.height);
+        annotation.annotationView.image = nil;
+        CGRect frame = CGRectMake(0, 0, _icon.size.width, _icon.size.height);
         if (_imageView == nil) {
             _imageView = [[UIImageView alloc] initWithImage:image];
             [annotation.annotationView addSubview:_imageView];
         }
         _imageView.frame = frame;
+        annotation.annotationView.frame = frame;
         
     } else {
         annotation.annotationView.image = image;
+        annotation.annotationView.frame = CGRectMake(0, 0, CGImageGetWidth(image.CGImage), CGImageGetHeight(image.CGImage));
     }
     annotation.annotationView.pinColor = [self getPinAnnotationColor];
 }
@@ -119,12 +120,9 @@
             [_annotation updatePaopaoView];
       });
     } else if([subview isKindOfClass:[OverlayMarkerIcon class]]) {
-      UIGraphicsBeginImageContextWithOptions(subview.frame.size, YES, [UIScreen mainScreen].scale);
-      [subview.layer renderInContext:UIGraphicsGetCurrentContext()];
-      UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-      UIGraphicsEndImageContext();
       dispatch_async(dispatch_get_main_queue(), ^{
         _annotation.annotationView.image = nil;
+        _annotation.annotationView.frame = subview.frame;
         [_annotation.annotationView addSubview:subview];
       });
     }
