@@ -12,11 +12,17 @@
 #import "InfoWindow.h"
 #import "OverlayMarkerIcon.h"
 
+static NSMutableDictionary *ICON_MAGE_MAP;
+
 @implementation OverlayMarker {
     RCTImageLoaderCancellationBlock _reloadImageCancellationBlock;
     UIImageView *_imageView;
     BMKMapView *_mapView;
     UIImage *_iconImage;
+}
+
++ (void)initialize {
+    ICON_MAGE_MAP = @{}.mutableCopy;
 }
 
 - (NSString *)getType {
@@ -51,12 +57,25 @@
     } else {
         annotation.title = _title;
     }
-    _annotation.coordinate = [OverlayUtils getCoorFromOption:_location];
+    annotation.coordinate = [OverlayUtils getCoorFromOption:_location];
+    if ([@"drop" isEqualToString:self.animateType]) {
+        annotation.annotationView.animatesDrop = YES;
+    } else {
+        annotation.annotationView.animatesDrop = NO;
+    }
     if (_iconImage == nil && _icon != nil) {
+        UIImage *image = [ICON_MAGE_MAP objectForKey:_icon.request.URL.absoluteString];
+        if (image != nil) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+               [self updateAnnotationView:annotation image:image];
+            });
+            return;
+        }
         if (_reloadImageCancellationBlock) {
             _reloadImageCancellationBlock();
             _reloadImageCancellationBlock = nil;
         }
+        NSLog(@"download %@", _icon.request.URL);
         _reloadImageCancellationBlock = [[_bridge moduleForName:@"ImageLoader"] loadImageWithURLRequest:_icon.request
                                                                       size:self.bounds.size
                                                                          scale:RCTScreenScale()
@@ -69,9 +88,10 @@
                                                                        NSLog(@"download image error: %@", error);
                                                                       return;
                                                                    }
+                                                                   ICON_MAGE_MAP[self.icon.request.URL.absoluteString] = image;
                                                                    dispatch_async(dispatch_get_main_queue(), ^{
                                                                       [self updateAnnotationView:annotation image:image];
-                                                                       NSLog(@"download image success: %@", image);
+                                                                       NSLog(@"download image success: %@", self.icon.request.URL.absoluteString);
                                                                    });
                                                                }];
     } else {
@@ -80,20 +100,20 @@
 }
 
 - (void)updateAnnotationView:(BMKPointAnnotationPro *) annotation image:(UIImage *)image {
-    annotation.annotationView.image = image;
     _iconImage = image;
     NSLog(@"annotationView width: %f, height: %f", _icon.size.width, _icon.size.height);
     if (_icon.size.height > 0 && _icon.size.width > 0) {
-        annotation.annotationView.image = NULL;
-        CGRect frame = CGRectMake(-_icon.size.width / 2, -_icon.size.height / 2, _icon.size.width, _icon.size.height);
+        annotation.annotationView.image = nil;
+        CGRect frame = CGRectMake(0, 0, _icon.size.width, _icon.size.height);
         if (_imageView == nil) {
             _imageView = [[UIImageView alloc] initWithImage:image];
             [annotation.annotationView addSubview:_imageView];
         }
         _imageView.frame = frame;
-        
+        annotation.annotationView.frame = frame;
     } else {
         annotation.annotationView.image = image;
+        annotation.annotationView.frame = CGRectMake(0, 0, CGImageGetWidth(image.CGImage), CGImageGetHeight(image.CGImage));
     }
     annotation.annotationView.pinColor = [self getPinAnnotationColor];
 }
@@ -119,12 +139,9 @@
             [_annotation updatePaopaoView];
       });
     } else if([subview isKindOfClass:[OverlayMarkerIcon class]]) {
-      UIGraphicsBeginImageContextWithOptions(subview.frame.size, YES, [UIScreen mainScreen].scale);
-      [subview.layer renderInContext:UIGraphicsGetCurrentContext()];
-      UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-      UIGraphicsEndImageContext();
       dispatch_async(dispatch_get_main_queue(), ^{
         _annotation.annotationView.image = nil;
+        _annotation.annotationView.frame = subview.frame;
         [_annotation.annotationView addSubview:subview];
       });
     }

@@ -9,7 +9,6 @@
 #import "BMKPointAnnotationPro.h"
 
 @implementation BMKPointAnnotationPro {
-    BMKActionPaopaoView *_pView;
     BMKActionPaopaoView *_paopaoView;
 }
 
@@ -18,7 +17,6 @@ static NSString *markerIdentifier = @"markerIdentifier";
 - (instancetype)init {
     self = [super init];
     _annotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:self reuseIdentifier:markerIdentifier];
-    _annotationView.animatesDrop = YES;
     _customPopView = [[UIView alloc] init];
     _paopaoView = [[BMKActionPaopaoView alloc] initWithCustomView:_customPopView];
     return self;

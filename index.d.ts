@@ -20,6 +20,19 @@ declare namespace ReactNativeBaiduMap {
     longitude: number;
   }
 
+  export interface Stroke {
+    width: number;
+    color: string;
+  }
+
+  /**
+   * 颜色渐变对象
+   */
+  export interface Gradient {
+    colors: Array<string>;
+    startPoints: Array<number>
+  }
+
   type CommonCallBack<T> = (l: T) => void;
 
   /**
@@ -177,6 +190,11 @@ declare namespace ReactNativeBaiduMap {
       icon?: ImageSourcePropType;
 
       /**
+       * 动画效果：drop/grow/jump (iOS 仅支持 drop)
+       */
+      animateType?: string;
+
+      /**
        * @default 0
        */
       alpha?: number;
@@ -190,19 +208,19 @@ declare namespace ReactNativeBaiduMap {
 
     export interface ArcProps extends ViewProps {
       /**
-       * @default 'AA00FF00'
+       * @default {width: 5, color: 'AA000000'}
        */
-      color?: string;
-
-      /**
-       * @default 4
-       */
-      width?: number;
+      stroke: Stroke;
 
       /**
        * 数值长度必须为 3
        */
-      poins: [Location, Location, Location];
+      points: [Location, Location, Location];
+
+      /**
+       * 是否为虚线，仅 iOS
+       */
+      dash: boolean;
     }
 
     export class Arc extends Component<ArcProps> {
@@ -227,23 +245,18 @@ declare namespace ReactNativeBaiduMap {
       center: Location;
     }
 
-    export interface CircleProps extends ViewProps {}
+    export interface CircleProps extends ViewProps {
+      radius: number;
+      fillColor: string;
+      stroke: Stroke;
+      center: Location;
+    }
 
     export class Circle extends Component<CircleProps> {}
 
     export interface PolylineProps extends ViewProps {
       points: Location[];
-
-      /**
-       * 8位(AARRGGBB)
-       * @default 'AAFF0000'
-       */
-      strokeColor?: string;
-
-      /**
-       * @default 1
-       */
-      lineWidth?: number;
+      stroke: Stroke;
     }
 
     export class Polyline extends Component<PolylineProps> {}
@@ -283,15 +296,23 @@ declare namespace ReactNativeBaiduMap {
     export class Text extends Component<TextProps> {}
 
     export interface InfoWindowProps extends ViewProps {
-      location: Location;
-
       /**
-       * @default false
+       * 相对于 point 在 y 轴的偏移量，仅 Android
        */
-      visible?: boolean;
+      offsetY: number;
     }
 
-    export class InfoWindowProps extends Component<TextProps> {}
+    export class InfoWindow extends Component<InfoWindowProps> {}
+
+    export interface HeatMapProps extends ViewProps {
+      points: Array<Location>;
+      gradient: Gradient;
+    }
+
+    /**
+     * 自定义热力图
+     */
+    export class HeatMap extends Component<HeatMapProps> {}
   }
 
   export namespace Geolocation {
@@ -430,6 +451,19 @@ declare namespace ReactNativeBaiduMap {
      * @example openWalkNavi({latitude: 0.0, longitude: 0.0, name: ''}, {latitude: 0.0, longitude: 0.0, name: ''})
      */
     export function openWalkNavi(sl: OpenLocation, el: OpenLocation): void;
+  }
+
+  export namespace BaiduMapManager {
+    /**
+     * iOS 初始化 SDK
+     * @param appKey
+     */
+    export function initSDK(appKey: string): void;
+
+    /**
+     * 是否有定位权限
+     */
+    export function hasLocationPermission(): Promise<boolean>;
   }
 }
 

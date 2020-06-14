@@ -14,6 +14,7 @@ RCT_EXPORT_MODULE(BaiduMapOverlayMarker)
 RCT_EXPORT_VIEW_PROPERTY(location, NSDictionary*)
 RCT_EXPORT_VIEW_PROPERTY(title, NSString*)
 RCT_EXPORT_VIEW_PROPERTY(icon, RCTImageSource*)
+RCT_EXPORT_VIEW_PROPERTY(animateType, NSString*)
 RCT_EXPORT_VIEW_PROPERTY(pinColor, NSString*)
 RCT_EXPORT_VIEW_PROPERTY(onClick, RCTBubblingEventBlock)
 

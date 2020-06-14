@@ -9,8 +9,12 @@ package org.lovebing.reactnative.baidumap.module;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.Manifest;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
+
+import org.lovebing.reactnative.baidumap.support.AppUtils;
 
 /**
  * @author lovebing
@@ -33,4 +37,8 @@ public class BaiduMapManager extends BaseModule {
         Log.i("initSDK", key);
     }
 
+    @ReactMethod
+    public void hasLocationPermission(Promise promise) {
+        promise.resolve(AppUtils.hasPermission(context.getCurrentActivity(), Manifest.permission.ACCESS_FINE_LOCATION));
+    }
 }

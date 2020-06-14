@@ -124,13 +124,14 @@ BaiduMapManager.initSDK('sIMQlfmOXhQmPLF1QMh4aBp8zZO9Lb2A');
 | Prop                    | Type  | Default  | Description
 | ----------------------- |:-----:| :-------:| -------
 | title                   | string| null     | 如果没有 InfoWindow，将会根据 title 生成 InfoWindow
-| titleOffsetY            | int   | -80        | title 作为 InfoWindow 展示的 y 轴偏移量，仅 Android
+| titleOffsetY            | int   | -80      | title 作为 InfoWindow 展示的 y 轴偏移量，仅 Android
 | location                | object| {latitude: 0, longitude: 0}    |
 | perspective             | bool  | null     | 仅 Android
 | flat                    | bool  | null     | 仅 Android
 | rotate                  | float | 0        | 旋转角度，仅 Android
 | icon                    | any   | null     | icon图片，同 <Image> 的 source 属性
 | alpha                   | float | 1        | 透明度，仅 Android
+| animateType             | string|          | 动画效果：drop/grow/jump (iOS 仅支持 drop)
 | pinColor                | string| red      | red/green/purple，大头针颜色，仅 iOS
 | onClick                 | func  |          | 点击事件回调
 ##### Cluster 点聚合
@@ -239,6 +240,13 @@ Cluster 示例
     </Cluster>
 </MapView>
 ```
+
+#### BaiduMapManager
+
+| Method                    | Description | Result
+| ------------------------- | ---------------- | -------
+| void initSDK(string apiKey)      | iOS 初始化 SDK   |
+| Promise hasLocationPermission    | 是否有定位权限    |
 
 #### Geolocation Methods
 

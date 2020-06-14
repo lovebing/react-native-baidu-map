@@ -43,12 +43,18 @@ import org.lovebing.reactnative.baidumap.R;
 import org.lovebing.reactnative.baidumap.model.IconInfo;
 import org.lovebing.reactnative.baidumap.util.BitmapUtil;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class OverlayMarker extends ViewGroup implements OverlayView, ClusterItem {
 
+    // TODO 1. 下载中的情况。 2. 清理零引用的 key
+    private static final Map<String, BitmapDescriptor> BITMAP_DESCRIPTOR_MAP = new ConcurrentHashMap<>();
+
     private String title;
     private int titleOffsetY = -100;
+    private MarkerOptions.MarkerAnimateType animateType = MarkerOptions.MarkerAnimateType.none;
     private LatLng position;
     private Float rotate;
     private Boolean flat;
@@ -66,10 +72,8 @@ public class OverlayMarker extends ViewGroup implements OverlayView, ClusterItem
     private final ControllerListener<ImageInfo> imageControllerListener =
             new BaseControllerListener<ImageInfo>() {
                 @Override
-                public void onFinalImageSet(
-                        String id,
-                         final ImageInfo imageInfo,
-                         Animatable animatable) {
+                public void onFinalImageSet(String id, final ImageInfo imageInfo, Animatable animatable) {
+                    Log.i("onFinalImageSet", id);
                     CloseableReference<CloseableImage> imageReference = null;
                     try {
                         imageReference = dataSource.getResult();
@@ -81,6 +85,7 @@ public class OverlayMarker extends ViewGroup implements OverlayView, ClusterItem
                                 if (bitmap != null) {
                                     bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
                                     iconBitmapDescriptor = BitmapDescriptorFactory.fromBitmap(bitmap);
+                                    BITMAP_DESCRIPTOR_MAP.put(iconInfo.getUri(), iconBitmapDescriptor);
                                 }
                             }
                         }
@@ -167,8 +172,26 @@ public class OverlayMarker extends ViewGroup implements OverlayView, ClusterItem
         }
     }
 
-    public String getTitle() {
-        return title;
+    public void setAnimateType(String animateType) {
+        if (animateType == null) {
+            return;
+        }
+        switch (animateType) {
+            case "drop":
+                this.animateType = MarkerOptions.MarkerAnimateType.drop;
+                break;
+            case "grow":
+                this.animateType = MarkerOptions.MarkerAnimateType.grow;
+                break;
+            case "jump":
+                this.animateType = MarkerOptions.MarkerAnimateType.jump;
+                break;
+            default:
+                this.animateType = MarkerOptions.MarkerAnimateType.none;
+        }
+        if (marker != null) {
+            marker.setAnimateType(this.animateType.ordinal());
+        }
     }
 
     public void setTitle(String title) {
@@ -218,6 +241,10 @@ public class OverlayMarker extends ViewGroup implements OverlayView, ClusterItem
 
     public void setIcon(IconInfo iconInfo) {
         if (iconInfo.getUri() == null || iconInfo.getUri().length() == 0) {
+            return;
+        }
+        if (BITMAP_DESCRIPTOR_MAP.containsKey(iconInfo.getUri())) {
+            iconBitmapDescriptor = BITMAP_DESCRIPTOR_MAP.get(iconInfo.getUri());
             return;
         }
         Log.i("download", iconInfo.getUri());
@@ -312,6 +339,7 @@ public class OverlayMarker extends ViewGroup implements OverlayView, ClusterItem
         MarkerOptions option = new MarkerOptions()
                 .position(position)
                 .alpha(getAlpha())
+                .animateType(animateType)
                 .icon(getBitmapDescriptor());
         if (rotate != null) {
             option.rotate(rotate);

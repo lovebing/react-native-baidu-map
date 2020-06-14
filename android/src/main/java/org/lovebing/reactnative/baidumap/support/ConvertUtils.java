@@ -33,6 +33,9 @@ public class ConvertUtils {
     }
 
     public static <T> T convert(ReadableMap readableMap, Class<T> targetClass) {
+        if (readableMap == null) {
+            return null;
+        }
         if (!FILED_MAP.containsKey(targetClass)) {
             FILED_MAP.put(targetClass, targetClass.getDeclaredFields());
         }

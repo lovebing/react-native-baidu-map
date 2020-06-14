@@ -290,4 +290,8 @@ RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     [self.bridge.eventDispatcher sendDeviceEventWithName:name body:body];
 }
 
++ (BOOL)requiresMainQueueSetup {
+    return YES;  
+}
+
 @end
