@@ -14,6 +14,7 @@
 #import <BMKLocationkit/BMKLocationComponent.h>
 #import <BaiduMapAPI_Map/BMKMapView.h>
 #import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
+#import <CoreLocation/CLLocationManager.h>
 
 @interface BaiduMapManager : NSObject<RCTBridgeModule>
 

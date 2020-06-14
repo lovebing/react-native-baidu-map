@@ -24,4 +24,14 @@ RCT_EXPORT_METHOD(initSDK:(NSString *)key) {
     }
 }
 
+RCT_REMAP_METHOD(hasLocationPermission,
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject) {
+  if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
+      resolve(@NO);
+  } else {
+      resolve(@YES);
+  }
+}
+
 @end

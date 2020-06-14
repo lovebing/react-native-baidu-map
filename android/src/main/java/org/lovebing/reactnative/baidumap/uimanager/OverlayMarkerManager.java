@@ -38,6 +38,11 @@ public class OverlayMarkerManager extends ViewGroupManager<OverlayMarker> {
         overlayMarker.setTitle(title);
     }
 
+    @ReactProp(name = "animateType")
+    public void setAnimateType(OverlayMarker overlayMarker, String animateType) {
+        overlayMarker.setAnimateType(animateType);
+    }
+
     @ReactProp(name = "titleOffsetY")
     public void setTitleOffsetY(OverlayMarker overlayMarker, int titleOffsetY) {
         overlayMarker.setTitleOffsetY(titleOffsetY);

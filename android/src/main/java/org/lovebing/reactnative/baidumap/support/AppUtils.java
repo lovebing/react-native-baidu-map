@@ -23,11 +23,14 @@ public class AppUtils {
     public static void checkPermission(Activity activity, String permission) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (activity.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.M) {
-                if (ContextCompat.checkSelfPermission(activity, permission)
-                        != PackageManager.PERMISSION_GRANTED) {
+                if (!hasPermission(activity, permission)) {
                     ActivityCompat.requestPermissions(activity, new String[]{permission}, RequestCode.CODE_ASK_PERMISSIONS);
                 }
             }
         }
+    }
+
+    public static boolean hasPermission(Activity activity, String permission) {
+        return ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED;
     }
 }

@@ -12,11 +12,17 @@
 #import "InfoWindow.h"
 #import "OverlayMarkerIcon.h"
 
+static NSMutableDictionary *ICON_MAGE_MAP;
+
 @implementation OverlayMarker {
     RCTImageLoaderCancellationBlock _reloadImageCancellationBlock;
     UIImageView *_imageView;
     BMKMapView *_mapView;
     UIImage *_iconImage;
+}
+
++ (void)initialize {
+    ICON_MAGE_MAP = @{}.mutableCopy;
 }
 
 - (NSString *)getType {
@@ -51,12 +57,25 @@
     } else {
         annotation.title = _title;
     }
-    _annotation.coordinate = [OverlayUtils getCoorFromOption:_location];
+    annotation.coordinate = [OverlayUtils getCoorFromOption:_location];
+    if ([@"drop" isEqualToString:self.animateType]) {
+        annotation.annotationView.animatesDrop = YES;
+    } else {
+        annotation.annotationView.animatesDrop = NO;
+    }
     if (_iconImage == nil && _icon != nil) {
+        UIImage *image = [ICON_MAGE_MAP objectForKey:_icon.request.URL.absoluteString];
+        if (image != nil) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+               [self updateAnnotationView:annotation image:image];
+            });
+            return;
+        }
         if (_reloadImageCancellationBlock) {
             _reloadImageCancellationBlock();
             _reloadImageCancellationBlock = nil;
         }
+        NSLog(@"download %@", _icon.request.URL);
         _reloadImageCancellationBlock = [[_bridge moduleForName:@"ImageLoader"] loadImageWithURLRequest:_icon.request
                                                                       size:self.bounds.size
                                                                          scale:RCTScreenScale()
@@ -69,9 +88,10 @@
                                                                        NSLog(@"download image error: %@", error);
                                                                       return;
                                                                    }
+                                                                   ICON_MAGE_MAP[self.icon.request.URL.absoluteString] = image;
                                                                    dispatch_async(dispatch_get_main_queue(), ^{
                                                                       [self updateAnnotationView:annotation image:image];
-                                                                       NSLog(@"download image success: %@", image);
+                                                                       NSLog(@"download image success: %@", self.icon.request.URL.absoluteString);
                                                                    });
                                                                }];
     } else {
@@ -91,7 +111,6 @@
         }
         _imageView.frame = frame;
         annotation.annotationView.frame = frame;
-        
     } else {
         annotation.annotationView.image = image;
         annotation.annotationView.frame = CGRectMake(0, 0, CGImageGetWidth(image.CGImage), CGImageGetHeight(image.CGImage));
