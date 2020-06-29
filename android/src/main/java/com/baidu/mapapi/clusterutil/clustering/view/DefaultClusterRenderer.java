@@ -325,10 +325,10 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
 
         @SuppressLint("NewApi")
         public void run() {
-            if (clusters.equals(DefaultClusterRenderer.this.mClusters)) {
-                mCallback.run();
-                return;
-            }
+//            if (clusters.equals(DefaultClusterRenderer.this.mClusters)) {
+//                mCallback.run();
+//                return;
+//            }
 
             final MarkerModifier markerModifier = new MarkerModifier();
 
@@ -358,17 +358,19 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
                     new ConcurrentHashMap<MarkerWithPosition, Boolean>());
             for (Cluster<T> c : clusters) {
                 boolean onScreen = visibleBounds.contains(c.getPosition());
-                if (zoomingIn && onScreen && SHOULD_ANIMATE) {
+                // if (zoomingIn && onScreen && SHOULD_ANIMATE) {
+                if ( onScreen ) {
                     Point point = mSphericalMercatorProjection.toPoint(c.getPosition());
                     Point closest = findClosestCluster(existingClustersOnScreen, point);
                     if (closest != null) {
                         LatLng animateTo = mSphericalMercatorProjection.toLatLng(closest);
-                        markerModifier.add(true, new CreateMarkerTask(c, newMarkers, animateTo));
+                        markerModifier.add(true, new CreateMarkerTask(c, newMarkers, SHOULD_ANIMATE ? animateTo : null));
                     } else {
                         markerModifier.add(true, new CreateMarkerTask(c, newMarkers, null));
                     }
                 } else {
-                    markerModifier.add(onScreen, new CreateMarkerTask(c, newMarkers, null));
+                    //todo
+//                    markerModifier.add(onScreen, new CreateMarkerTask(c, newMarkers, null));
                 }
             }
 
