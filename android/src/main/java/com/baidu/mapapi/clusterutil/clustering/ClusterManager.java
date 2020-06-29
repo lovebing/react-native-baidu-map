@@ -177,15 +177,6 @@ public class ClusterManager<T extends ClusterItem> implements
         if (mRenderer instanceof BaiduMap.OnMapStatusChangeListener) {
             ((BaiduMap.OnMapStatusChangeListener) mRenderer).onMapStatusChange(mapStatus);
         }
-
-        // Don't re-compute clusters if the map has just been panned/tilted/rotated.
-    //    MapStatus position = mMap.getMapStatus();
-    //    if (mPreviousCameraPosition != null && mPreviousCameraPosition.zoom == position.zoom) {
-    //        return;
-    //    }
-    //    mPreviousCameraPosition = mMap.getMapStatus();
-
-    //    cluster();
     }
 
     @Override
@@ -194,14 +185,6 @@ public class ClusterManager<T extends ClusterItem> implements
             ((BaiduMap.OnMapStatusChangeListener) mRenderer).onMapStatusChangeFinish(mapStatus);
         }
 
-        // Don't re-compute clusters if the map has just been panned/tilted/rotated.
-//        MapStatus position = mMap.getMapStatus();
-//        if (mPreviousCameraPosition != null && mPreviousCameraPosition.zoom == position.zoom) {
-//            return;
-//        }
-//        if (mPreviousCameraPosition != null ) {
-//            return;
-//        }
         mPreviousCameraPosition = mMap.getMapStatus();
 
         cluster();
