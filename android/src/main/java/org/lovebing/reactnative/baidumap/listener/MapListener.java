@@ -97,6 +97,9 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
     @Override
     public void onMapStatusChangeFinish(MapStatus mapStatus) {
         sendEvent(mapView, "onMapStatusChangeFinish", getEventParams(mapStatus));
+        for (BaiduMap.OnMapStatusChangeListener mapStatusChangeListener : mapStatusChangeListeners) {
+            mapStatusChangeListener.onMapStatusChangeFinish(mapStatus);
+        }
     }
 
     @Override
