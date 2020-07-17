@@ -15,6 +15,8 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
+import com.baidu.mapapi.CoordType;
+import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.core.SearchResult;
@@ -33,7 +35,14 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import org.lovebing.reactnative.baidumap.support.AppUtils;
 
+
 import java.util.List;
+
+import static com.baidu.mapapi.CoordType.BD09LL;
+import static com.baidu.mapapi.CoordType.GCJ02;
+import static com.baidu.mapapi.utils.CoordinateConverter.CoordType.COMMON;
+import static com.baidu.mapapi.utils.CoordinateConverter.CoordType.GPS;
+
 
 /**
  * Created by lovebing on 2016/10/28.
@@ -96,6 +105,137 @@ public class GeolocationModule extends BaseModule
         LatLng desLatLng = converter.convert();
         return desLatLng;
 
+    }
+
+    @ReactMethod
+    public void getGCJ02CoorFromWGS84Coor(double lat, double lng,Promise promise) {
+        WritableMap params = Arguments.createMap();
+        CoordType coord = SDKInitializer.getCoordType();
+        boolean isSetCoord = false;
+
+
+        if (coord != BD09LL){
+            SDKInitializer.setCoordType(BD09LL);
+            isSetCoord = true;
+        }
+        LatLng src=new LatLng(lat,lng);
+        CoordinateConverter converter  = new CoordinateConverter()
+                .from(GPS)
+                .coord(src);
+        //转换坐标
+        LatLng tempdest = converter.convert();
+
+
+        if (isSetCoord){
+            SDKInitializer.setCoordType(coord);
+        }
+
+
+
+        if (coord != GCJ02){
+            SDKInitializer.setCoordType(GCJ02);
+            isSetCoord = true;
+        }
+
+        CoordinateConverter descconverter  = new CoordinateConverter()
+                .from(CoordinateConverter.CoordType.BD09LL)
+                .coord(tempdest);
+        //转换坐标
+        LatLng dest = descconverter.convert();
+        params.putDouble("latitude", dest.latitude);
+        params.putDouble("longitude", dest.longitude);
+        if (isSetCoord){
+            SDKInitializer.setCoordType(coord);
+
+        }
+        //System.out.println("getGCJ02CoorFromWGS84Coor lat:"+lat+"lng:"+lng+" to "+"lat:"+dest.latitude+" lng:"+dest.longitude);
+
+        promise.resolve(params);
+    }
+
+    @ReactMethod
+    public void getBD09LLCoorFromWGS84Coor(double lat, double lng,Promise promise) {
+        WritableMap params = Arguments.createMap();
+        CoordType coord = SDKInitializer.getCoordType();
+        boolean isSetCoord = false;
+
+        if (coord!= BD09LL){
+            SDKInitializer.setCoordType(BD09LL);
+
+            isSetCoord = true;
+        }
+        LatLng src = new LatLng(lat,lng);
+        CoordinateConverter converter  = new CoordinateConverter()
+                .from(GPS)
+                .coord(src);
+        //转换坐标
+        LatLng dest = converter.convert();
+        params.putDouble("latitude", dest.latitude);
+        params.putDouble("longitude", dest.longitude);
+        if (isSetCoord){
+            SDKInitializer.setCoordType(coord);
+
+        }
+        //System.out.println("getBD09LLCoorFromWGS84Coor lat:"+lat+"lng:"+lng+" to "+"lat:"+dest.latitude+" lng:"+dest.longitude);
+
+        promise.resolve(params);
+    }
+
+
+    @ReactMethod
+    public void getGCJ02CoorFromBD09LLCoor(double lat, double lng,Promise promise) {
+
+        WritableMap params = Arguments.createMap();
+        CoordType coord = SDKInitializer.getCoordType();
+        boolean isSetCoord = false;
+
+        if (coord != GCJ02){
+            SDKInitializer.setCoordType(GCJ02);
+
+            isSetCoord =true;
+        }
+        LatLng src = new LatLng(lat,lng);
+        CoordinateConverter converter  = new CoordinateConverter()
+                .from(CoordinateConverter.CoordType.BD09LL)
+                .coord(src);
+        //转换坐标
+        LatLng dest = converter.convert();
+        params.putDouble("latitude", dest.latitude);
+        params.putDouble("longitude", dest.longitude);
+        if (isSetCoord){
+            SDKInitializer.setCoordType(coord);
+
+        }
+        //System.out.println("getGCJ02CoorFromBD09LLCoor lat:"+lat+"lng:"+lng+" to "+"lat:"+dest.latitude+" lng:"+dest.longitude);
+        promise.resolve(params);
+
+    }
+    @ReactMethod
+    public void getBD09LLCoorFromGCJ02Coor(double lat, double lng,Promise promise) {
+        WritableMap params = Arguments.createMap();
+        CoordType coord = SDKInitializer.getCoordType();
+        boolean isSetCoord = false;
+
+        if (coord != BD09LL){
+            SDKInitializer.setCoordType(BD09LL);
+
+            isSetCoord= true;
+        }
+        LatLng src = new LatLng(lat,lng);
+        CoordinateConverter converter = new CoordinateConverter()
+                .from(COMMON)
+                .coord(src);
+        //转换坐标
+        LatLng dest = converter.convert();
+        params.putDouble("latitude", dest.latitude);
+        params.putDouble("longitude", dest.longitude);
+        if (isSetCoord){
+            SDKInitializer.setCoordType(coord);
+
+        }
+        //System.out.println("getBD09LLCoorFromGCJ02Coor lat:"+lat+"lng:"+lng+" to "+"lat:"+dest.latitude+" lng:"+dest.longitude);
+
+        promise.resolve(params);
     }
 
     @ReactMethod

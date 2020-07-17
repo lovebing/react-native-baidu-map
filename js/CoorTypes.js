@@ -7,5 +7,6 @@
 
 export default {
   BD09ll: 'bd09ll',
-  GCJ02: 'gcj02'
+  GCJ02: 'gcj02',
+  WGS84:'wgs84'
 };
