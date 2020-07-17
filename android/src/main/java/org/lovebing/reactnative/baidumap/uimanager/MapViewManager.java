@@ -116,7 +116,7 @@ public class MapViewManager extends ViewGroupManager<TextureMapView> {
     }
 
     @ReactProp(name = "showMapPoi")
-    public void showMapPoi(MapView mapView, boolean showMapPoi) {
+    public void showMapPoi(TextureMapView mapView, boolean showMapPoi) {
         mapView.getMap().showMapPoi(showMapPoi);
     }
 
