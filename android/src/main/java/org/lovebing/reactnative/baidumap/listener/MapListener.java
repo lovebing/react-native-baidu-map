@@ -117,7 +117,7 @@ public class MapListener implements BaiduMap.OnMapStatusChangeListener,
             reactContext
                     .getJSModule(RCTEventEmitter.class)
                     .receiveEvent(overlayMarker.getId(),
-                            "topClick", writableMap.copy());
+                            "topClick", writableMap);
         }
         sendEvent(mapView, "onMarkerClick", writableMap);
         return true;

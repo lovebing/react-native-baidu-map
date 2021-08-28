@@ -10,7 +10,7 @@ package org.lovebing.reactnative.baidumap;
 import android.os.Build;
 import android.os.Looper;
 import android.support.annotation.MainThread;
-import android.support.annotation.RequiresApi
+import android.support.annotation.RequiresApi;
 
 import java.util.Arrays;
 import java.util.List;
