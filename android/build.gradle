@@ -9,9 +9,9 @@ buildscript {
         mavenLocal()
         google()
         jcenter()
-        maven() {
-            url 'http://repo.lovebing.net/repository/maven-public/'
-        }
+        // maven() {
+        //     url 'http://repo.lovebing.net/repository/maven-public/'
+        // }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.0'
@@ -22,9 +22,9 @@ repositories {
     mavenLocal()
     google()
     jcenter()
-    maven {
-        url 'http://repo.lovebing.net/repository/maven-public/'
-    }
+    // maven {
+    //     url 'http://repo.lovebing.net/repository/maven-public/'
+    // }
 }
 
 android {
@@ -51,10 +51,11 @@ android {
 }
 
 dependencies {
-    compileOnly 'com.facebook.react:react-native:0.60.6'
+    compileOnly 'com.facebook.react:react-native:+'
     //noinspection GradleCompatible
     compileOnly 'com.android.support:appcompat-v7:28.0.0'
     implementation files('libs/BaiduLBS_Android.jar')
+    implementation'androidx.annotation:annotation:+'
     compileOnly files('src/main/assets')
 }
 
